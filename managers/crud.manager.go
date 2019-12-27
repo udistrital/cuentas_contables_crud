@@ -36,6 +36,27 @@ func (m *CrudManager) GetDocumentByUUID(UUID, collName string, resul interface{}
 	return
 }
 
+// DeleteDocumentByUUID delete one document by it's uuid.
+func (m *CrudManager) DeleteDocumentByUUID(UUID, collName string, resul interface{}) (err error) {
+	coll, err := db.GetCollection(collName)
+
+	if err != nil {
+		return err
+	}
+
+	filter := make(map[string]interface{})
+
+	filter["_id"] = UUID
+
+	resul, err = coll.DeleteOne(m.Ctx, filter)
+
+	if err == mongo.ErrNoDocuments {
+		return errors.New("cannot-delete-document")
+	}
+
+	return
+}
+
 // UpdateDocument pdate one documen.
 func (m *CrudManager) UpdateDocument(data interface{}, UUID, collName string, result interface{}) (err error) {
 
