@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/astaxie/beego"
 	"github.com/udistrital/cuentas_contables_crud/compositors"
+	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/models"
 )
 
@@ -12,6 +13,7 @@ type NodoCuentaContableController struct {
 }
 
 var nodeCCCompositor = compositors.NodoCuentaContableCompositor{}
+var commonHelper = helpers.CommonHelper{}
 
 // GetByUUID función para obtener todos los objetos
 // @Title Get
@@ -22,12 +24,10 @@ var nodeCCCompositor = compositors.NodoCuentaContableCompositor{}
 func (c *NodoCuentaContableController) GetByUUID() {
 	UUID := c.GetString("UUID")
 
-	nodeInfo, err := nodeCCCompositor.GetNodeByID(UUID, models.ArbolPlanMaestroCuentasContCollection)
-	errorMessage := ""
-	if err != nil {
-		errorMessage = err.Error()
-	}
-	c.Data["json"] = map[string]interface{}{"data": nodeInfo, "error": errorMessage}
+	nodeInfo, err := nodeCCCompositor.GetNodeByID(UUID)
+
+	c.Data["json"] = commonHelper.DefaultResponse(200, err, nodeInfo)
+
 	c.ServeJSON()
 }
 
@@ -40,14 +40,20 @@ func (c *NodoCuentaContableController) GetByUUID() {
 // @router / [post]
 func (c *NodoCuentaContableController) AddNode() {
 	var requestBody models.NodoCuentaContable
-	errorMessage := ""
+
 	err := json.Unmarshal(c.Ctx.Input.RequestBody, &requestBody)
+
+	message := ""
+
 	if err == nil {
-		err = nodeCCCompositor.AddNode(&requestBody, models.ArbolPlanMaestroCuentasContCollection)
+		err = nodeCCCompositor.AddNode(&requestBody)
 	}
-	if err != nil {
-		errorMessage = err.Error()
+
+	if err == nil {
+		message = "node-added"
 	}
-	c.Data["json"] = map[string]interface{}{"data": requestBody, "error": errorMessage}
+
+	c.Data["json"] = commonHelper.DefaultResponse(200, err, message)
+
 	c.ServeJSON()
 }

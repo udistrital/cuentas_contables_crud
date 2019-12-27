@@ -2,6 +2,7 @@ package managers
 
 import (
 	"context"
+	"time"
 
 	"github.com/udistrital/cuentas_contables_crud/models"
 )
@@ -15,18 +16,18 @@ type NodoCuentaContableManager struct {
 var crudManager = CrudManager{}
 
 // AddNode This function will store the node data of a tree for the bussines proccess
-func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable, collName string) (err error) {
+func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable) (err error) {
 	var fatherData *models.NodoCuentaContable
 
 	crudManager.Ctx = m.Ctx // Add ctx if process will be part of a transacction.
 
-	if nodeData.Padre != "" {
-		if e := crudManager.GetDocumentByUUID(nodeData.Padre, collName, &fatherData); e != nil {
+	if nodeData.Padre != nil {
+		if e := crudManager.GetDocumentByUUID(*nodeData.Padre, models.ArbolPlanMaestroCuentasContCollection, &fatherData); e != nil {
 			return e
 		}
 	}
-
-	UUID, err := crudManager.AddDocument(nodeData, collName)
+	nodeData.FechaRegistro = time.Now().Format("2006-01-02")
+	UUID, err := crudManager.AddDocument(nodeData, models.ArbolPlanMaestroCuentasContCollection)
 
 	if err != nil {
 		return err
@@ -42,7 +43,7 @@ func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable,
 		updMap := map[string]interface{}{
 			"hijos": fatherData.Hijos,
 		}
-		if e := crudManager.UpdateDocument(updMap, fatherData.ID, collName, updtDoc); e != nil {
+		if e := crudManager.UpdateDocument(updMap, fatherData.ID, models.ArbolPlanMaestroCuentasContCollection, updtDoc); e != nil {
 			return e
 		}
 	}
