@@ -14,5 +14,74 @@
         }
     },
     "basePath": "/v1",
-    "paths": null
+    "paths": {
+        "/nodo_cuenta_contable/": {
+            "post": {
+                "tags": [
+                    "nodo_cuenta_contable"
+                ],
+                "description": "Post models.NodoCuentaContable",
+                "operationId": "NodoCuentaContableController.Post models.NodoCuentaContable",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Body para la creacion de models.NodoCuentaContable",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.NodoCuentaContable"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{int} models.NodoCuentaContable.Id"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/nodo_cuenta_contable/{UUID}": {
+            "get": {
+                "tags": [
+                    "nodo_cuenta_contable"
+                ],
+                "description": "get all objects",
+                "operationId": "NodoCuentaContableController.Get",
+                "responses": {
+                    "200": {
+                        "description": "NodoRubroApropiacion models.NodoCuentaContable"
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.NodoCuentaContable": {
+            "title": "NodoCuentaContable",
+            "type": "object",
+            "properties": {
+                "Codigo": {
+                    "type": "string"
+                },
+                "FechaRegistro": {
+                    "type": "string"
+                },
+                "Hijos": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "Padre": {
+                    "type": "string"
+                }
+            }
+        }
+    }
 }
