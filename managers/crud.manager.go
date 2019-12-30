@@ -9,6 +9,7 @@ import (
 
 	"github.com/udistrital/cuentas_contables_crud/db"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 // CrudManager this manager must be used if you want to separate logic from implementation.
@@ -28,12 +29,41 @@ func (m *CrudManager) GetDocumentByUUID(UUID, collName string, resul interface{}
 
 	filter["_id"] = UUID
 
-	log.Println(filter)
-
 	err = coll.FindOne(context.TODO(), filter).Decode(resul)
 
 	if err == mongo.ErrNoDocuments {
 		return errors.New("document-no-found")
+	}
+
+	return
+}
+
+// GetDocumentByUUID get one document by it's uuid.
+func (m *CrudManager) GetAllDocuments(filter map[string]interface{}, limit, offset int64, collName string, fn func(*mongo.Cursor)) (err error) {
+	coll, err := db.GetCollection(collName)
+	if err != nil {
+		return err
+	}
+
+	findOptions := options.Find()
+
+	if limit >= 0 {
+		findOptions.SetLimit(limit)
+	}
+
+	findOptions.SetSkip(offset)
+
+	cur, err := coll.Find(context.TODO(), filter, findOptions)
+
+	if err == mongo.ErrNoDocuments {
+		return errors.New("document-no-found")
+	}
+
+	for cur.Next(context.TODO()) {
+
+		// create a value into which the single document can be decoded
+		fn(cur)
+
 	}
 
 	return

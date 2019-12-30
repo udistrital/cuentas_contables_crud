@@ -5,6 +5,7 @@ import (
 
 	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type NodoCuentaContableCompositor struct{}
@@ -34,6 +35,17 @@ func (c *NodoCuentaContableCompositor) AddNode(nodeData *models.NodoCuentaContab
 	return
 }
 
-func (c *NodoCuentaContableCompositor) BuildTree() (err error) {
-	return nil
+func (c *NodoCuentaContableCompositor) BuildTree() (treeData []models.NodoArbolCuentaContable, err error) {
+	filter := make(map[string]interface{})
+	dataIndexed := make(map[string]models.NodoArbolCuentaContable)
+
+	err = crudManager.GetAllDocuments(filter, -1, 0, models.ArbolPlanMaestroCuentasContCollection, func(curr *mongo.Cursor) {
+		var node models.NodoArbolCuentaContable
+		if err := curr.Decode(&node); err == nil {
+			dataIndexed[node.ID] = node
+			treeData = append(treeData, node)
+		}
+	})
+
+	return
 }

@@ -66,8 +66,8 @@ func (c *NodoCuentaContableController) AddNode() {
 // @Failure 403 :objectId is empty
 // @router / [get]
 func (c *NodoCuentaContableController) GetTree() {
-
-	c.Data["json"] = commonHelper.DefaultResponse(200, nil, "test")
+	treeData, err := nodeCCCompositor.BuildTree()
+	c.Data["json"] = commonHelper.DefaultResponse(200, err, treeData)
 
 	c.ServeJSON()
 }
