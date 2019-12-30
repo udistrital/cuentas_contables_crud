@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/udistrital/cuentas_contables_crud/db"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -72,6 +73,9 @@ func (m *CrudManager) AddDocument(data interface{}, collName string) (generatedI
 	resul, err := coll.InsertOne(m.Ctx, data)
 
 	if err != nil {
+		if strings.Contains(err.Error(), "dup key") {
+			return "", errors.New("duplicated-node")
+		}
 		return "", err
 	}
 

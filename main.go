@@ -7,6 +7,7 @@ import (
 	dbConnManager "github.com/udistrital/cuentas_contables_crud/db"
 	apistatus "github.com/udistrital/utils_oas/apiStatusLib"
 	"github.com/udistrital/utils_oas/customerror"
+	"github.com/udistrital/utils_oas/responseformat"
 )
 
 var mainDb = beego.AppConfig.String("mongo_db")
@@ -27,6 +28,7 @@ func main() {
 	}
 
 	// Custom libs
+	beego.BConfig.RecoverFunc = responseformat.GlobalResponseHandler
 	beego.ErrorController(&customerror.CustomErrorController{})
 	apistatus.Init()
 
