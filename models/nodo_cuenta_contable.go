@@ -10,3 +10,11 @@ type NodoCuentaContable struct {
 	Padre         *string  `json:"Padre" bson:"padre,omitempty"` // if the field is optional we put it as pointer.
 	FechaRegistro string   `json:"FechaRegistro" bson:"fecha_registro"`
 }
+
+// NodoArbolCuentaContable This struct is iseful for reduce band with usage in services that build a tree.
+type NodoArbolCuentaContable struct {
+	ID            string                    `json:"Codigo" bson:"_id,omitempty"`
+	Hijos         []NodoArbolCuentaContable `json:"Hijos" bson:"hijos,omitempty"`
+	Padre         *string                   `json:"Padre" bson:"padre,omitempty"` // if the field is optional we put it as pointer.
+	FechaRegistro string                    `json:"FechaRegistro" bson:"fecha_registro"`
+}

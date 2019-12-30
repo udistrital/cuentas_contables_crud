@@ -28,6 +28,8 @@ func (m *CrudManager) GetDocumentByUUID(UUID, collName string, resul interface{}
 
 	filter["_id"] = UUID
 
+	log.Println(filter)
+
 	err = coll.FindOne(context.TODO(), filter).Decode(resul)
 
 	if err == mongo.ErrNoDocuments {
