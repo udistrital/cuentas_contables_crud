@@ -20,6 +20,16 @@ func init() {
 				&controllers.NodoCuentaContableController{},
 			),
 		),
+		beego.NSNamespace("/comprobante",
+			beego.NSInclude(
+				&controllers.ComprobanteController{},
+			),
+		),
+		beego.NSNamespace("/tipo_comprobante",
+			beego.NSInclude(
+				&controllers.TipoComprobanteController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }

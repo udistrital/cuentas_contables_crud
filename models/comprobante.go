@@ -1,5 +1,7 @@
 package models
 
+var ComprobanteCollection = "comprobante"
+
 // Comprobante es la estructura de un comprobante con parametros opcionales
 type Comprobante struct {
 	ID          string `json:"_id" bson:"_id,omitempty"`
@@ -7,6 +9,7 @@ type Comprobante struct {
 	Descripcion string `json:"Descripcion" bson:"descripcion"`
 	Comprobante string `json:"Comprobante" bson:"comprobante"`
 	Numero      int    `json:"Numero" bson:"numero"`
+	*General
 	*Parametros
 	*TipoComprobante
 }
