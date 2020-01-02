@@ -15,7 +15,7 @@ type NodoCuentaContable struct {
 type NodoArbolCuentaContable struct {
 	ID            string                     `json:"Codigo" bson:"_id,omitempty"`
 	Hijos         []string                   `json:"Hijos" bson:"hijos,omitempty"`
-	HijosRef      []*NodoArbolCuentaContable `json:"HijosRef" bson:"-"`
+	HijosRef      []*NodoArbolCuentaContable `json:"children" bson:"-"`
 	Padre         *string                    `json:"Padre" bson:"padre,omitempty"` // if the field is optional we put it as pointer.
 	FechaRegistro string                     `json:"FechaRegistro" bson:"fecha_registro"`
 }
