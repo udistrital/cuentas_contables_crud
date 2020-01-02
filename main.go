@@ -4,10 +4,12 @@ import (
 	_ "github.com/udistrital/cuentas_contables_crud/routers"
 
 	"github.com/astaxie/beego"
-	"github.com/udistrital/utils_oas/customerror"
 	dbConnManager "github.com/udistrital/cuentas_contables_crud/db"
 	apistatus "github.com/udistrital/utils_oas/apiStatusLib"
+	"github.com/udistrital/utils_oas/customerror"
 )
+
+var mainDb = beego.AppConfig.String("mongo_db")
 
 func main() {
 
@@ -16,6 +18,7 @@ func main() {
 		beego.AppConfig.String("mongo_user"),
 		beego.AppConfig.String("mongo_pass"),
 		beego.AppConfig.String("mongo_db_auth"),
+		beego.AppConfig.String("mongo_db"),
 	)
 
 	if beego.BConfig.RunMode == "dev" {
