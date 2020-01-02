@@ -15,6 +15,120 @@
     },
     "basePath": "/v1",
     "paths": {
+        "/comprobante/": {
+            "get": {
+                "tags": [
+                    "comprobante"
+                ],
+                "description": "get all objects",
+                "operationId": "ComprobanteController.Get",
+                "responses": {
+                    "200": {
+                        "description": "Comprobante models.Comprobante"
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "comprobante"
+                ],
+                "description": "Post models.Comprobante",
+                "operationId": "ComprobanteController.Post models.Comprobante",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Body para la creacion de models.Comprobante",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Comprobante"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{int} models.Comprobante.Id"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/comprobante/{UUID}": {
+            "get": {
+                "tags": [
+                    "comprobante"
+                ],
+                "description": "get object por id",
+                "operationId": "ComprobanteController.Get",
+                "responses": {
+                    "200": {
+                        "description": "Comprobante models.Comprobante"
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            }
+        },
+        "/comprobante/{id}": {
+            "put": {
+                "tags": [
+                    "comprobante"
+                ],
+                "description": "Update models.Comprobante",
+                "operationId": "ComprobanteController.Update models.Comprobante",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The objectid you want to update",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Comprobante"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{int} models.Comprobante.Id"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "comprobante"
+                ],
+                "description": "Delete models.Comprobante",
+                "operationId": "ComprobanteController.Delete models.Comprobante",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The objectid you want to delete",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Comprobante"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{int} models.Comprobante.Id"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
         "/nodo_cuenta_contable/": {
             "get": {
                 "tags": [
@@ -74,9 +188,161 @@
                     }
                 }
             }
+        },
+        "/tipo_comprobante/": {
+            "get": {
+                "tags": [
+                    "tipo_comprobante"
+                ],
+                "description": "get all objects",
+                "operationId": "TipoComprobanteController.Get",
+                "responses": {
+                    "200": {
+                        "description": "TipoComprobante models.TipoComprobante"
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "tipo_comprobante"
+                ],
+                "description": "Post models.TipoComprobante",
+                "operationId": "TipoComprobanteController.Post models.TipoComprobante",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Body para la creacion de models.TipoComprobante",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.TipoComprobante"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{int} models.TipoComprobante.Id"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/tipo_comprobante/{UUID}": {
+            "get": {
+                "tags": [
+                    "tipo_comprobante"
+                ],
+                "description": "get object by id",
+                "operationId": "TipoComprobanteController.Get",
+                "responses": {
+                    "200": {
+                        "description": "TipoComprobante models.TipoComprobante"
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            }
+        },
+        "/tipo_comprobante/{id}": {
+            "put": {
+                "tags": [
+                    "tipo_comprobante"
+                ],
+                "description": "Update models.TipoComprobante",
+                "operationId": "TipoComprobanteController.Update models.TipoComprobante",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The objectid you want to update",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.TipoComprobante"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{int} models.TipoComprobante.Id"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "tipo_comprobante"
+                ],
+                "description": "Delete models.TipoComprobante",
+                "operationId": "TipoComprobanteController.Delete models.TipoComprobante",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The objectid you want to delete",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.TipoComprobante"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{int} models.TipoComprobante.Id"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "models.Comprobante": {
+            "title": "Comprobante",
+            "type": "object",
+            "properties": {
+                "Codigo": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Comprobante": {
+                    "type": "string"
+                },
+                "Descripcion": {
+                    "type": "string"
+                },
+                "Numero": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.General": {
+            "title": "General",
+            "type": "object",
+            "properties": {
+                "Activo": {
+                    "type": "boolean"
+                },
+                "FechaCreacion": {
+                    "type": "string"
+                },
+                "FechaModificacion": {
+                    "type": "string"
+                }
+            }
+        },
         "models.NodoCuentaContable": {
             "title": "NodoCuentaContable",
             "type": "object",
@@ -94,6 +360,54 @@
                     }
                 },
                 "Padre": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Parametros": {
+            "title": "Parametros",
+            "type": "object",
+            "properties": {
+                "CuentaBanco": {
+                    "type": "string"
+                },
+                "FormatoImpresion": {
+                    "type": "string"
+                },
+                "NumCopias": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "NumInicial": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "NumItems": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "NumeracionAutomatica": {
+                    "type": "boolean"
+                },
+                "TipoImpresion": {
+                    "type": "string"
+                },
+                "Titulo": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TipoComprobante": {
+            "title": "TipoComprobante",
+            "type": "object",
+            "properties": {
+                "Codigo": {
+                    "type": "string"
+                },
+                "Descripcion": {
+                    "type": "string"
+                },
+                "TipoDocumento": {
                     "type": "string"
                 }
             }

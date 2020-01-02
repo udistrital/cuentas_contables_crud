@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/udistrital/cuentas_contables_crud/db"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -18,7 +19,7 @@ type CrudManager struct {
 }
 
 // GetDocumentByUUID get one document by it's uuid.
-func (m *CrudManager) GetDocumentByUUID(UUID, collName string, resul interface{}) (err error) {
+func (m *CrudManager) GetDocumentByUUID(UUID interface{}, collName string, resul interface{}) (err error) {
 	coll, err := db.GetCollection(collName)
 
 	if err != nil {
@@ -33,6 +34,48 @@ func (m *CrudManager) GetDocumentByUUID(UUID, collName string, resul interface{}
 
 	if err == mongo.ErrNoDocuments {
 		return errors.New("document-no-found")
+	}
+
+	return
+}
+
+// GetDocumentByItem get one document by it's item by nameItem.
+func (m *CrudManager) GetDocumentByItem(item interface{}, nameBson, collName string, resul interface{}) (err error) {
+	coll, err := db.GetCollection(collName)
+
+	if err != nil {
+		return err
+	}
+
+	filter := make(map[string]interface{})
+
+	filter[nameBson] = item
+
+	err = coll.FindOne(context.TODO(), filter).Decode(resul)
+
+	if err == mongo.ErrNoDocuments {
+		return errors.New("document-no-found-by-item")
+	}
+
+	return
+}
+
+// DeleteDocumentByUUID delete one document by it's uuid.
+func (m *CrudManager) DeleteDocumentByUUID(UUID interface{}, collName string, resul interface{}) (err error) {
+	coll, err := db.GetCollection(collName)
+
+	if err != nil {
+		return err
+	}
+
+	filter := make(map[string]interface{})
+
+	filter["_id"] = UUID
+
+	resul, err = coll.DeleteOne(m.Ctx, filter)
+
+	if err == mongo.ErrNoDocuments {
+		return errors.New("cannot-delete-document")
 	}
 
 	return
@@ -70,7 +113,7 @@ func (m *CrudManager) GetAllDocuments(filter map[string]interface{}, limit, offs
 }
 
 // UpdateDocument pdate one documen.
-func (m *CrudManager) UpdateDocument(data interface{}, UUID, collName string, result interface{}) (err error) {
+func (m *CrudManager) UpdateDocument(data interface{}, UUID interface{}, collName string, result interface{}) (err error) {
 
 	coll, err := db.GetCollection(collName)
 
@@ -106,15 +149,16 @@ func (m *CrudManager) AddDocument(data interface{}, collName string) (generatedI
 
 	if err != nil {
 		if strings.Contains(err.Error(), "dup key") {
-			return "", errors.New("duplicated-node")
+			return "", errors.New("duplicated-document")
 		}
 		return "", err
 	}
-
 	generatedID, ok := resul.InsertedID.(string)
-
 	if !ok {
-		return "", errors.New("cannot-get-coll-id")
+		generatedID = resul.InsertedID.(primitive.ObjectID).Hex()
+		if generatedID == "" {
+			return "", errors.New("cannot-get-coll-id")
+		}
 	}
 
 	return
