@@ -3,17 +3,20 @@ package compositors
 import (
 	"context"
 
+	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
+// NodoCuentaContableCompositor compositor for controll the data processing over NodoCuentaContable models
 type NodoCuentaContableCompositor struct{}
 
 var crudManager = managers.CrudManager{}
+var nodoCcManager = managers.NodoCuentaContableManager{}
+var nodoCcHelper = helpers.NodoCuentaContableHelper{}
 
 // GetNodeByID Returns a *models.NodoCuentaContable by it's _id
-func (m *NodoCuentaContableCompositor) GetNodeByID(ID string) (node *models.NodoCuentaContable, err error) {
+func (c *NodoCuentaContableCompositor) GetNodeByID(ID string) (node *models.NodoCuentaContable, err error) {
 
 	resul := &models.NodoCuentaContable{}
 
@@ -26,26 +29,25 @@ func (m *NodoCuentaContableCompositor) GetNodeByID(ID string) (node *models.Nodo
 func (c *NodoCuentaContableCompositor) AddNode(nodeData *models.NodoCuentaContable) (err error) {
 
 	err = crudManager.RunTransaction(func(ctx context.Context) error {
-		ccmang := managers.NodoCuentaContableManager{
-			// Ctx: ctx, // set this var if mongo is deployed on replica set mode.
-		}
+		ccmang := managers.NewNodoCuentaContableManager(nil)
 		err = ccmang.AddNode(nodeData)
 		return err
 	})
 	return
 }
 
-func (c *NodoCuentaContableCompositor) BuildTree() (treeData []models.NodoArbolCuentaContable, err error) {
-	filter := make(map[string]interface{})
-	dataIndexed := make(map[string]models.NodoArbolCuentaContable)
+// BuildTree returns the tree data on the DB as a tree structure with it's hierarchy
+func (c *NodoCuentaContableCompositor) BuildTree() (treeData []*models.NodoArbolCuentaContable, err error) {
+	rootNodes, _, err := nodoCcManager.GetRootNodes()
 
-	err = crudManager.GetAllDocuments(filter, -1, 0, models.ArbolPlanMaestroCuentasContCollection, func(curr *mongo.Cursor) {
-		var node models.NodoArbolCuentaContable
-		if err := curr.Decode(&node); err == nil {
-			dataIndexed[node.ID] = node
-			treeData = append(treeData, node)
-		}
-	})
-
+	if err != nil {
+		return
+	}
+	_, noRootNodes, err := nodoCcManager.GetNoRootNodes()
+	if err != nil {
+		return
+	}
+	nodoCcHelper.BuildTreeFromDataSource(rootNodes, noRootNodes)
+	treeData = rootNodes
 	return
 }
