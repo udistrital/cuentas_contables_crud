@@ -11,10 +11,9 @@ import (
 
 type NodoCuentaContableController struct {
 	beego.Controller
+	nodeCCCompositor compositors.NodoCuentaContableCompositor
+	commonHelper     helpers.CommonHelper
 }
-
-var nodeCCCompositor = compositors.NodoCuentaContableCompositor{}
-var commonHelper = helpers.CommonHelper{}
 
 // GetByUUID función para obtener todos los objetos
 // @Title Get
@@ -25,9 +24,9 @@ var commonHelper = helpers.CommonHelper{}
 func (c *NodoCuentaContableController) GetByUUID() {
 	UUID := c.GetString(":UUID")
 
-	nodeInfo, err := nodeCCCompositor.GetNodeByID(UUID)
+	nodeInfo, err := c.nodeCCCompositor.GetNodeByID(UUID)
 
-	c.Data["json"] = commonHelper.DefaultResponse(200, err, nodeInfo)
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, nodeInfo)
 
 	c.ServeJSON()
 }
@@ -47,14 +46,14 @@ func (c *NodoCuentaContableController) AddNode() {
 	message := ""
 
 	if err == nil {
-		err = nodeCCCompositor.AddNode(&requestBody)
+		err = c.nodeCCCompositor.AddNode(&requestBody)
 	}
 
 	if err == nil {
 		message = "node-added"
 	}
 
-	c.Data["json"] = commonHelper.DefaultResponse(200, err, message)
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
 
 	c.ServeJSON()
 }
@@ -62,12 +61,17 @@ func (c *NodoCuentaContableController) AddNode() {
 // GetTree función para obtener todos los objetos
 // @Title GetTree
 // @Description get all objects
+// @Param	query	fullTree	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
 // @Success 200 NodoRubroApropiacion []models.NodoCuentaContable
 // @Failure 403 :objectId is empty
 // @router / [get]
 func (c *NodoCuentaContableController) GetTree() {
-	treeData, err := nodeCCCompositor.BuildTree()
-	c.Data["json"] = commonHelper.DefaultResponse(200, err, treeData)
+	fullTree := false
+	if v, _ := c.GetBool("fullTree"); v {
+		fullTree = v
+	}
+	treeData, err := c.nodeCCCompositor.BuildTree(fullTree)
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, treeData)
 
 	c.ServeJSON()
 }
