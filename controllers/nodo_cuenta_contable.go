@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+
 	"github.com/astaxie/beego"
 	"github.com/udistrital/cuentas_contables_crud/compositors"
 	"github.com/udistrital/cuentas_contables_crud/helpers"
@@ -22,7 +23,7 @@ var commonHelper = helpers.CommonHelper{}
 // @Failure 403 :objectId is empty
 // @router /:UUID [get]
 func (c *NodoCuentaContableController) GetByUUID() {
-	UUID := c.GetString("UUID")
+	UUID := c.GetString(":UUID")
 
 	nodeInfo, err := nodeCCCompositor.GetNodeByID(UUID)
 
@@ -54,6 +55,19 @@ func (c *NodoCuentaContableController) AddNode() {
 	}
 
 	c.Data["json"] = commonHelper.DefaultResponse(200, err, message)
+
+	c.ServeJSON()
+}
+
+// GetTree función para obtener todos los objetos
+// @Title GetTree
+// @Description get all objects
+// @Success 200 NodoRubroApropiacion []models.NodoCuentaContable
+// @Failure 403 :objectId is empty
+// @router / [get]
+func (c *NodoCuentaContableController) GetTree() {
+	treeData, err := nodeCCCompositor.BuildTree()
+	c.Data["json"] = commonHelper.DefaultResponse(200, err, treeData)
 
 	c.ServeJSON()
 }

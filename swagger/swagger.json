@@ -130,6 +130,21 @@
             }
         },
         "/nodo_cuenta_contable/": {
+            "get": {
+                "tags": [
+                    "nodo_cuenta_contable"
+                ],
+                "description": "get all objects",
+                "operationId": "NodoCuentaContableController.GetTree",
+                "responses": {
+                    "200": {
+                        "description": "NodoRubroApropiacion []models.NodoCuentaContable"
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "nodo_cuenta_contable"
@@ -333,9 +348,6 @@
             "type": "object",
             "properties": {
                 "Codigo": {
-                    "type": "string"
-                },
-                "FechaRegistro": {
                     "type": "string"
                 },
                 "Hijos": {
