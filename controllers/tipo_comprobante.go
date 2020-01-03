@@ -5,15 +5,16 @@ import (
 
 	"github.com/astaxie/beego"
 	"github.com/udistrital/cuentas_contables_crud/compositors"
+	"github.com/udistrital/cuentas_contables_crud/helpers"
 	_ "github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/models"
 )
 
 type TipoComprobanteController struct {
 	beego.Controller
+	commonHelper              helpers.CommonHelper
+	tipoComprobanteCompositor compositors.TipoComprobanteCompositor
 }
-
-var tipoComprobanteCompositor = compositors.TipoComprobanteCompositor{}
 
 // var commonHelper = helpers.CommonHelper{}
 
@@ -26,9 +27,9 @@ var tipoComprobanteCompositor = compositors.TipoComprobanteCompositor{}
 func (c *TipoComprobanteController) GetByUUID() {
 	UUID := c.Ctx.Input.Param(":UUID")
 
-	TipoComprobanteInfo, err := tipoComprobanteCompositor.GetTipoComprobanteByID(UUID)
+	TipoComprobanteInfo, err := c.tipoComprobanteCompositor.GetTipoComprobanteByID(UUID)
 
-	c.Data["json"] = commonHelper.DefaultResponse(200, err, TipoComprobanteInfo)
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, TipoComprobanteInfo)
 
 	c.ServeJSON()
 }
@@ -41,9 +42,9 @@ func (c *TipoComprobanteController) GetByUUID() {
 // @router / [get]
 func (c *TipoComprobanteController) GetAll() {
 
-	TipoComprobanteInfo, err := tipoComprobanteCompositor.GetAllTipoComprobante()
+	TipoComprobanteInfo, err := c.tipoComprobanteCompositor.GetAllTipoComprobante()
 
-	c.Data["json"] = commonHelper.DefaultResponse(200, err, TipoComprobanteInfo)
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, TipoComprobanteInfo)
 
 	c.ServeJSON()
 }
@@ -63,14 +64,14 @@ func (c *TipoComprobanteController) AddTipoComprobante() {
 	message := ""
 
 	if err == nil {
-		err = tipoComprobanteCompositor.AddTipoComprobante(&requestBody)
+		err = c.tipoComprobanteCompositor.AddTipoComprobante(&requestBody)
 	}
 
 	if err == nil {
 		message = "tipo-comprobante-added"
 	}
 
-	c.Data["json"] = commonHelper.DefaultResponse(200, err, message)
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
 
 	c.ServeJSON()
 }
@@ -91,14 +92,14 @@ func (c *TipoComprobanteController) UpdateTipoComprobante() {
 	message := ""
 
 	if err == nil {
-		err = tipoComprobanteCompositor.UpdateTipoComprobante(&requestBody, objectID)
+		err = c.tipoComprobanteCompositor.UpdateTipoComprobante(&requestBody, objectID)
 	}
 
 	if err == nil {
 		message = "tipo-comprobante-updated"
 	}
 
-	c.Data["json"] = commonHelper.DefaultResponse(200, err, message)
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
 
 	c.ServeJSON()
 }
@@ -115,13 +116,13 @@ func (c *TipoComprobanteController) DeleteTipoComprobante() {
 
 	message := ""
 
-	err := tipoComprobanteCompositor.DeleteTipoComprobante(objectID)
+	err := c.tipoComprobanteCompositor.DeleteTipoComprobante(objectID)
 
 	if err == nil {
 		message = "tipo-comprobante-deleted"
 	}
 
-	c.Data["json"] = commonHelper.DefaultResponse(200, err, message)
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
 
 	c.ServeJSON()
 }

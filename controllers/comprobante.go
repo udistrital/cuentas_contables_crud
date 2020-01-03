@@ -5,15 +5,16 @@ import (
 
 	"github.com/astaxie/beego"
 	"github.com/udistrital/cuentas_contables_crud/compositors"
+	"github.com/udistrital/cuentas_contables_crud/helpers"
 	_ "github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/models"
 )
 
 type ComprobanteController struct {
 	beego.Controller
+	commonHelper          helpers.CommonHelper
+	comprobanteCompositor compositors.ComprobanteCompositor
 }
-
-var comprobanteCompositor = compositors.ComprobanteCompositor{}
 
 // var commonHelper = helpers.CommonHelper{}
 
@@ -26,9 +27,9 @@ var comprobanteCompositor = compositors.ComprobanteCompositor{}
 func (c *ComprobanteController) GetByUUID() {
 	UUID := c.Ctx.Input.Param(":UUID")
 
-	TipoComprobanteInfo, err := comprobanteCompositor.GetComprobanteByID(UUID)
+	TipoComprobanteInfo, err := c.comprobanteCompositor.GetComprobanteByID(UUID)
 
-	c.Data["json"] = commonHelper.DefaultResponse(200, err, TipoComprobanteInfo)
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, TipoComprobanteInfo)
 
 	c.ServeJSON()
 }
@@ -41,9 +42,9 @@ func (c *ComprobanteController) GetByUUID() {
 // @router / [get]
 func (c *ComprobanteController) GetAll() {
 
-	TipoComprobanteInfo, err := comprobanteCompositor.GetAllComprobante()
+	TipoComprobanteInfo, err := c.comprobanteCompositor.GetAllComprobante()
 
-	c.Data["json"] = commonHelper.DefaultResponse(200, err, TipoComprobanteInfo)
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, TipoComprobanteInfo)
 
 	c.ServeJSON()
 }
@@ -63,14 +64,14 @@ func (c *ComprobanteController) AddComprobante() {
 	message := ""
 
 	if err == nil {
-		err = comprobanteCompositor.AddComprobante(&requestBody)
+		err = c.comprobanteCompositor.AddComprobante(&requestBody)
 	}
 
 	if err == nil {
 		message = "tipo-comprobante-added"
 	}
 
-	c.Data["json"] = commonHelper.DefaultResponse(200, err, message)
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
 
 	c.ServeJSON()
 }
@@ -91,14 +92,14 @@ func (c *ComprobanteController) UpdateComprobante() {
 	message := ""
 
 	if err == nil {
-		err = comprobanteCompositor.UpdateComprobante(&requestBody, objectID)
+		err = c.comprobanteCompositor.UpdateComprobante(&requestBody, objectID)
 	}
 
 	if err == nil {
 		message = "comprobante-updated"
 	}
 
-	c.Data["json"] = commonHelper.DefaultResponse(200, err, message)
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
 
 	c.ServeJSON()
 }
@@ -115,13 +116,13 @@ func (c *ComprobanteController) DeleteComprobante() {
 
 	message := ""
 
-	err := comprobanteCompositor.DeleteComprobante(objectID)
+	err := c.comprobanteCompositor.DeleteComprobante(objectID)
 
 	if err == nil {
 		message = "comprobante-deleted"
 	}
 
-	c.Data["json"] = commonHelper.DefaultResponse(200, err, message)
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
 
 	c.ServeJSON()
 }

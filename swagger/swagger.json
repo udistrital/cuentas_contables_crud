@@ -136,6 +136,14 @@
                 ],
                 "description": "get all objects",
                 "operationId": "NodoCuentaContableController.GetTree",
+                "parameters": [
+                    {
+                        "in": "fullTree",
+                        "name": "query",
+                        "description": "Filter. e.g. col1:v1,col2:v2 ...",
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "NodoRubroApropiacion []models.NodoCuentaContable"

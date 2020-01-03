@@ -26,12 +26,16 @@ func NewNodoCuentaContableManager(ctx context.Context) NodoCuentaContableManager
 	return managerObj
 }
 
-func (m *NodoCuentaContableManager) getNodesByFilter(filter map[string]interface{}) (nodesData []*models.NodoArbolCuentaContable, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
+func (m *NodoCuentaContableManager) getNodesByFilter(filter map[string]interface{}, withNoActive ...bool) (nodesData []*models.NodoArbolCuentaContable, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
 	localfilter := make(map[string]interface{})
 	if filter != nil {
 		localfilter = filter
 	}
-	localfilter["general.activo"] = true
+
+	if len(withNoActive) == 0 || (len(withNoActive) > 0 && !withNoActive[0]) {
+		localfilter["general.activo"] = true
+	}
+
 	nodesDataIndexed = make(map[string]*models.NodoArbolCuentaContable)
 	err = m.crudManager.GetAllDocuments(filter, -1, 0, models.ArbolPlanMaestroCuentasContCollection, func(curr *mongo.Cursor) {
 		var node models.NodoArbolCuentaContable
@@ -84,15 +88,17 @@ func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable)
 }
 
 // GetRootNodes returns the "Plan maestro" tree's root nodes
-func (m *NodoCuentaContableManager) GetRootNodes() (rootsData []*models.NodoArbolCuentaContable, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
+func (m *NodoCuentaContableManager) GetRootNodes(withNoActive ...bool) (rootsData []*models.NodoArbolCuentaContable, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
 	filter := map[string]interface{}{"padre": nil}
-	rootsData, nodesDataIndexed, err = m.getNodesByFilter(filter)
+
+	rootsData, nodesDataIndexed, err = m.getNodesByFilter(filter, withNoActive...)
 	return
 }
 
 // GetNoRootNodes returns the "Plan maestro" tree's non root nodes
-func (m *NodoCuentaContableManager) GetNoRootNodes() (nodesData []*models.NodoArbolCuentaContable, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
+func (m *NodoCuentaContableManager) GetNoRootNodes(withNoActive ...bool) (nodesData []*models.NodoArbolCuentaContable, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
 	filter := map[string]interface{}{"padre": map[string]interface{}{"$ne": nil}}
-	nodesData, nodesDataIndexed, err = m.getNodesByFilter(filter)
+
+	nodesData, nodesDataIndexed, err = m.getNodesByFilter(filter, withNoActive...)
 	return
 }
