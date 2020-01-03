@@ -11,17 +11,18 @@ import (
 
 // TipoComprobanteManager this will manage the data process and store (CRUD) for the bussines (DAO)
 type TipoComprobanteManager struct {
-	Ctx context.Context
+	Ctx         context.Context
+	crudManager CrudManager
 }
 
 // AddItem This function will store the item data for the bussines proccess
 func (m *TipoComprobanteManager) AddItem(itemData *models.TipoComprobante) (err error) {
 	var tipoComprobante *models.TipoComprobante
 
-	crudManager.Ctx = m.Ctx // Add ctx if process will be part of a transacction.
+	m.crudManager.Ctx = m.Ctx // Add ctx if process will be part of a transacction.
 
 	if itemData.TipoDocumento != "" {
-		_ = crudManager.GetDocumentByItem(itemData.TipoDocumento, "tipo_documento", models.TipoComprobanteCollection, &tipoComprobante)
+		_ = m.crudManager.GetDocumentByItem(itemData.TipoDocumento, "tipo_documento", models.TipoComprobanteCollection, &tipoComprobante)
 	}
 	if tipoComprobante != nil {
 		return errors.New("item_exists")
@@ -32,7 +33,7 @@ func (m *TipoComprobanteManager) AddItem(itemData *models.TipoComprobante) (err 
 		Activo:            true,
 	}
 	itemData.General = &general
-	UUID, err := crudManager.AddDocument(itemData, models.TipoComprobanteCollection)
+	UUID, err := m.crudManager.AddDocument(itemData, models.TipoComprobanteCollection)
 
 	if err != nil {
 		return err
@@ -50,10 +51,10 @@ func (m *TipoComprobanteManager) AddItem(itemData *models.TipoComprobante) (err 
 func (m *TipoComprobanteManager) UpdateItem(itemData *models.TipoComprobante, ID string) (err error) {
 	var tipoComprobante *models.TipoComprobante
 	var updtDoc interface{}
-	crudManager.Ctx = m.Ctx // Add ctx if process will be part of a transacction.
+	m.crudManager.Ctx = m.Ctx // Add ctx if process will be part of a transacction.
 
 	if itemData.TipoDocumento != "" {
-		_ = crudManager.GetDocumentByItem(itemData.TipoDocumento, "tipo_documento", models.TipoComprobanteCollection, &tipoComprobante)
+		_ = m.crudManager.GetDocumentByItem(itemData.TipoDocumento, "tipo_documento", models.TipoComprobanteCollection, &tipoComprobante)
 	}
 	if tipoComprobante != nil {
 		return errors.New("item_exists")
@@ -65,7 +66,7 @@ func (m *TipoComprobanteManager) UpdateItem(itemData *models.TipoComprobante, ID
 	}
 	itemData.General = &general
 	objectID, _ := primitive.ObjectIDFromHex(ID)
-	err = crudManager.UpdateDocument(itemData, objectID, models.TipoComprobanteCollection, updtDoc)
+	err = m.crudManager.UpdateDocument(itemData, objectID, models.TipoComprobanteCollection, updtDoc)
 
 	if err != nil {
 		return err
