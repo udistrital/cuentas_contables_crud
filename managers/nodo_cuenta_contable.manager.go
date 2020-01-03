@@ -27,6 +27,11 @@ func NewNodoCuentaContableManager(ctx context.Context) NodoCuentaContableManager
 }
 
 func (m *NodoCuentaContableManager) getNodesByFilter(filter map[string]interface{}) (nodesData []*models.NodoArbolCuentaContable, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
+	localfilter := make(map[string]interface{})
+	if filter != nil {
+		localfilter = filter
+	}
+	localfilter["general.activo"] = true
 	nodesDataIndexed = make(map[string]*models.NodoArbolCuentaContable)
 	err = m.crudManager.GetAllDocuments(filter, -1, 0, models.ArbolPlanMaestroCuentasContCollection, func(curr *mongo.Cursor) {
 		var node models.NodoArbolCuentaContable
@@ -48,7 +53,11 @@ func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable)
 			return e
 		}
 	}
-	nodeData.FechaRegistro = time.Now().Format("2006-01-02")
+	nodeData.General = &models.General{}
+	nodeData.FechaCreacion = time.Now().Format("2006-01-02")
+	nodeData.FechaModificacion = time.Now().Format("2006-01-02")
+	nodeData.Activo = true
+
 	UUID, err := m.crudManager.AddDocument(nodeData, models.ArbolPlanMaestroCuentasContCollection)
 
 	if err != nil {

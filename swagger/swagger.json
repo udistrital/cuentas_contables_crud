@@ -350,9 +350,6 @@
                 "Codigo": {
                     "type": "string"
                 },
-                "FechaRegistro": {
-                    "type": "string"
-                },
                 "Hijos": {
                     "type": "array",
                     "items": {

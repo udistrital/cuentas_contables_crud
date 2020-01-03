@@ -37,8 +37,8 @@ func (c *NodoCuentaContableCompositor) AddNode(nodeData *models.NodoCuentaContab
 }
 
 // BuildTree returns the tree data on the DB as a tree structure with it's hierarchy
-func (c *NodoCuentaContableCompositor) BuildTree() (treeData []*models.NodoArbolCuentaContable, err error) {
-	rootNodes, _, err := c.nodoCcManager.GetRootNodes()
+func (c *NodoCuentaContableCompositor) BuildTree() (rootNodes []*models.NodoArbolCuentaContable, err error) {
+	rootNodes, _, err = c.nodoCcManager.GetRootNodes()
 
 	if err != nil {
 		return
@@ -48,6 +48,5 @@ func (c *NodoCuentaContableCompositor) BuildTree() (treeData []*models.NodoArbol
 		return
 	}
 	c.nodoCcHelper.BuildTreeFromDataSource(rootNodes, noRootNodes)
-	treeData = rootNodes
 	return
 }
