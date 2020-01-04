@@ -102,3 +102,23 @@ func (m *NodoCuentaContableManager) GetNoRootNodes(withNoActive ...bool) (nodesD
 	nodesData, nodesDataIndexed, err = m.getNodesByFilter(filter, withNoActive...)
 	return
 }
+
+// ChangeNodeState this function will enable or disable one node from the tree (if a root node is disabled, full branch will no be visible in some services)
+func (m *NodoCuentaContableManager) ChangeNodeState(UUID string) (err error) {
+
+	var nodeData models.NodoCuentaContable
+	var result interface{}
+
+	err = m.crudManager.GetDocumentByUUID(UUID, models.ArbolPlanMaestroCuentasContCollection, &nodeData)
+
+	if err != nil {
+		return
+	}
+
+	updateData := map[string]interface{}{
+		"general.activo": !nodeData.Activo,
+	}
+	err = m.crudManager.UpdateDocument(updateData, UUID, models.ArbolPlanMaestroCuentasContCollection, &result)
+
+	return
+}
