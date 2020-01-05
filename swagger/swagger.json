@@ -381,7 +381,19 @@
             "title": "NodoCuentaContable",
             "type": "object",
             "properties": {
+                "Ajustable": {
+                    "type": "boolean"
+                },
+                "CentroDecostosID": {
+                    "type": "string"
+                },
                 "Codigo": {
+                    "type": "string"
+                },
+                "CodigoCuentaAlterna": {
+                    "type": "string"
+                },
+                "DetalleCuenta": {
                     "type": "string"
                 },
                 "Hijos": {
@@ -390,8 +402,24 @@
                         "type": "string"
                     }
                 },
+                "MonedaID": {
+                    "type": "string"
+                },
+                "NaturalezaCuentaID": {
+                    "type": "string"
+                },
+                "Nivel": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Nmnc": {
+                    "type": "boolean"
+                },
                 "Padre": {
                     "type": "string"
+                },
+                "RequiereTercero": {
+                    "type": "boolean"
                 }
             }
         },

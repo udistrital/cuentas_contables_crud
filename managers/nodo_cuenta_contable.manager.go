@@ -2,7 +2,7 @@ package managers
 
 import (
 	"context"
-	"time"
+	"errors"
 
 	"github.com/udistrital/cuentas_contables_crud/models"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -33,7 +33,7 @@ func (m *NodoCuentaContableManager) getNodesByFilter(filter map[string]interface
 	}
 
 	if len(withNoActive) == 0 || (len(withNoActive) > 0 && !withNoActive[0]) {
-		localfilter["general.activo"] = true
+		localfilter["activo"] = true
 	}
 
 	nodesDataIndexed = make(map[string]*models.NodoArbolCuentaContable)
@@ -51,16 +51,29 @@ func (m *NodoCuentaContableManager) getNodesByFilter(filter map[string]interface
 // AddNode This function will store the node data of a tree for the bussines proccess
 func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable) (err error) {
 	var fatherData *models.NodoCuentaContable
+	var tempResults interface{}
+
+	if e := m.crudManager.GetDocumentByUUID(nodeData.NaturalezaCuentaID, models.NaturalezaCuentaContableCollection, &tempResults); e != nil {
+		return errors.New("naturaleza-no-found")
+	}
+
+	if e := m.crudManager.GetDocumentByUUID(nodeData.MonedaID, models.TipoMonedaCollection, &tempResults); e != nil {
+		return errors.New("tipo-moneda-no-found")
+	}
 
 	if nodeData.Padre != nil {
 		if e := m.crudManager.GetDocumentByUUID(*nodeData.Padre, models.ArbolPlanMaestroCuentasContCollection, &fatherData); e != nil {
-			return e
+			return errors.New("father-no-found")
 		}
 	}
 	nodeData.General = &models.General{}
-	nodeData.FechaCreacion = time.Now().Format("2006-01-02")
-	nodeData.FechaModificacion = time.Now().Format("2006-01-02")
 	nodeData.Activo = true
+
+	if fatherData != nil { // infer level from father if it exist.
+		nodeData.Nivel = fatherData.Nivel + 1
+	} else {
+		nodeData.Nivel = 1 // put 1 as default level
+	}
 
 	UUID, err := m.crudManager.AddDocument(nodeData, models.ArbolPlanMaestroCuentasContCollection)
 
@@ -116,7 +129,7 @@ func (m *NodoCuentaContableManager) ChangeNodeState(UUID string) (err error) {
 	}
 
 	updateData := map[string]interface{}{
-		"general.activo": !nodeData.Activo,
+		"activo": !nodeData.Activo,
 	}
 	err = m.crudManager.UpdateDocument(updateData, UUID, models.ArbolPlanMaestroCuentasContCollection, &result)
 

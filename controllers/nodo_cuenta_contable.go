@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 
 	"github.com/astaxie/beego"
 	"github.com/udistrital/cuentas_contables_crud/compositors"
@@ -87,9 +86,12 @@ func (c *NodoCuentaContableController) GetTree() {
 // @Failure 403 body is empty
 // @router /change_node_state/:UUID [put]
 func (c *NodoCuentaContableController) ChangeNodeState() {
-	uuid := c.GetString("UUID")
-	fmt.Println("Code", uuid)
-
+	uuid := c.GetString(":UUID")
+	/*
+		   TODO: currently, this funtion will only change state
+				 of target node, in future realises maybe it can
+				 change full branch state.
+	*/
 	err := c.nodeCCManager.ChangeNodeState(uuid)
 	message := ""
 	if err == nil {
