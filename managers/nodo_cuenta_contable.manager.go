@@ -2,7 +2,8 @@ package managers
 
 import (
 	"context"
-	"time"
+	"errors"
+	"log"
 
 	"github.com/udistrital/cuentas_contables_crud/models"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -33,7 +34,7 @@ func (m *NodoCuentaContableManager) getNodesByFilter(filter map[string]interface
 	}
 
 	if len(withNoActive) == 0 || (len(withNoActive) > 0 && !withNoActive[0]) {
-		localfilter["general.activo"] = true
+		localfilter["activo"] = true
 	}
 
 	nodesDataIndexed = make(map[string]*models.NodoArbolCuentaContable)
@@ -51,17 +52,40 @@ func (m *NodoCuentaContableManager) getNodesByFilter(filter map[string]interface
 // AddNode This function will store the node data of a tree for the bussines proccess
 func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable) (err error) {
 	var fatherData *models.NodoCuentaContable
+	var tempResults interface{}
+
+	if e := m.crudManager.GetDocumentByUUID(nodeData.NaturalezaCuentaID, models.NaturalezaCuentaContableCollection, &tempResults); e != nil {
+		return errors.New("naturaleza-no-found")
+	}
+
+	if e := m.crudManager.GetDocumentByUUID(nodeData.MonedaID, models.TipoMonedaCollection, &tempResults); e != nil {
+		return errors.New("tipo-moneda-no-found")
+	}
 
 	if nodeData.Padre != nil {
 		if e := m.crudManager.GetDocumentByUUID(*nodeData.Padre, models.ArbolPlanMaestroCuentasContCollection, &fatherData); e != nil {
-			return e
+			return errors.New("father-no-found")
 		}
 	}
-	nodeData.General = &models.General{}
-	nodeData.FechaCreacion = time.Now().Format("2006-01-02")
-	nodeData.FechaModificacion = time.Now().Format("2006-01-02")
-	nodeData.Activo = true
 
+	nodeData.General = &models.General{}
+	nodeData.Activo = true
+	originalID := nodeData.ID
+	if fatherData != nil { // infer level from father if it exist.
+		nodeData.Nivel = fatherData.Nivel + 1
+		nodeData.ID = fatherData.ID + "-" + nodeData.ID
+	} else {
+		nodeData.Nivel = 1 // put 1 as default level
+	}
+	// check for curr level constraints.
+	if currLevelParam, e := m.GetLevelParameterForNode(nodeData.Nivel); e == nil {
+		if len(originalID) != *currLevelParam.CodeLenght {
+			return errors.New("code-lenght-error")
+		}
+	} else {
+		log.Println("error", e.Error())
+		return errors.New("parameter-for-level-no-found")
+	}
 	UUID, err := m.crudManager.AddDocument(nodeData, models.ArbolPlanMaestroCuentasContCollection)
 
 	if err != nil {
@@ -101,4 +125,40 @@ func (m *NodoCuentaContableManager) GetNoRootNodes(withNoActive ...bool) (nodesD
 
 	nodesData, nodesDataIndexed, err = m.getNodesByFilter(filter, withNoActive...)
 	return
+}
+
+// ChangeNodeState this function will enable or disable one node from the tree (if a root node is disabled, full branch will no be visible in some services)
+func (m *NodoCuentaContableManager) ChangeNodeState(UUID string) (err error) {
+
+	var nodeData models.NodoCuentaContable
+	var result interface{}
+
+	err = m.crudManager.GetDocumentByUUID(UUID, models.ArbolPlanMaestroCuentasContCollection, &nodeData)
+
+	if err != nil {
+		return
+	}
+
+	updateData := map[string]interface{}{
+		"activo": !nodeData.Activo,
+	}
+	err = m.crudManager.UpdateDocument(updateData, UUID, models.ArbolPlanMaestroCuentasContCollection, &result)
+
+	return
+}
+
+// GetLevelParameterForNode returns the parameter value of a specific level for the plan cuentas tree or error "parameter-no-found".
+func (m *NodoCuentaContableManager) GetLevelParameterForNode(level int) (*models.ArbolCuentaContableParameters, error) {
+	filter := map[string]interface{}{
+		"nivel": level,
+	}
+	var parameter *models.ArbolCuentaContableParameters
+	err := m.crudManager.GetAllDocuments(filter, 1, 0, models.ArbolCuentasContParametersCollection, func(curr *mongo.Cursor) {
+
+		if err := curr.Decode(&parameter); err == nil {
+		}
+		return
+	})
+
+	return parameter, err
 }

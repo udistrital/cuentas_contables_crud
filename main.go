@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/plugins/cors"
 	"github.com/udistrital/auditoria"
 	dbConnManager "github.com/udistrital/cuentas_contables_crud/db"
@@ -39,6 +40,12 @@ func main() {
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 	}))
+	// migrations
+	if _, err := dbConnManager.RunMigrations(); err != nil {
+		logs.Error("Migrations Error: ", err.Error())
+	} else {
+		logs.Info("Migration process success !")
+	}
 	// Custom libs
 	beego.BConfig.RecoverFunc = responseformat.GlobalResponseHandler
 	auditoria.InitMiddleware()
