@@ -1,7 +1,7 @@
 package models
 
 var ArbolPlanMaestroCuentasContCollection = "plan_mestro_cuentas_contables"
-var ArbolCuentasContCollection = "plan_cuentas_contables"
+var ArbolCuentasContParametersCollection = "parametros_plan_cuentas_contables"
 
 // NodoCuentaContable This struct represents a tree's node of "plan cuentas contable" bussines model.
 type NodoCuentaContable struct {
@@ -28,4 +28,11 @@ type NodoArbolCuentaContable struct {
 	HijosRef []*NodoArbolCuentaContable `json:"children" bson:"-"`
 	Padre    *string                    `json:"Padre" bson:"padre,omitempty"` // if the field is optional we put it as pointer.
 	Nivel    int                        `json:"Nivel" bson:"nivel"`
+}
+
+// ArbolCuentaContableParameters represents the paremeters for some Arbol Cuentas contables process.
+type ArbolCuentaContableParameters struct {
+	ID         string `json:"ID" bson:"_id,omitempty"`
+	Nivel      *int   `json:"Nivel" bson:"nivel"`
+	CodeLenght *int   `json:"CodeLenght" bson:"longitud_codigo"`
 }

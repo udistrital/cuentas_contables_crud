@@ -3,6 +3,7 @@ package managers
 import (
 	"context"
 	"errors"
+	"log"
 
 	"github.com/udistrital/cuentas_contables_crud/models"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -66,15 +67,25 @@ func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable)
 			return errors.New("father-no-found")
 		}
 	}
+
 	nodeData.General = &models.General{}
 	nodeData.Activo = true
-
+	originalID := nodeData.ID
 	if fatherData != nil { // infer level from father if it exist.
 		nodeData.Nivel = fatherData.Nivel + 1
+		nodeData.ID = fatherData.ID + "-" + nodeData.ID
 	} else {
 		nodeData.Nivel = 1 // put 1 as default level
 	}
-
+	// check for curr level constraints.
+	if currLevelParam, e := m.GetLevelParameterForNode(nodeData.Nivel); e == nil {
+		if len(originalID) != *currLevelParam.CodeLenght {
+			return errors.New("code-lenght-error")
+		}
+	} else {
+		log.Println("error", e.Error())
+		return errors.New("parameter-for-level-no-found")
+	}
 	UUID, err := m.crudManager.AddDocument(nodeData, models.ArbolPlanMaestroCuentasContCollection)
 
 	if err != nil {
@@ -134,4 +145,20 @@ func (m *NodoCuentaContableManager) ChangeNodeState(UUID string) (err error) {
 	err = m.crudManager.UpdateDocument(updateData, UUID, models.ArbolPlanMaestroCuentasContCollection, &result)
 
 	return
+}
+
+// GetLevelParameterForNode returns the parameter value of a specific level for the plan cuentas tree or error "parameter-no-found".
+func (m *NodoCuentaContableManager) GetLevelParameterForNode(level int) (*models.ArbolCuentaContableParameters, error) {
+	filter := map[string]interface{}{
+		"nivel": level,
+	}
+	var parameter *models.ArbolCuentaContableParameters
+	err := m.crudManager.GetAllDocuments(filter, 1, 0, models.ArbolCuentasContParametersCollection, func(curr *mongo.Cursor) {
+
+		if err := curr.Decode(&parameter); err == nil {
+		}
+		return
+	})
+
+	return parameter, err
 }
