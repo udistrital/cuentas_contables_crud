@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/udistrital/cuentas_contables_crud/db"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -169,6 +170,12 @@ func (m *CrudManager) AddDocument(data interface{}, collName string) (generatedI
 		return "", err
 	}
 	generatedID, ok := resul.InsertedID.(string)
+	if !ok {
+		generatedID = resul.InsertedID.(primitive.ObjectID).Hex()
+		if generatedID == "" {
+			return "", errors.New("cannot-get-coll-id")
+		}
+	}
 
 	go func() {
 		filter := make(map[string]interface{})
@@ -187,10 +194,6 @@ func (m *CrudManager) AddDocument(data interface{}, collName string) (generatedI
 			log.Println("error:", res.Err().Error())
 		}
 	}()
-
-	if !ok {
-		return "", errors.New("cannot-get-coll-id")
-	}
 
 	return
 }
