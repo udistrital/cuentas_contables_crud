@@ -4,14 +4,14 @@ var ComprobanteCollection = "comprobante"
 
 // Comprobante es la estructura de un comprobante con parametros opcionales
 type Comprobante struct {
-	ID          string `json:"_id" bson:"_id,omitempty"`
-	Codigo      int    `json:"Codigo" bson:"codigo"`
-	Descripcion string `json:"Descripcion" bson:"descripcion"`
-	Comprobante string `json:"Comprobante" bson:"comprobante"`
-	Numero      int    `json:"Numero" bson:"numero"`
+	ID              string           `json:"_id" bson:"_id,omitempty"`
+	Codigo          int              `json:"Codigo" bson:"codigo"`
+	Descripcion     string           `json:"Descripcion" bson:"descripcion"`
+	Comprobante     string           `json:"Comprobante" bson:"comprobante"`
+	Numero          int              `json:"Numero" bson:"numero"`
+	TipoComprobante *TipoComprobante `json:"TipoComprobante" bson:"tipocomprobante"`
 	*General
 	*Parametros
-	*TipoComprobante
 }
 type Parametros struct {
 	NumInicial           int    `json:"NumInicial" bson:"num_inicial"`

@@ -3,6 +3,8 @@ package compositors
 import (
 	//"context"
 	// "github.com/udistrital/cuentas_contables_crud/managers"
+	"context"
+
 	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -26,12 +28,10 @@ func (m *ComprobanteCompositor) GetComprobanteByID(ID string) (item *models.Comp
 // GetAllComprobante Returns All Comprobante
 func (m *ComprobanteCompositor) GetAllComprobante() (data []models.Comprobante, err error) {
 	filter := make(map[string]interface{})
-	dataIndexed := make(map[string]models.Comprobante)
 
 	err = m.crudManager.GetAllDocuments(filter, -1, 0, models.ComprobanteCollection, func(curr *mongo.Cursor) {
 		var item models.Comprobante
 		if err := curr.Decode(&item); err == nil {
-			dataIndexed[item.ID] = item
 			data = append(data, item)
 		}
 	})
@@ -41,22 +41,26 @@ func (m *ComprobanteCompositor) GetAllComprobante() (data []models.Comprobante, 
 
 // UpdateComprobante Update tipo_comprobante
 func (m *ComprobanteCompositor) UpdateComprobante(itemData *models.Comprobante, ID string) (err error) {
-	var updtDoc interface{}
-	objectID, _ := primitive.ObjectIDFromHex(ID)
-	err = m.crudManager.UpdateDocument(itemData, objectID, models.ComprobanteCollection, updtDoc)
-	if err != nil {
+	err = m.crudManager.RunTransaction(func(ctx context.Context) error {
+		mang := managers.ComprobanteManager{
+			// Ctx: ctx, // set this bar if mongo is deployed on replica set mode.
+		}
+		err = mang.UpdateItem(itemData, ID)
 		return err
-	}
+	})
 	return
 }
 
 // AddComprobante Add new node to the tree
-func (m *ComprobanteCompositor) AddComprobante(nodeData *models.Comprobante) (err error) {
+func (m *ComprobanteCompositor) AddComprobante(itemData *models.Comprobante) (err error) {
 
-	_, err = m.crudManager.AddDocument(nodeData, models.ComprobanteCollection)
-	if err != nil {
+	err = m.crudManager.RunTransaction(func(ctx context.Context) error {
+		mang := managers.ComprobanteManager{
+			// Ctx: ctx, // set this bar if mongo is deployed on replica set mode.
+		}
+		err = mang.AddItem(itemData)
 		return err
-	}
+	})
 	return
 }
 
