@@ -357,6 +357,9 @@
                     "type": "integer",
                     "format": "int64"
                 },
+                "TipoComprobante": {
+                    "$ref": "#/definitions/models.TipoComprobante"
+                },
                 "_id": {
                     "type": "string"
                 }

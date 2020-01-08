@@ -39,6 +39,8 @@ github.com/leodido/go-urn v1.2.0 h1:hpXL4XnriNwQ/ABnpepYM/1vCLWNDfUNts8dX3xTG6Y=
 github.com/leodido/go-urn v1.2.0/go.mod h1:+8+nEpDfqqsY+g338gtMEUOtuK+4dEMhiQEgxpxOKII=
 github.com/lib/pq v1.0.0 h1:X5PMW56eZitiTeO7tKzZxFCSpbFZJtkMMooicw2us9A=
 github.com/lib/pq v1.0.0/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
+github.com/manucorporat/try v0.0.0-20170609134256-2a0c6b941d52 h1:oDTPtoe4cjcJZyFBdQeM9fIYr3r9OChbE52ZlPBm0R0=
+github.com/manucorporat/try v0.0.0-20170609134256-2a0c6b941d52/go.mod h1:PYmsnmY2H7ohIZ3KsT7XGM7C5cmr+yKJ9MBBQd5p6AU=
 github.com/mattn/go-sqlite3 v1.10.0/go.mod h1:FPy6KqzDD04eiIsT53CuJW3U88zkxoIYsOqkbpncsNc=
 github.com/patrickmn/go-cache v2.1.0+incompatible h1:HRMgzkcYKYpi3C8ajMPV8OFXaaRUnok+kx1WdO15EQc=
 github.com/patrickmn/go-cache v2.1.0+incompatible/go.mod h1:3Qf8kWWT7OJRJbdiICTKqZju1ZixQ/KpMGzzAfe6+WQ=
@@ -62,6 +64,8 @@ github.com/syndtr/goleveldb v0.0.0-20181127023241-353a9fca669c/go.mod h1:Z4AUp2K
 github.com/tidwall/pretty v0.0.0-20190325153808-1166b9ac2b65/go.mod h1:XNkn88O1ChpSDQmQeStsy+sBenx6DDtFZJxhVysOjyk=
 github.com/udistrital/auditoria v0.0.0-20191202194614-a5859b6a1b61 h1:fMe/gvkofQglZ2TfkNukFykmXT8/zSbUnPoSaleph2k=
 github.com/udistrital/auditoria v0.0.0-20191202194614-a5859b6a1b61/go.mod h1:2g8J932brTzbNOcSHob/vjt+/GFfMQuRreLZhvGiUro=
+github.com/udistrital/plan_cuentas_mongo_crud v0.0.0-20190603231911-c9c59b9699b6 h1:M+HHiVcP19puZK6leX3l208Q+yH6TrE4LvzwpF/YNeU=
+github.com/udistrital/plan_cuentas_mongo_crud v0.0.0-20190603231911-c9c59b9699b6/go.mod h1:beAKXIrD4IEZIWwjpHN/bNigcTquGzEo7mmwEEfhd0g=
 github.com/udistrital/utils_oas v0.0.0-20191109214056-11e30cddc4f9 h1:ewGuiYxJ+tz3HEyMMPdbTYfRSXfwAPShzbG0PlZjdWE=
 github.com/udistrital/utils_oas v0.0.0-20191109214056-11e30cddc4f9/go.mod h1:cAempbkjyiJIy04wWta6iDcYwtwHNITWcNA6oKtkXPM=
 github.com/wendal/errors v0.0.0-20130201093226-f66c77a7882b/go.mod h1:Q12BUT7DqIlHRmgv3RskH+UCM/4eqVMgI0EMmlSpAXc=
