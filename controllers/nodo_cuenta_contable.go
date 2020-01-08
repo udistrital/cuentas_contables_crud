@@ -6,6 +6,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/udistrital/cuentas_contables_crud/compositors"
 	"github.com/udistrital/cuentas_contables_crud/helpers"
+	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
 )
 
@@ -13,6 +14,7 @@ type NodoCuentaContableController struct {
 	beego.Controller
 	nodeCCCompositor compositors.NodoCuentaContableCompositor
 	commonHelper     helpers.CommonHelper
+	nodeCCManager    managers.NodoCuentaContableManager
 }
 
 // GetByUUID función para obtener todos los objetos
@@ -73,5 +75,28 @@ func (c *NodoCuentaContableController) GetTree() {
 	treeData, err := c.nodeCCCompositor.BuildTree(fullTree)
 	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, treeData)
 
+	c.ServeJSON()
+}
+
+// ChangeNodeState Método PUT de HTTP
+// @Title PUT ChangeNodeState
+// @Description Post models.NodoCuentaContable
+// @Param	UUID		path 	string	true		"The key for object to update state"
+// @Success 200 {int} models.NodoCuentaContable.Id
+// @Failure 403 body is empty
+// @router /change_node_state/:UUID [put]
+func (c *NodoCuentaContableController) ChangeNodeState() {
+	uuid := c.GetString(":UUID")
+	/*
+		   TODO: currently, this funtion will only change state
+				 of target node, in future realises maybe it can
+				 change full branch state.
+	*/
+	err := c.nodeCCManager.ChangeNodeState(uuid)
+	message := ""
+	if err == nil {
+		message = "node-state-changed"
+	}
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
 	c.ServeJSON()
 }

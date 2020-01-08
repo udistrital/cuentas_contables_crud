@@ -129,6 +129,23 @@ paths:
           description: NodoRubroApropiacion models.NodoCuentaContable
         "403":
           description: :objectId is empty
+  /nodo_cuenta_contable/change_node_state/{UUID}:
+    put:
+      tags:
+      - nodo_cuenta_contable
+      description: Post models.NodoCuentaContable
+      operationId: NodoCuentaContableController.PUT ChangeNodeState
+      parameters:
+      - in: path
+        name: UUID
+        description: The key for object to update state
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{int} models.NodoCuentaContable.Id'
+        "403":
+          description: body is empty
   /tipo_comprobante/:
     get:
       tags:
@@ -234,14 +251,33 @@ definitions:
     title: NodoCuentaContable
     type: object
     properties:
+      Ajustable:
+        type: boolean
+      CentroDecostosID:
+        type: string
       Codigo:
+        type: string
+      CodigoCuentaAlterna:
+        type: string
+      DetalleCuenta:
         type: string
       Hijos:
         type: array
         items:
           type: string
+      MonedaID:
+        type: string
+      NaturalezaCuentaID:
+        type: string
+      Nivel:
+        type: integer
+        format: int64
+      Nmnc:
+        type: boolean
       Padre:
         type: string
+      RequiereTercero:
+        type: boolean
   models.Parametros:
     title: Parametros
     type: object

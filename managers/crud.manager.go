@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"strings"
+	"time"
 
 	"github.com/udistrital/cuentas_contables_crud/db"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -135,6 +136,21 @@ func (m *CrudManager) UpdateDocument(data interface{}, UUID interface{}, collNam
 		return errors.New("cannot-update-document")
 	}
 
+	go func() {
+
+		update := map[string]interface{}{
+			"$set": map[string]interface{}{
+				"fecha_modificacion": time.Now().Format("2006-01-02"),
+			},
+		}
+
+		res := coll.FindOneAndUpdate(m.Ctx, filter, update)
+
+		if res.Err() != nil {
+			log.Println("error:", res.Err().Error())
+		}
+	}()
+
 	return
 }
 
@@ -160,6 +176,24 @@ func (m *CrudManager) AddDocument(data interface{}, collName string) (generatedI
 			return "", errors.New("cannot-get-coll-id")
 		}
 	}
+
+	go func() {
+		filter := make(map[string]interface{})
+		filter["_id"] = generatedID
+
+		update := map[string]interface{}{
+			"$set": map[string]interface{}{
+				"fecha_creacion":     time.Now().Format("2006-01-02"),
+				"fecha_modificacion": time.Now().Format("2006-01-02"),
+			},
+		}
+
+		res := coll.FindOneAndUpdate(m.Ctx, filter, update)
+
+		if res.Err() != nil {
+			log.Println("error:", res.Err().Error())
+		}
+	}()
 
 	return
 }
