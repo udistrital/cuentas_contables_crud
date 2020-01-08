@@ -237,6 +237,8 @@ definitions:
       Numero:
         type: integer
         format: int64
+      TipoComprobante:
+        $ref: '#/definitions/models.TipoComprobante'
   models.General:
     title: General
     type: object

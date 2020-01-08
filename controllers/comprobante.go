@@ -68,7 +68,7 @@ func (c *ComprobanteController) AddComprobante() {
 	}
 
 	if err == nil {
-		message = "tipo-comprobante-added"
+		message = "comprobante-added"
 	}
 
 	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
