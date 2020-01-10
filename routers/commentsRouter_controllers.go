@@ -28,7 +28,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ComprobanteController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ComprobanteController"],
         beego.ControllerComments{
             Method: "GetByUUID",
-            Router: `/:UUID`,
+            Router: `/:id`,
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -109,7 +109,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoComprobanteController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoComprobanteController"],
         beego.ControllerComments{
             Method: "GetByUUID",
-            Router: `/:UUID`,
+            Router: `/:id`,
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
