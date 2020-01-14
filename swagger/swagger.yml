@@ -39,7 +39,7 @@ paths:
           description: '{int} models.Comprobante.Id'
         "403":
           description: body is empty
-  /comprobante/{UUID}:
+  /comprobante/{id}:
     get:
       tags:
       - comprobante
@@ -50,7 +50,6 @@ paths:
           description: Comprobante models.Comprobante
         "403":
           description: :objectId is empty
-  /comprobante/{id}:
     put:
       tags:
       - comprobante
@@ -174,7 +173,7 @@ paths:
           description: '{int} models.TipoComprobante.Id'
         "403":
           description: body is empty
-  /tipo_comprobante/{UUID}:
+  /tipo_comprobante/{id}:
     get:
       tags:
       - tipo_comprobante
@@ -185,7 +184,6 @@ paths:
           description: TipoComprobante models.TipoComprobante
         "403":
           description: :objectId is empty
-  /tipo_comprobante/{id}:
     put:
       tags:
       - tipo_comprobante

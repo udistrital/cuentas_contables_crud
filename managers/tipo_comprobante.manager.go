@@ -56,8 +56,8 @@ func (m *TipoComprobanteManager) UpdateItem(itemData *models.TipoComprobante, ID
 	if itemData.TipoDocumento != "" {
 		_ = m.crudManager.GetDocumentByItem(itemData.TipoDocumento, "tipo_documento", models.TipoComprobanteCollection, &tipoComprobante)
 	}
-	if tipoComprobante != nil {
-		return errors.New("item_exists")
+	if tipoComprobante != nil && ID != tipoComprobante.ID {
+		return errors.New("El elemento " + tipoComprobante.TipoDocumento + " ya fue creado previamente")
 	}
 	general := models.General{
 		FechaCreacion:     itemData.FechaCreacion,

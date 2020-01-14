@@ -23,9 +23,9 @@ type ComprobanteController struct {
 // @Description get object por id
 // @Success 200 Comprobante models.Comprobante
 // @Failure 403 :objectId is empty
-// @router /:UUID [get]
+// @router /:id [get]
 func (c *ComprobanteController) GetByUUID() {
-	UUID := c.Ctx.Input.Param(":UUID")
+	UUID := c.Ctx.Input.Param(":id")
 
 	TipoComprobanteInfo, err := c.comprobanteCompositor.GetComprobanteByID(UUID)
 
