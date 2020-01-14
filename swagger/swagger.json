@@ -58,7 +58,7 @@
                 }
             }
         },
-        "/comprobante/{UUID}": {
+        "/comprobante/{id}": {
             "get": {
                 "tags": [
                     "comprobante"
@@ -73,9 +73,7 @@
                         "description": ":objectId is empty"
                     }
                 }
-            }
-        },
-        "/comprobante/{id}": {
+            },
             "put": {
                 "tags": [
                     "comprobante"
@@ -266,7 +264,7 @@
                 }
             }
         },
-        "/tipo_comprobante/{UUID}": {
+        "/tipo_comprobante/{id}": {
             "get": {
                 "tags": [
                     "tipo_comprobante"
@@ -281,9 +279,7 @@
                         "description": ":objectId is empty"
                     }
                 }
-            }
-        },
-        "/tipo_comprobante/{id}": {
+            },
             "put": {
                 "tags": [
                     "tipo_comprobante"
