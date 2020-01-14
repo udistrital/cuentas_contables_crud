@@ -418,6 +418,9 @@
                 "Nmnc": {
                     "type": "boolean"
                 },
+                "Nombre": {
+                    "type": "string"
+                },
                 "Padre": {
                     "type": "string"
                 },

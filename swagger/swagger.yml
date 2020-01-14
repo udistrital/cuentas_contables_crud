@@ -276,6 +276,8 @@ definitions:
         format: int64
       Nmnc:
         type: boolean
+      Nombre:
+        type: string
       Padre:
         type: string
       RequiereTercero:

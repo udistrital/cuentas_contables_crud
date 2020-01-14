@@ -9,6 +9,7 @@ type NodoCuentaContable struct {
 	ID                  string   `json:"Codigo" bson:"_id,omitempty"`
 	Hijos               []string `json:"Hijos" bson:"hijos,omitempty"`
 	Padre               *string  `json:"Padre" bson:"padre,omitempty"` // if the field is optional we put it as pointer.
+	Nombre              string   `json:"Nombre" bson:"nombre"`
 	Nivel               int      `json:"Nivel" bson:"nivel"`
 	DetalleCuenta       string   `json:"DetalleCuenta" bson:"detalle"`
 	NaturalezaCuentaID  string   `json:"NaturalezaCuentaID" bson:"naturaleza_id"`
@@ -27,6 +28,7 @@ type NodoArbolCuentaContable struct {
 	Hijos    []string                   `json:"Hijos" bson:"hijos,omitempty"`
 	HijosRef []*NodoArbolCuentaContable `json:"children" bson:"-"`
 	Padre    *string                    `json:"Padre" bson:"padre,omitempty"` // if the field is optional we put it as pointer.
+	Nombre   string                     `json:"Nombre" bson:"nombre"`
 	Nivel    int                        `json:"Nivel" bson:"nivel"`
 }
 
@@ -35,4 +37,9 @@ type ArbolCuentaContableParameters struct {
 	ID         string `json:"ID" bson:"_id,omitempty"`
 	Nivel      *int   `json:"Nivel" bson:"nivel"`
 	CodeLenght *int   `json:"CodeLenght" bson:"longitud_codigo"`
+}
+
+type ArbolNbFormatNode struct {
+	Data     *NodoArbolCuentaContable `json:"data" bson:"-"`
+	Children []*ArbolNbFormatNode     `json:"children" bson:"-"`
 }
