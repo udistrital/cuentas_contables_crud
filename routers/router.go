@@ -30,6 +30,21 @@ func init() {
 				&controllers.TipoComprobanteController{},
 			),
 		),
+		beego.NSNamespace("/naturaleza_cuenta_contable",
+			beego.NSInclude(
+				&controllers.NaturalezaCuentaContable{},
+			),
+		),
+		beego.NSNamespace("/tipo_moneda",
+			beego.NSInclude(
+				&controllers.TipoMoneda{},
+			),
+		),
+		beego.NSNamespace("/detalle_cuenta_contable",
+			beego.NSInclude(
+				&controllers.DetalleCuentaContable{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }

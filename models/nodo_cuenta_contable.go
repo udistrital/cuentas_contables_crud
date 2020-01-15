@@ -11,7 +11,7 @@ type NodoCuentaContable struct {
 	Padre               *string  `json:"Padre" bson:"padre,omitempty"` // if the field is optional we put it as pointer.
 	Nombre              string   `json:"Nombre" bson:"nombre"`
 	Nivel               int      `json:"Nivel" bson:"nivel"`
-	DetalleCuenta       string   `json:"DetalleCuenta" bson:"detalle"`
+	DetalleCuentaID     string   `json:"DetalleCuentaID" bson:"detalle_cuenta_id"`
 	NaturalezaCuentaID  string   `json:"NaturalezaCuentaID" bson:"naturaleza_id"`
 	CodigoCuentaAlterna string   `json:"CodigoCuentaAlterna" bson:"codigo_cuenta_alterna"`
 	Ajustable           bool     `json:"Ajustable" bson:"ajustable"`

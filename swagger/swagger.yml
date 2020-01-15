@@ -85,6 +85,28 @@ paths:
           description: '{int} models.Comprobante.Id'
         "403":
           description: body is empty
+  /detalle_cuenta_contable/:
+    get:
+      tags:
+      - detalle_cuenta_contable
+      description: get all objects
+      operationId: DetalleCuentaContable.Get
+      responses:
+        "200":
+          description: TipoComprobante models.TipoComprobante
+        "403":
+          description: :objectId is empty
+  /naturaleza_cuenta_contable/:
+    get:
+      tags:
+      - naturaleza_cuenta_contable
+      description: get all objects
+      operationId: NaturalezaCuentaContable.Get
+      responses:
+        "200":
+          description: TipoComprobante models.TipoComprobante
+        "403":
+          description: :objectId is empty
   /nodo_cuenta_contable/:
     get:
       tags:
@@ -220,6 +242,17 @@ paths:
           description: '{int} models.TipoComprobante.Id'
         "403":
           description: body is empty
+  /tipo_moneda/:
+    get:
+      tags:
+      - tipo_moneda
+      description: get all objects
+      operationId: TipoMoneda.Get
+      responses:
+        "200":
+          description: TipoComprobante models.TipoComprobante
+        "403":
+          description: :objectId is empty
 definitions:
   models.Comprobante:
     title: Comprobante
@@ -261,7 +294,7 @@ definitions:
         type: string
       CodigoCuentaAlterna:
         type: string
-      DetalleCuenta:
+      DetalleCuentaID:
         type: string
       Hijos:
         type: array
