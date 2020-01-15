@@ -255,6 +255,30 @@
                         "description": ":objectId is empty"
                     }
                 }
+            },
+            "put": {
+                "tags": [
+                    "nodo_cuenta_contable"
+                ],
+                "description": "Post models.NodoCuentaContable",
+                "operationId": "NodoCuentaContableController.PUT UpdateNode",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "UUID",
+                        "description": "The key for object to update",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{int} models.NodoCuentaContable.Id"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
             }
         },
         "/tipo_comprobante/": {
