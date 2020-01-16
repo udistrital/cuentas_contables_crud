@@ -1,8 +1,8 @@
 package models
 
-var TipoMonedaCollection = "tipo_moneda"
+var DetalleCuentaContableCollection = "detalle_cuenta_contable"
 
-type TipoMoneda struct {
+type DetalleCuentaContable struct {
 	ID    string `json:"Id" bson:"_id,omitempty"`
 	Label string `json:"Label" bson:"label"`
 }

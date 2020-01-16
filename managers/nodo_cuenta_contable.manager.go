@@ -112,10 +112,18 @@ func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable)
 }
 
 // GetRootNodes returns the "Plan maestro" tree's root nodes
-func (m *NodoCuentaContableManager) GetRootNodes(withNoActive ...bool) (rootsData []*models.NodoArbolCuentaContable, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
+func (m *NodoCuentaContableManager) GetRootNodes(withNoActive ...bool) (rootsDataFormated []*models.ArbolNbFormatNode, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
 	filter := map[string]interface{}{"padre": nil}
 
-	rootsData, nodesDataIndexed, err = m.getNodesByFilter(filter, withNoActive...)
+	rootsData, nodesDataIndexed, err := m.getNodesByFilter(filter, withNoActive...)
+	if err != nil {
+		return
+	}
+	for _, root := range rootsData {
+		rootsDataFormated = append(rootsDataFormated, &models.ArbolNbFormatNode{
+			Data: root,
+		})
+	}
 	return
 }
 
