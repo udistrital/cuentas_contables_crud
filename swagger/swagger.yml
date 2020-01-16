@@ -84,6 +84,28 @@ paths:
           description: '{int} models.Comprobante.Id'
         "403":
           description: body is empty
+  /detalle_cuenta_contable/:
+    get:
+      tags:
+      - detalle_cuenta_contable
+      description: get all objects
+      operationId: DetalleCuentaContable.Get
+      responses:
+        "200":
+          description: TipoComprobante models.TipoComprobante
+        "403":
+          description: :objectId is empty
+  /naturaleza_cuenta_contable/:
+    get:
+      tags:
+      - naturaleza_cuenta_contable
+      description: get all objects
+      operationId: NaturalezaCuentaContable.Get
+      responses:
+        "200":
+          description: TipoComprobante models.TipoComprobante
+        "403":
+          description: :objectId is empty
   /nodo_cuenta_contable/:
     get:
       tags:
@@ -128,6 +150,22 @@ paths:
           description: NodoRubroApropiacion models.NodoCuentaContable
         "403":
           description: :objectId is empty
+    put:
+      tags:
+      - nodo_cuenta_contable
+      description: Post models.NodoCuentaContable
+      operationId: NodoCuentaContableController.PUT UpdateNode
+      parameters:
+      - in: path
+        name: UUID
+        description: The key for object to update
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{int} models.NodoCuentaContable.Id'
+        "403":
+          description: body is empty
   /nodo_cuenta_contable/change_node_state/{UUID}:
     put:
       tags:
@@ -218,6 +256,17 @@ paths:
           description: '{int} models.TipoComprobante.Id'
         "403":
           description: body is empty
+  /tipo_moneda/:
+    get:
+      tags:
+      - tipo_moneda
+      description: get all objects
+      operationId: TipoMoneda.Get
+      responses:
+        "200":
+          description: TipoComprobante models.TipoComprobante
+        "403":
+          description: :objectId is empty
 definitions:
   models.Comprobante:
     title: Comprobante
@@ -259,7 +308,7 @@ definitions:
         type: string
       CodigoCuentaAlterna:
         type: string
-      DetalleCuenta:
+      DetalleCuentaID:
         type: string
       Hijos:
         type: array
@@ -274,6 +323,8 @@ definitions:
         format: int64
       Nmnc:
         type: boolean
+      Nombre:
+        type: string
       Padre:
         type: string
       RequiereTercero:

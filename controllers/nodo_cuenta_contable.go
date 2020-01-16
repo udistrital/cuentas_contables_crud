@@ -15,6 +15,7 @@ type NodoCuentaContableController struct {
 	nodeCCCompositor compositors.NodoCuentaContableCompositor
 	commonHelper     helpers.CommonHelper
 	nodeCCManager    managers.NodoCuentaContableManager
+	crudManager      managers.CrudManager
 }
 
 // GetByUUID función para obtener todos los objetos
@@ -97,6 +98,35 @@ func (c *NodoCuentaContableController) ChangeNodeState() {
 	if err == nil {
 		message = "node-state-changed"
 	}
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
+	c.ServeJSON()
+}
+
+// UpdateNode Método PUT de HTTP
+// @Title PUT UpdateNode
+// @Description Post models.NodoCuentaContable
+// @Param	UUID		path 	string	true		"The key for object to update"
+// @Success 200 {int} models.NodoCuentaContable.Id
+// @Failure 403 body is empty
+// @router /:UUID [put]
+func (c *NodoCuentaContableController) UpdateNode() {
+	uuid := c.GetString(":UUID")
+	var requestBody models.NodoCuentaContable
+
+	err := json.Unmarshal(c.Ctx.Input.RequestBody, &requestBody)
+	message := ""
+
+	if err == nil {
+		requestBody.ID = uuid
+		var resul interface{}
+		err = c.crudManager.UpdateDocument(requestBody, uuid, models.ArbolPlanMaestroCuentasContCollection, &resul)
+		if err == nil {
+			message = "node-updated"
+		}
+	} else {
+		message = "invalid-body"
+	}
+
 	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
 	c.ServeJSON()
 }
