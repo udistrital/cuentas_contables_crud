@@ -12,6 +12,7 @@ require (
 	github.com/manucorporat/try v0.0.0-20170609134256-2a0c6b941d52 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/shiena/ansicolor v0.0.0-20151119151921-a422bbe96644 // indirect
+	github.com/smartystreets/goconvey v1.6.4
 	github.com/udistrital/auditoria v0.0.0-20191202194614-a5859b6a1b61
 	github.com/udistrital/plan_cuentas_mongo_crud v0.0.0-20190603231911-c9c59b9699b6
 	github.com/udistrital/utils_oas v0.0.0-20191109214056-11e30cddc4f9
