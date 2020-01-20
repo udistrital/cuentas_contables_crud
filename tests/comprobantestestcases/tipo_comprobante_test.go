@@ -5,7 +5,6 @@ import (
 
 	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func TestTipoComprobanteSuccess(t *testing.T) {
@@ -30,16 +29,6 @@ func TestTipoComprobanteSuccess(t *testing.T) {
 	if err := mang.AddItem(&dataTipoComprobante); err != nil {
 		panic(err.Error())
 	}
-	crudManager := managers.CrudManager{}
-	var tipoComprobanteTest *models.TipoComprobante
-	if err := crudManager.GetDocumentByItem(dataComprobante.TipoDocumento, "tipodocumento", models.TipoComprobanteCollection, &tipoComprobanteTest); err != nil {
-		panic(err.Error())
-	}
-	var updtDoc interface{}
-	objectID, _ := primitive.ObjectIDFromHex(tipoComprobanteTest.ID)
-	if err := crudManager.DeleteDocumentByUUID(objectID, models.TipoComprobanteCollection, updtDoc); err != nil {
-		panic(err.Error())
-	}
 
 }
 
@@ -55,8 +44,8 @@ func TestTipoComprobanteFail(t *testing.T) {
 	}()
 
 	dataTipoComprobante := models.TipoComprobante{
-		TipoDocumento: "X",
-		Descripcion:   "Comprobante X ejemplo",
+		TipoDocumento: "Y",
+		Descripcion:   "Comprobante Y ejemplo",
 	}
 
 	mang := managers.TipoComprobanteManager{
@@ -66,21 +55,11 @@ func TestTipoComprobanteFail(t *testing.T) {
 		panic(err.Error())
 	}
 	dataTipoComprobante2 := models.TipoComprobante{
-		TipoDocumento: "X",
-		Descripcion:   "Comprobante X ejemplo",
+		TipoDocumento: "Y",
+		Descripcion:   "Comprobante Y ejemplo",
 	}
 
 	if err := mang.AddItem(&dataTipoComprobante2); err != nil {
-		crudManager := managers.CrudManager{}
-		var tipoComprobanteTest *models.TipoComprobante
-		if err := crudManager.GetDocumentByItem(dataComprobante.TipoDocumento, "tipodocumento", models.TipoComprobanteCollection, &tipoComprobanteTest); err != nil {
-			panic(err.Error())
-		}
-		var updtDoc interface{}
-		objectID, _ := primitive.ObjectIDFromHex(tipoComprobanteTest.ID)
-		if err := crudManager.DeleteDocumentByUUID(objectID, models.TipoComprobanteCollection, updtDoc); err != nil {
-			panic(err.Error())
-		}
 		panic(err.Error())
 	}
 
