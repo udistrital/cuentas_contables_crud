@@ -15,6 +15,23 @@
     },
     "basePath": "/v1",
     "paths": {
+        "/centro_costos/": {
+            "get": {
+                "tags": [
+                    "centro_costos"
+                ],
+                "description": "get all objects",
+                "operationId": "CentroCostos.Get",
+                "responses": {
+                    "200": {
+                        "description": "TipoComprobante models.TipoComprobante"
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            }
+        },
         "/comprobante/": {
             "get": {
                 "tags": [
