@@ -2,8 +2,7 @@ package comprobantestestcases
 
 import (
 	"testing"
-	"time"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+
 	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
 )
@@ -21,25 +20,13 @@ func TestTipoComprobanteSuccess(t *testing.T) {
 
 	dataTipoComprobante := models.TipoComprobante{
 		TipoDocumento: "X",
-		Descripcion:  "Comprobante X ejemplo" 	
+		Descripcion:   "Comprobante X ejemplo",
 	}
 
 	mang := managers.TipoComprobanteManager{
 		// Ctx: ctx, // set this bar if mongo is deployed on replica set mode.
-	} 
-	if err := mang.AddItem(&dataTipoComprobante) err != nil {
-		panic(err.Error())
 	}
-	crudManager := managers.CrudManager{
-
-	}
-	var tipoComprobanteTest *models.TipoComprobante
-	if err := crudManager.GetDocumentByItem(dataComprobante.TipoDocumento, "tipodocumento", models.TipoComprobanteCollection, &tipoComprobanteTest) err != nil {
-		panic(err.Error())
-	}
-	var updtDoc interface{}
-	objectID, _ := primitive.ObjectIDFromHex(tipoComprobanteTest.ID)
-	if err := crudManager.DeleteDocumentByUUID(objectID, models.TipoComprobanteCollection, updtDoc) err != nil {
+	if err := mang.AddItem(&dataTipoComprobante); err != nil {
 		panic(err.Error())
 	}
 
@@ -56,39 +43,24 @@ func TestTipoComprobanteFail(t *testing.T) {
 		}
 	}()
 
-
 	dataTipoComprobante := models.TipoComprobante{
-		TipoDocumento: "X",
-		Descripcion:  "Comprobante X ejemplo" 	
+		TipoDocumento: "Y",
+		Descripcion:   "Comprobante Y ejemplo",
 	}
 
 	mang := managers.TipoComprobanteManager{
 		// Ctx: ctx, // set this bar if mongo is deployed on replica set mode.
-	} 
-	if err := mang.AddItem(&dataTipoComprobante) err != nil {
+	}
+	if err := mang.AddItem(&dataTipoComprobante); err != nil {
 		panic(err.Error())
 	}
 	dataTipoComprobante2 := models.TipoComprobante{
-		TipoDocumento: "X",
-		Descripcion:  "Comprobante X ejemplo" 	
+		TipoDocumento: "Y",
+		Descripcion:   "Comprobante Y ejemplo",
 	}
 
-	if err := mang.AddItem(&dataTipoComprobante2) err != nil {
-		crudManager := managers.CrudManager{
-
-		}
-		var tipoComprobanteTest *models.TipoComprobante
-		if err := crudManager.GetDocumentByItem(dataComprobante.TipoDocumento, "tipodocumento", models.TipoComprobanteCollection, &tipoComprobanteTest) err != nil {
-			panic(err.Error())
-		}
-		var updtDoc interface{}
-		objectID, _ := primitive.ObjectIDFromHex(tipoComprobanteTest.ID)
-		if err := crudManager.DeleteDocumentByUUID(objectID, models.TipoComprobanteCollection, updtDoc) err != nil {
-			panic(err.Error())
-		}		
+	if err := mang.AddItem(&dataTipoComprobante2); err != nil {
 		panic(err.Error())
 	}
 
-
 }
-

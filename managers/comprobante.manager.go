@@ -2,6 +2,7 @@ package managers
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/udistrital/cuentas_contables_crud/models"
@@ -26,6 +27,9 @@ func (m *ComprobanteManager) AddItem(itemData *models.Comprobante) (err error) {
 	}
 	itemData.Codigo = consecutivoComprobante
 	itemData.General = &general
+	if itemData.TipoComprobante == nil {
+		return errors.New("TipoComprobante Not Defined")
+	}
 	UUID, err := m.crudManager.AddDocument(itemData, models.ComprobanteCollection)
 
 	if err != nil {
