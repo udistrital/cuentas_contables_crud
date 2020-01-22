@@ -61,6 +61,51 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"],
+        beego.ControllerComments{
+            Method: "Add",
+            Router: `/`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"],
+        beego.ControllerComments{
+            Method: "GetAll",
+            Router: `/`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"],
+        beego.ControllerComments{
+            Method: "GetOne",
+            Router: `/:UUID`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"],
+        beego.ControllerComments{
+            Method: "UpdateNode",
+            Router: `/:UUID`,
+            AllowHTTPMethods: []string{"put"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"],
+        beego.ControllerComments{
+            Method: "Delete",
+            Router: `/:UUID`,
+            AllowHTTPMethods: []string{"delete"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:DetalleCuentaContable"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:DetalleCuentaContable"],
         beego.ControllerComments{
             Method: "GetAll",

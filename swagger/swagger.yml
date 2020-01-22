@@ -95,6 +95,77 @@ paths:
           description: '{int} models.Comprobante.Id'
         "403":
           description: body is empty
+  /concepto/:
+    get:
+      tags:
+      - concepto
+      description: get all objects
+      operationId: ConceptoController.Get
+      responses:
+        "200":
+          description: TipoComprobante models.TipoComprobante
+        "403":
+          description: :objectId is empty
+    post:
+      tags:
+      - concepto
+      description: Post models.Concepto
+      operationId: ConceptoController.Post models.Concepto
+      parameters:
+      - in: body
+        name: body
+        description: Body para la creacion de models.Concepto
+        required: true
+        schema:
+          $ref: '#/definitions/models.Concepto'
+      responses:
+        "200":
+          description: '{int} models.Concepto.Id'
+        "403":
+          description: body is empty
+  /concepto/{UUID}:
+    get:
+      tags:
+      - concepto
+      description: get all objects
+      operationId: ConceptoController.Get
+      responses:
+        "200":
+          description: TipoComprobante models.Concepto
+        "403":
+          description: :objectId is empty
+    put:
+      tags:
+      - concepto
+      description: Post models.Concepto
+      operationId: ConceptoController.PUT UpdateNode
+      parameters:
+      - in: path
+        name: UUID
+        description: The key for object to update
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{int} models.Concepto.ID'
+        "403":
+          description: body is empty
+    delete:
+      tags:
+      - concepto
+      description: Post models.Concepto
+      operationId: ConceptoController.Delete Delete
+      parameters:
+      - in: path
+        name: UUID
+        description: The key for object to update
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{int} models.Concepto.ID'
+        "403":
+          description: body is empty
   /detalle_cuenta_contable/:
     get:
       tags:
@@ -297,6 +368,20 @@ definitions:
         format: int64
       TipoComprobante:
         $ref: '#/definitions/models.TipoComprobante'
+  models.Concepto:
+    title: Concepto
+    type: object
+    properties:
+      CuentasContables:
+        type: array
+        items:
+          type: string
+      ID:
+        type: string
+      Nombre:
+        type: string
+      SistemaID:
+        type: string
   models.General:
     title: General
     type: object

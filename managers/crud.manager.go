@@ -181,15 +181,15 @@ func (m *CrudManager) AddDocument(data interface{}, collName string) (generatedI
 
 	go func() {
 		filter := make(map[string]interface{})
-		filter["_id"] = generatedID
+		filter["_id"] = resul.InsertedID
 
 		update := map[string]interface{}{
 			"$set": map[string]interface{}{
 				"fecha_creacion":     time.Now().Format("2006-01-02"),
 				"fecha_modificacion": time.Now().Format("2006-01-02"),
+				"activo":             true,
 			},
 		}
-
 		res := coll.FindOneAndUpdate(m.Ctx, filter, update)
 
 		if res.Err() != nil {
