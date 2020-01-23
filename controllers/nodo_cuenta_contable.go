@@ -10,6 +10,7 @@ import (
 	"github.com/udistrital/cuentas_contables_crud/models"
 )
 
+// NodoCuentaContableController ...
 type NodoCuentaContableController struct {
 	beego.Controller
 	nodeCCCompositor compositors.NodoCuentaContableCompositor
@@ -70,7 +71,7 @@ func (c *NodoCuentaContableController) AddNode() {
 // @router / [get]
 func (c *NodoCuentaContableController) GetTree() {
 	fullTree := false
-	if v, _ := c.GetBool("fullTree"); v {
+	if v, err := c.GetBool("fullTree"); v && err == nil {
 		fullTree = v
 	}
 	treeData, err := c.nodeCCCompositor.BuildTree(fullTree)

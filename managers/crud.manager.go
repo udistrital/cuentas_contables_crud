@@ -82,7 +82,7 @@ func (m *CrudManager) DeleteDocumentByUUID(UUID interface{}, collName string, re
 	return
 }
 
-// GetDocumentByUUID get one document by it's uuid.
+// GetAllDocuments get one document by it's uuid.
 func (m *CrudManager) GetAllDocuments(filter map[string]interface{}, limit, offset int64, collName string, fn func(*mongo.Cursor)) (err error) {
 	coll, err := db.GetCollection(collName)
 	if err != nil {
@@ -156,6 +156,7 @@ func (m *CrudManager) UpdateDocument(data interface{}, UUID interface{}, collNam
 	return
 }
 
+// AddDocument ...
 func (m *CrudManager) AddDocument(data interface{}, collName string) (generatedID string, err error) {
 	coll, err := db.GetCollection(collName)
 
@@ -200,6 +201,7 @@ func (m *CrudManager) AddDocument(data interface{}, collName string) (generatedI
 	return
 }
 
+// RunTransaction ...
 func (m *CrudManager) RunTransaction(f func(context.Context) error) (err error) {
 
 	client, err := db.GetClient()
