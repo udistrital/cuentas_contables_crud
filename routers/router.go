@@ -50,6 +50,11 @@ func init() {
 				&controllers.CentroCostos{},
 			),
 		),
+		beego.NSNamespace("/concepto",
+			beego.NSInclude(
+				&controllers.ConceptoController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }
