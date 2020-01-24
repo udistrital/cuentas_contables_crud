@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+// TipoMoneda ...
 type TipoMoneda struct {
 	beego.Controller
 	commonHelper helpers.CommonHelper

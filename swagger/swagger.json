@@ -565,5 +565,35 @@
                 }
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "nodo_cuenta_contable",
+            "description": "NodoCuentaContableController ...\n"
+        },
+        {
+            "name": "comprobante",
+            "description": "ComprobanteController ...\n"
+        },
+        {
+            "name": "tipo_comprobante",
+            "description": "TipoComprobanteController ...\n"
+        },
+        {
+            "name": "naturaleza_cuenta_contable",
+            "description": "NaturalezaCuentaContable ...\n"
+        },
+        {
+            "name": "tipo_moneda",
+            "description": "TipoMoneda ...\n"
+        },
+        {
+            "name": "detalle_cuenta_contable",
+            "description": "DetalleCuentaContable ...\n"
+        },
+        {
+            "name": "centro_costos",
+            "description": "CentroCostos ...\n"
+        }
+    ]
 }

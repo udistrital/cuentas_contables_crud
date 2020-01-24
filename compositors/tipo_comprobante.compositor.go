@@ -35,9 +35,11 @@ func (m *TipoComprobanteCompositor) GetAllTipoComprobante() (data []models.TipoC
 func (m *TipoComprobanteCompositor) GetTipoComprobanteByID(ID string) (item *models.TipoComprobante, err error) {
 
 	var resul *models.TipoComprobante
-	objectID, _ := primitive.ObjectIDFromHex(ID)
+	objectID, err := primitive.ObjectIDFromHex(ID)
 
-	err = m.crudManager.GetDocumentByItem(objectID, "_id", models.TipoComprobanteCollection, &resul)
+	if errDocument := m.crudManager.GetDocumentByItem(objectID, "_id", models.TipoComprobanteCollection, &resul); errDocument != nil {
+		return resul, errDocument
+	}
 
 	return resul, err
 }
@@ -69,11 +71,11 @@ func (m *TipoComprobanteCompositor) UpdateTipoComprobante(itemData *models.TipoC
 
 // DeleteTipoComprobante Delete tipo_comprobante
 func (m *TipoComprobanteCompositor) DeleteTipoComprobante(ID string) (err error) {
+	var objectID primitive.ObjectID
 	var updtDoc interface{}
-	objectID, _ := primitive.ObjectIDFromHex(ID)
-	err = m.crudManager.DeleteDocumentByUUID(objectID, models.TipoComprobanteCollection, updtDoc)
-	if err != nil {
+	if objectID, err = primitive.ObjectIDFromHex(ID); err != nil {
 		return err
 	}
+	err = m.crudManager.DeleteDocumentByUUID(objectID, models.TipoComprobanteCollection, updtDoc)
 	return
 }

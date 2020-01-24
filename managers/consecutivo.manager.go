@@ -13,6 +13,7 @@ type ConsecutivoManager struct {
 	crudManager CrudManager
 }
 
+// GetByCollection ...
 func (m *ConsecutivoManager) GetByCollection(collectionName string) (data []map[string]interface{}) {
 	filter := make(map[string]interface{})
 	err := m.crudManager.GetAllDocuments(filter, -1, 0, collectionName, func(curr *mongo.Cursor) {

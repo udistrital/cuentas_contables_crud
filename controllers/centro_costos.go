@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+// CentroCostos ...
 type CentroCostos struct {
 	beego.Controller
 	commonHelper helpers.CommonHelper

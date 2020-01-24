@@ -1,5 +1,6 @@
 package models
 
+// TipoComprobanteCollection ...
 var TipoComprobanteCollection = "tipo_comprobante"
 
 // TipoComprobante es la estructura de un tipo de comprobantel

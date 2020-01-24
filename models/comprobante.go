@@ -1,5 +1,6 @@
 package models
 
+// ComprobanteCollection ...
 var ComprobanteCollection = "comprobante"
 
 // Comprobante es la estructura de un comprobante con parametros opcionales
@@ -13,6 +14,8 @@ type Comprobante struct {
 	*General
 	*Parametros
 }
+
+// Parametros ...
 type Parametros struct {
 	NumInicial           int    `json:"NumInicial" bson:"num_inicial"`
 	CuentaBanco          string `json:"CuentaBanco" bson:"cuenta_banco"`
