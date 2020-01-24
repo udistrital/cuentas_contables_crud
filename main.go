@@ -12,7 +12,7 @@ import (
 	"github.com/udistrital/utils_oas/responseformat"
 )
 
-var mainDb = beego.AppConfig.String("mongo_db")
+//var mainDb = beego.AppConfig.String("mongo_db")
 
 func main() {
 

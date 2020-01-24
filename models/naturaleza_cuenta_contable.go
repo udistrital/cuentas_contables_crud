@@ -1,5 +1,6 @@
 package models
 
+// NaturalezaCuentaContableCollection ...
 var NaturalezaCuentaContableCollection = "naturaleza_cuenta_contable"
 
 // NaturalezaCuentaContable cuenta contable parameter.

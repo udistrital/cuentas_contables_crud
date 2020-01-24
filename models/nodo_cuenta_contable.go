@@ -1,6 +1,9 @@
 package models
 
+// ArbolPlanMaestroCuentasContCollection ...
 var ArbolPlanMaestroCuentasContCollection = "plan_mestro_cuentas_contables"
+
+// ArbolCuentasContParametersCollection ...
 var ArbolCuentasContParametersCollection = "parametros_plan_cuentas_contables"
 
 // NodoCuentaContable This struct represents a tree's node of "plan cuentas contable" bussines model.
@@ -39,6 +42,7 @@ type ArbolCuentaContableParameters struct {
 	CodeLenght *int   `json:"CodeLenght" bson:"longitud_codigo"`
 }
 
+// ArbolNbFormatNode ...
 type ArbolNbFormatNode struct {
 	Data     *NodoArbolCuentaContable `json:"data" bson:"-"`
 	Children []*ArbolNbFormatNode     `json:"children" bson:"-"`

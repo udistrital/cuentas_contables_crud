@@ -11,6 +11,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+// ComprobanteCompositor ...
 type ComprobanteCompositor struct {
 	crudManager managers.CrudManager
 }
@@ -19,8 +20,10 @@ type ComprobanteCompositor struct {
 func (m *ComprobanteCompositor) GetComprobanteByID(ID string) (item *models.Comprobante, err error) {
 
 	var resul *models.Comprobante
-	objectID, _ := primitive.ObjectIDFromHex(ID)
-	err = m.crudManager.GetDocumentByUUID(objectID, models.ComprobanteCollection, &resul)
+	objectID, err := primitive.ObjectIDFromHex(ID)
+	if errDocument := m.crudManager.GetDocumentByUUID(objectID, models.ComprobanteCollection, &resul); errDocument != nil {
+		return resul, errDocument
+	}
 
 	return resul, err
 }
@@ -67,10 +70,10 @@ func (m *ComprobanteCompositor) AddComprobante(itemData *models.Comprobante) (er
 // DeleteComprobante Delete comprobante
 func (m *ComprobanteCompositor) DeleteComprobante(ID string) (err error) {
 	var updtDoc interface{}
-	objectID, _ := primitive.ObjectIDFromHex(ID)
-	err = m.crudManager.DeleteDocumentByUUID(objectID, models.ComprobanteCollection, updtDoc)
-	if err != nil {
+	var objectID primitive.ObjectID
+	if objectID, err = primitive.ObjectIDFromHex(ID); err != nil {
 		return err
 	}
+	err = m.crudManager.DeleteDocumentByUUID(objectID, models.ComprobanteCollection, updtDoc)
 	return
 }

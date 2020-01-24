@@ -373,3 +373,25 @@ definitions:
         type: string
       TipoDocumento:
         type: string
+tags:
+- name: nodo_cuenta_contable
+  description: |
+    NodoCuentaContableController ...
+- name: comprobante
+  description: |
+    ComprobanteController ...
+- name: tipo_comprobante
+  description: |
+    TipoComprobanteController ...
+- name: naturaleza_cuenta_contable
+  description: |
+    NaturalezaCuentaContable ...
+- name: tipo_moneda
+  description: |
+    TipoMoneda ...
+- name: detalle_cuenta_contable
+  description: |
+    DetalleCuentaContable ...
+- name: centro_costos
+  description: |
+    CentroCostos ...

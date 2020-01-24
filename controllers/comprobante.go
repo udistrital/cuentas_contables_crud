@@ -6,10 +6,10 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/udistrital/cuentas_contables_crud/compositors"
 	"github.com/udistrital/cuentas_contables_crud/helpers"
-	_ "github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/models"
 )
 
+// ComprobanteController ...
 type ComprobanteController struct {
 	beego.Controller
 	commonHelper          helpers.CommonHelper

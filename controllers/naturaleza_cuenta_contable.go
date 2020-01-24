@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+// NaturalezaCuentaContable ...
 type NaturalezaCuentaContable struct {
 	beego.Controller
 	commonHelper helpers.CommonHelper
