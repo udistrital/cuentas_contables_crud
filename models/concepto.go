@@ -7,6 +7,7 @@ type Concepto struct {
 	*General         `bson:"inline"`
 	ID               string   `json:"ID" bson:"_id,omitempty"`
 	Nombre           string   `json:"Nombre" bson:"nombre"`
-	CuentasContables []string `json:"CuentasContables" bson:"cuentas_contables,omitempty"`
-	SistemaID        string   `json:"SistemaID" bson:"sistema_id"`
+	CuentaDebito     string   `json:"CuentaDebito" bson:"cuenta_debito,omitempty"`
+	CuentaCredito    string   `json:"CuentaCredito" bson:"cuenta_credito,omitempty"`
+	SistemaID        string   `json:"MovimientoID" bson:"movimiento_id"`
 }

@@ -372,15 +372,15 @@ definitions:
     title: Concepto
     type: object
     properties:
-      CuentasContables:
-        type: array
-        items:
-          type: string
+      CuentaCredito:
+        type: string
+      CuentaDebito:
+        type: string
       ID:
         type: string
-      Nombre:
+      MovimientoID:
         type: string
-      SistemaID:
+      Nombre:
         type: string
   models.General:
     title: General
