@@ -1,110 +1,86 @@
 # cuentas_contables_crud
 
-El API cuentas_contables_crud, generada con beego, proporciona interfaces para la manipulación(CRUD) de los datos almacenados en una base de datos no relacional MongoDB (comprobantes, tipos de comprobantes, árbol de cuentas contables), esta API representa la capa de datos del subsistema de contabilidad, el cual, a su vez, hacer parte de el sistema de gestión financiero KRONOS.
+El API cuentas_contables_crud, proporciona interfaces para la manipulación(CRUD) de los datos almacenados en una base de datos no relacional **MongoDB** (comprobantes, tipos de comprobantes, árbol de cuentas contables).  
+Esta API representa la capa de datos del subsistema de contabilidad, el cual, a su vez, hacer parte de el sistema de gestión financiero KRONOS.
 
-* Integration with CI
+## Especificaciones Técnicas
 
-## Como ejecutar
+### Tecnologías Implementadas y Versiones
+* [Golang](https://github.com/udistrital/introduccion_oas/blob/master/instalacion_de_herramientas/golang.md)
+* [BeeGo](https://github.com/udistrital/introduccion_oas/blob/master/instalacion_de_herramientas/beego.md)
+* [MongoDB]()
+* [Docker](https://docs.docker.com/engine/install/ubuntu/)
+* [Docker Compose](https://docs.docker.com/compose/)
 
-### Requisitos previos
-* Docker
-* Docker Compose 
-
-*Se se utiliza Windows como sistema operativo, se recomienda utilizar **Git bash** para ejecutar todos los comandos posteriores*
-### Comenzar a desarrollar
-#### Ejecutar con Docker
-
-1. Clonar el repositorio
-```sh
-git clone -b dev https://github.com/udistrital/cuentas_contables_crud
+### Variables de Entorno
+```shell
+# Ejemplo que se debe actualizar acorde al proyecto
+CUENTAS_CONTABLES_CRUD_DB_USER = [descripción]
+CUENTAS_CONTABLES_CRUD_DB_PASS = [descripción]
+CUENTAS_CONTABLES_CRUD_DB_HOST = [descripción]
 ```
+**NOTA:** Las variables se pueden ver en el fichero conf/app.conf y están identificadas con CUENTAS_CONTABLES_CRUD_...
 
-2. Moverse a la carpeta del repositorio
-```sh
-cd cuentas_contables_crud
-```
-
-3. Crear un fichero con el nombre **custom.env**
-```sh
-touch custom.env
-```
-
-*En windows ejecutar:* ` ni custom.env`
-
-4. Crear la network **back_end** para los contenedores
-```sh
-docker network create back_end
-```
-
-5. Ejecutar el compose del contenedor
-```sh
-docker-compose up --build
-```
-
-6. Comprobar que los contenedores estén en ejecución
-```sh
-docker ps 
-```
-
-#### Ejecutar directamente con Go
-Para ejecutar el proyecto directamente con el lenguaje **Go** es necesario tener preinstalado en su equipo:
-
-Prerequisitos: 
-
-* Go
-* beego
-* MongoDB
-
-1. Obtener el repositorio con Go
-```sh
+### Ejecución del Proyecto
+```shell
+#1. Obtener el repositorio con Go
 go get github.com/udistrital/cuentas_contables_crud
-```
 
-2. Moverse a la carpeta del repositorio
-```sh
+#2. Moverse a la carpeta del repositorio
 cd $GOPATH/src/github.com/udistrital/cuentas_contables_crud
+
+# 3. Moverse a la rama **develop**
+git pull origin develop && git checkout develop
+
+# 4. alimentar todas las variables de entorno que utiliza el proyecto.
+CUENTAS_CONTABLES_HTTP_PORT=8080 CUENTAS_CONTABLES_DB_HOST=127.0.0.1:27017 CUENTAS_CONTABLES_SOME_VARIABLE=some_value bee run
 ```
 
-3. Moverse a la rama **dev**
-```sh
-git pull origin dev && git checkout dev
+
+### Ejecución Dockerfile
+```shell
+# docker build --tag=cuentas_contables_crud . --no-cache
+# docker run -p 80:80 cuentas_contables_crud
 ```
 
-4. Enlistar todas las variables de entorno que utiliza el proyecto. Las variables se pueden ver en el fichero **conf/app.conf** y están identificadas con **${FINANCIERA_MONGO_CRUD_...}**
-```sh
-FINANCIERA_MONGO_CRUD_PORT=8080 
-FINANCIERA_MONGO_CRUD_DB_URL=127.0.0.1:27017
-FINANCIERA_MONGO_CRUD_SOME_VARIABLE=some_value
-.
-.
-.
-bee run
+### Ejecución docker-compose
+```shell
+#1. Clonar el repositorio
+git clone -b develop https://github.com/udistrital/cuentas_contables_crud
+
+#2. Moverse a la carpeta del repositorio
+cd cuentas_contables_crud
+
+#3. Crear un fichero con el nombre **custom.env**
+touch custom.env
+
+#4. Crear la network **back_end** para los contenedores
+docker network create back_end
+
+#5. Ejecutar el compose del contenedor
+docker-compose up --build
+
+#6. Comprobar que los contenedores estén en ejecución
+docker ps
 ```
-*Nota: El comando anterior es una sola linea, no se ejecuta uno por uno (sin saltos de linea).*
 
-![Vista Previa](images/terminal_api.png)
+### Ejecución Pruebas
+
+Pruebas unitarias
+```shell
+# Not Data
+```
+## Estado CI
+| Develop | Relese 0.0.1 | Master |
+| -- | -- | -- |
+| [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/cuentas_contables_crud/status.svg?ref=refs/heads/develop)](https://hubci.portaloas.udistrital.edu.co/udistrital/cuentas_contables_crud) | [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/cuentas_contables_crud/status.svg?ref=refs/heads/release/0.0.1)](https://hubci.portaloas.udistrital.edu.co/udistrital/cuentas_contables_crud) | [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/cuentas_contables_crud/status.svg?ref=refs/heads/master)](https://hubci.portaloas.udistrital.edu.co/udistrital/cuentas_contables_crud) |
 
 
-## Servicios
+## Licencia
+This file is part of cuentas_contables_crud
 
-Para la documentación de esta API, se utiliza swagger. Si quieres ver una documentación exaustiva de todos los servicios que provee esta API, una vez ejecutado el contenedor o el proyecto de beego, ve a la dirección http://127.0.0.1:8086/swagger/swagger-1/
+cuentas_contables_crud is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-## Derechos de Autor
+cuentas_contables_crud is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-This program is free software: you can redistribute it 
-and/or modify it under the terms of the GNU General Public 
-License as published by the Free Software Foundation, either
-version 3 of the License, or (at your option) any later
-version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-### UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS
-
-### OFICINA ASESORA DE SISTEMAS
-
-### 2019
-### 
+You should have received a copy of the GNU General Public License along with necesidades_crud. If not, see https://www.gnu.org/licenses/.
