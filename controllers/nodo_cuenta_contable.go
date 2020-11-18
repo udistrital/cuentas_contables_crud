@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 	"github.com/udistrital/cuentas_contables_crud/compositors"
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/managers"
@@ -39,11 +40,13 @@ func (c *NodoCuentaContableController) GetByUUID() {
 // GetByNCC función para obtener Los objetos segun naturaleza de cuenta contable
 // @Title Get
 // @Description get all objects segun naturaleza cuenta contable
+// @Param	NCC		path 	string	true		"descripcion del atributo"
 // @Success 200 NodoRubroApropiacion models.NodoCuentaContable
 // @Failure 403 :objectId is empty
-// @router cuentas/:NCC [get]
+// @router /cuentas/:NCC [get]
 func (c *NodoCuentaContableController) GetByNCC() {
 	NCC := c.GetString(":NCC")
+	logs.Error(NCC)
 	fullTree := false
 	if v, err := c.GetBool("fullTree"); v && err == nil {
 		fullTree = v

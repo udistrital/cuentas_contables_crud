@@ -363,6 +363,32 @@
                 }
             }
         },
+        "/nodo_cuenta_contable/cuentas/{NCC}": {
+            "get": {
+                "tags": [
+                    "nodo_cuenta_contable"
+                ],
+                "description": "get all objects segun naturaleza cuenta contable",
+                "operationId": "NodoCuentaContableController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "NCC",
+                        "description": "descripcion del atributo",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "NodoRubroApropiacion models.NodoCuentaContable"
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            }
+        },
         "/nodo_cuenta_contable/{UUID}": {
             "get": {
                 "tags": [
@@ -400,23 +426,6 @@
                     },
                     "403": {
                         "description": "body is empty"
-                    }
-                }
-            }
-        },
-        "/nodo_cuenta_contablecuentas/{NCC}": {
-            "get": {
-                "tags": [
-                    "nodo_cuenta_contable"
-                ],
-                "description": "get all objects segun naturaleza cuenta contable",
-                "operationId": "NodoCuentaContableController.Get",
-                "responses": {
-                    "200": {
-                        "description": "NodoRubroApropiacion models.NodoCuentaContable"
-                    },
-                    "403": {
-                        "description": ":objectId is empty"
                     }
                 }
             }
@@ -556,9 +565,6 @@
             "title": "Comprobante",
             "type": "object",
             "properties": {
-                "Activo": {
-                    "type": "boolean"
-                },
                 "Codigo": {
                     "type": "integer",
                     "format": "int64"
@@ -566,35 +572,8 @@
                 "Comprobante": {
                     "type": "string"
                 },
-                "CuentaBanco": {
-                    "type": "string"
-                },
                 "Descripcion": {
                     "type": "string"
-                },
-                "FechaCreacion": {
-                    "type": "string"
-                },
-                "FechaModificacion": {
-                    "type": "string"
-                },
-                "FormatoImpresion": {
-                    "type": "string"
-                },
-                "NumCopias": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "NumInicial": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "NumItems": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "NumeracionAutomatica": {
-                    "type": "boolean"
                 },
                 "Numero": {
                     "type": "integer",
@@ -602,12 +581,6 @@
                 },
                 "TipoComprobante": {
                     "$ref": "#/definitions/models.TipoComprobante"
-                },
-                "TipoImpresion": {
-                    "type": "string"
-                },
-                "Titulo": {
-                    "type": "string"
                 },
                 "_id": {
                     "type": "string"
@@ -618,19 +591,10 @@
             "title": "Concepto",
             "type": "object",
             "properties": {
-                "Activo": {
-                    "type": "boolean"
-                },
                 "CuentaCredito": {
                     "type": "string"
                 },
                 "CuentaDebito": {
-                    "type": "string"
-                },
-                "FechaCreacion": {
-                    "type": "string"
-                },
-                "FechaModificacion": {
                     "type": "string"
                 },
                 "ID": {
@@ -663,9 +627,6 @@
             "title": "NodoCuentaContable",
             "type": "object",
             "properties": {
-                "Activo": {
-                    "type": "boolean"
-                },
                 "Ajustable": {
                     "type": "boolean"
                 },
@@ -679,12 +640,6 @@
                     "type": "string"
                 },
                 "DetalleCuentaID": {
-                    "type": "string"
-                },
-                "FechaCreacion": {
-                    "type": "string"
-                },
-                "FechaModificacion": {
                     "type": "string"
                 },
                 "Hijos": {
@@ -754,19 +709,10 @@
             "title": "TipoComprobante",
             "type": "object",
             "properties": {
-                "Activo": {
-                    "type": "boolean"
-                },
                 "Codigo": {
                     "type": "string"
                 },
                 "Descripcion": {
-                    "type": "string"
-                },
-                "FechaCreacion": {
-                    "type": "string"
-                },
-                "FechaModificacion": {
                     "type": "string"
                 },
                 "TipoDocumento": {
