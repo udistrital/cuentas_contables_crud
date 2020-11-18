@@ -1,7 +1,4 @@
 .git
-go.mod
-go.sum
 cuentas_contables_crud
 lastupdate.tmp
-main
 .vscode
