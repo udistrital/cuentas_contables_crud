@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 
 	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/logs"
 	"github.com/udistrital/cuentas_contables_crud/compositors"
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/managers"
@@ -46,7 +45,6 @@ func (c *NodoCuentaContableController) GetByUUID() {
 // @router /cuentas/:NCC [get]
 func (c *NodoCuentaContableController) GetByNCC() {
 	NCC := c.GetString(":NCC")
-	logs.Error(NCC)
 	fullTree := false
 	if v, err := c.GetBool("fullTree"); v && err == nil {
 		fullTree = v
