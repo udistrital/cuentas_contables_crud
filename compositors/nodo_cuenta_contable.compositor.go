@@ -25,15 +25,15 @@ func (c *NodoCuentaContableCompositor) GetNodeByID(ID string) (node *models.Nodo
 	return resul, err
 }
 
-// GetNodeByNCC Returns a *models.NodoCuentaContable by it's naturaleza_id
-func (c *NodoCuentaContableCompositor) GetNodeByNCC(NCC string, withNoActive ...bool) (rootNodes []*models.ArbolNbFormatNode, err error) {
+// GetNodeByNaturalezaCuentaContableC Returns a *models.NodoCuentaContable by it's naturaleza_id
+func (c *NodoCuentaContableCompositor) GetNodeByNaturalezaCuentaContable(NaturalezaCuentaContable string, withNoActive ...bool) (rootNodes []*models.ArbolNbFormatNode, err error) {
 
-	rootNodes, _, err = c.nodoCcManager.GetRootNodes(NCC, withNoActive...)
+	rootNodes, _, err = c.nodoCcManager.GetRootNodes(NaturalezaCuentaContable, withNoActive...)
 
 	if err != nil {
 		return
 	}
-	_, noRootNodes, err := c.nodoCcManager.GetNoRootNodes(NCC, withNoActive...)
+	_, noRootNodes, err := c.nodoCcManager.GetNoRootNodes(NaturalezaCuentaContable, withNoActive...)
 	if err != nil {
 		return
 	}

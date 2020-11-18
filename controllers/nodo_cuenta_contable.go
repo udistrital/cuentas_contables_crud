@@ -36,20 +36,17 @@ func (c *NodoCuentaContableController) GetByUUID() {
 
 }
 
-// GetByNCC función para obtener Los objetos segun naturaleza de cuenta contable
+// GetByNaturalezaCuentaContable función para obtener Los objetos segun naturaleza de cuenta contable
 // @Title Get
-// @Description get all objects segun naturaleza cuenta contable
-// @Param	NCC		path 	string	true		"descripcion del atributo"
+// @Description get all objects based on naturaleza cuenta contable
+// @Param	NaturalezaCuentaContable		path 	string	true	"NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)"
 // @Success 200 NodoRubroApropiacion models.NodoCuentaContable
 // @Failure 403 :objectId is empty
-// @router /cuentas/:NCC [get]
-func (c *NodoCuentaContableController) GetByNCC() {
-	NCC := c.GetString(":NCC")
+// @router /cuentas/:NaturalezaCuentaContable [get]
+func (c *NodoCuentaContableController) GetByNaturalezaCuentaContable() {
+	NaturalezaCuentaContable := c.GetString(":NaturalezaCuentaContable")
 	fullTree := false
-	if v, err := c.GetBool("fullTree"); v && err == nil {
-		fullTree = v
-	}
-	treeData, err := c.nodeCCCompositor.GetNodeByNCC(NCC, fullTree)
+	treeData, err := c.nodeCCCompositor.GetNodeByNaturalezaCuentaContable(NaturalezaCuentaContable, fullTree)
 	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, treeData)
 	c.ServeJSON()
 }

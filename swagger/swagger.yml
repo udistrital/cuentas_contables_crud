@@ -265,16 +265,16 @@ paths:
           description: '{int} models.NodoCuentaContable.Id'
         "403":
           description: body is empty
-  /nodo_cuenta_contable/cuentas/{NCC}:
+  /nodo_cuenta_contable/cuentas/{NaturalezaCuentaContable}:
     get:
       tags:
       - nodo_cuenta_contable
-      description: get all objects segun naturaleza cuenta contable
+      description: get all objects based on naturaleza cuenta contable
       operationId: NodoCuentaContableController.Get
       parameters:
       - in: path
-        name: NCC
-        description: descripcion del atributo
+        name: NaturalezaCuentaContable
+        description: NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)
         required: true
         type: string
       responses:
@@ -373,25 +373,56 @@ definitions:
     properties:
       _id:
         type: string
+      Activo:
+        type: boolean
       Codigo:
         type: integer
         format: int64
       Comprobante:
         type: string
+      CuentaBanco:
+        type: string
       Descripcion:
         type: string
+      FechaCreacion:
+        type: string
+      FechaModificacion:
+        type: string
+      FormatoImpresion:
+        type: string
+      NumCopias:
+        type: integer
+        format: int64
+      NumInicial:
+        type: integer
+        format: int64
+      NumItems:
+        type: integer
+        format: int64
+      NumeracionAutomatica:
+        type: boolean
       Numero:
         type: integer
         format: int64
       TipoComprobante:
         $ref: '#/definitions/models.TipoComprobante'
+      TipoImpresion:
+        type: string
+      Titulo:
+        type: string
   models.Concepto:
     title: Concepto
     type: object
     properties:
+      Activo:
+        type: boolean
       CuentaCredito:
         type: string
       CuentaDebito:
+        type: string
+      FechaCreacion:
+        type: string
+      FechaModificacion:
         type: string
       ID:
         type: string
@@ -413,6 +444,8 @@ definitions:
     title: NodoCuentaContable
     type: object
     properties:
+      Activo:
+        type: boolean
       Ajustable:
         type: boolean
       CentroDecostosID:
@@ -422,6 +455,10 @@ definitions:
       CodigoCuentaAlterna:
         type: string
       DetalleCuentaID:
+        type: string
+      FechaCreacion:
+        type: string
+      FechaModificacion:
         type: string
       Hijos:
         type: array
@@ -469,9 +506,15 @@ definitions:
     title: TipoComprobante
     type: object
     properties:
+      Activo:
+        type: boolean
       Codigo:
         type: string
       Descripcion:
+        type: string
+      FechaCreacion:
+        type: string
+      FechaModificacion:
         type: string
       TipoDocumento:
         type: string

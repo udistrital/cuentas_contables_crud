@@ -28,7 +28,7 @@ func NewNodoCuentaContableManager(ctx context.Context) NodoCuentaContableManager
 	return managerObj
 }
 
-func (m *NodoCuentaContableManager) getNodesByFilter(filter map[string]interface{}, NCC string, withNoActive ...bool) (nodesData []*models.NodoArbolCuentaContable, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
+func (m *NodoCuentaContableManager) getNodesByFilter(filter map[string]interface{}, NaturalezaCuentaContable string, withNoActive ...bool) (nodesData []*models.NodoArbolCuentaContable, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
 	localfilter := make(map[string]interface{})
 	if filter != nil {
 		localfilter = filter
@@ -40,8 +40,8 @@ func (m *NodoCuentaContableManager) getNodesByFilter(filter map[string]interface
 
 	nodesDataIndexed = make(map[string]*models.NodoArbolCuentaContable)
 
-	if NCC != "" {
-		localfilter["naturaleza_id"] = NCC
+	if NaturalezaCuentaContable != "" {
+		localfilter["naturaleza_id"] = NaturalezaCuentaContable
 	}
 	err = m.crudManager.GetAllDocuments(filter, -1, 0, models.ArbolPlanMaestroCuentasContCollection, func(curr *mongo.Cursor) {
 		var node models.NodoArbolCuentaContable
@@ -117,17 +117,17 @@ func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable)
 }
 
 // GetRootNodes returns the "Plan maestro" tree's root nodes
-func (m *NodoCuentaContableManager) GetRootNodes(NCC string, withNoActive ...bool) (rootsDataFormated []*models.ArbolNbFormatNode, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
+func (m *NodoCuentaContableManager) GetRootNodes(NaturalezaCuentaContable string, withNoActive ...bool) (rootsDataFormated []*models.ArbolNbFormatNode, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
 	var codigo []string
 	filter := make(map[string]interface{})
 
-	if NCC != "" {
-		filter = map[string]interface{}{"naturaleza_id": NCC}
+	if NaturalezaCuentaContable != "" {
+		filter = map[string]interface{}{"naturaleza_id": NaturalezaCuentaContable}
 	} else {
 		filter = map[string]interface{}{"padre": nil}
 	}
 
-	rootsData, nodesDataIndexed, err := m.getNodesByFilter(filter, NCC, withNoActive...)
+	rootsData, nodesDataIndexed, err := m.getNodesByFilter(filter, NaturalezaCuentaContable, withNoActive...)
 
 	if err != nil {
 		return
@@ -151,11 +151,11 @@ func (m *NodoCuentaContableManager) GetRootNodes(NCC string, withNoActive ...boo
 }
 
 // GetNoRootNodes returns the "Plan maestro" tree's non root nodes
-func (m *NodoCuentaContableManager) GetNoRootNodes(NCC string, withNoActive ...bool) (nodesData []*models.NodoArbolCuentaContable, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
+func (m *NodoCuentaContableManager) GetNoRootNodes(NaturalezaCuentaContable string, withNoActive ...bool) (nodesData []*models.NodoArbolCuentaContable, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
 
 	filter := map[string]interface{}{"padre": map[string]interface{}{"$ne": nil}}
 
-	nodesData, nodesDataIndexed, err = m.getNodesByFilter(filter, NCC, withNoActive...)
+	nodesData, nodesDataIndexed, err = m.getNodesByFilter(filter, NaturalezaCuentaContable, withNoActive...)
 	return
 }
 
