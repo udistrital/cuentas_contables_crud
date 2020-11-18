@@ -96,6 +96,7 @@ func (m *CrudManager) GetAllDocuments(filter map[string]interface{}, limit, offs
 	}
 
 	findOptions.SetSkip(offset)
+
 	cur, err := coll.Find(context.TODO(), filter, findOptions)
 
 	if err == mongo.ErrNoDocuments {

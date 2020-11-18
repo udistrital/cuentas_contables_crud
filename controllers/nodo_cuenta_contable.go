@@ -33,6 +33,24 @@ func (c *NodoCuentaContableController) GetByUUID() {
 	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, nodeInfo)
 
 	c.ServeJSON()
+
+}
+
+// GetByNCC función para obtener Los objetos segun naturaleza de cuenta contable
+// @Title Get
+// @Description get all objects segun naturaleza cuenta contable
+// @Success 200 NodoRubroApropiacion models.NodoCuentaContable
+// @Failure 403 :objectId is empty
+// @router cuentas/:NCC [get]
+func (c *NodoCuentaContableController) GetByNCC() {
+	NCC := c.GetString(":NCC")
+	fullTree := false
+	if v, err := c.GetBool("fullTree"); v && err == nil {
+		fullTree = v
+	}
+	treeData, err := c.nodeCCCompositor.GetNodeByNCC(NCC, fullTree)
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, treeData)
+	c.ServeJSON()
 }
 
 // AddNode Método Post de HTTP
@@ -76,7 +94,6 @@ func (c *NodoCuentaContableController) GetTree() {
 	}
 	treeData, err := c.nodeCCCompositor.BuildTree(fullTree)
 	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, treeData)
-
 	c.ServeJSON()
 }
 

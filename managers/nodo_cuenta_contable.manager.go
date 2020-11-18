@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"log"
+	"strings"
 
 	"github.com/udistrital/cuentas_contables_crud/models"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -27,7 +28,7 @@ func NewNodoCuentaContableManager(ctx context.Context) NodoCuentaContableManager
 	return managerObj
 }
 
-func (m *NodoCuentaContableManager) getNodesByFilter(filter map[string]interface{}, withNoActive ...bool) (nodesData []*models.NodoArbolCuentaContable, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
+func (m *NodoCuentaContableManager) getNodesByFilter(filter map[string]interface{}, NCC string, withNoActive ...bool) (nodesData []*models.NodoArbolCuentaContable, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
 	localfilter := make(map[string]interface{})
 	if filter != nil {
 		localfilter = filter
@@ -38,6 +39,10 @@ func (m *NodoCuentaContableManager) getNodesByFilter(filter map[string]interface
 	}
 
 	nodesDataIndexed = make(map[string]*models.NodoArbolCuentaContable)
+
+	if NCC != "" {
+		localfilter["naturaleza_id"] = NCC
+	}
 	err = m.crudManager.GetAllDocuments(filter, -1, 0, models.ArbolPlanMaestroCuentasContCollection, func(curr *mongo.Cursor) {
 		var node models.NodoArbolCuentaContable
 		if err := curr.Decode(&node); err == nil {
@@ -112,14 +117,32 @@ func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable)
 }
 
 // GetRootNodes returns the "Plan maestro" tree's root nodes
-func (m *NodoCuentaContableManager) GetRootNodes(withNoActive ...bool) (rootsDataFormated []*models.ArbolNbFormatNode, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
-	filter := map[string]interface{}{"padre": nil}
+func (m *NodoCuentaContableManager) GetRootNodes(NCC string, withNoActive ...bool) (rootsDataFormated []*models.ArbolNbFormatNode, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
+	var codigo []string
+	filter := make(map[string]interface{})
 
-	rootsData, nodesDataIndexed, err := m.getNodesByFilter(filter, withNoActive...)
+	if NCC != "" {
+		filter = map[string]interface{}{"naturaleza_id": NCC}
+	} else {
+		filter = map[string]interface{}{"padre": nil}
+	}
+
+	rootsData, nodesDataIndexed, err := m.getNodesByFilter(filter, NCC, withNoActive...)
+
 	if err != nil {
 		return
 	}
+
 	for _, root := range rootsData {
+		index := strings.IndexAny(root.ID, "-")
+		if index == -1 {
+			index = len(root.ID)
+		}
+		newdata := stringInSlice(root.ID[0:index], codigo)
+		if newdata {
+			continue
+		}
+		codigo = append(codigo, root.ID[0:1])
 		rootsDataFormated = append(rootsDataFormated, &models.ArbolNbFormatNode{
 			Data: root,
 		})
@@ -128,10 +151,11 @@ func (m *NodoCuentaContableManager) GetRootNodes(withNoActive ...bool) (rootsDat
 }
 
 // GetNoRootNodes returns the "Plan maestro" tree's non root nodes
-func (m *NodoCuentaContableManager) GetNoRootNodes(withNoActive ...bool) (nodesData []*models.NodoArbolCuentaContable, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
+func (m *NodoCuentaContableManager) GetNoRootNodes(NCC string, withNoActive ...bool) (nodesData []*models.NodoArbolCuentaContable, nodesDataIndexed map[string]*models.NodoArbolCuentaContable, err error) {
+
 	filter := map[string]interface{}{"padre": map[string]interface{}{"$ne": nil}}
 
-	nodesData, nodesDataIndexed, err = m.getNodesByFilter(filter, withNoActive...)
+	nodesData, nodesDataIndexed, err = m.getNodesByFilter(filter, NCC, withNoActive...)
 	return
 }
 
@@ -169,4 +193,14 @@ func (m *NodoCuentaContableManager) GetLevelParameterForNode(level int) (*models
 	})
 
 	return parameter, err
+}
+
+// stringInSlice returns true/false if there is a repeated root node
+func stringInSlice(a string, list []string) bool {
+	for _, b := range list {
+		if b == a {
+			return true
+		}
+	}
+	return false
 }
