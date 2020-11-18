@@ -25,6 +25,22 @@ func (c *NodoCuentaContableCompositor) GetNodeByID(ID string) (node *models.Nodo
 	return resul, err
 }
 
+// GetNodeByNaturalezaCuentaContableC Returns a *models.NodoCuentaContable by it's naturaleza_id
+func (c *NodoCuentaContableCompositor) GetNodeByNaturalezaCuentaContable(NaturalezaCuentaContable string, withNoActive ...bool) (rootNodes []*models.ArbolNbFormatNode, err error) {
+
+	rootNodes, _, err = c.nodoCcManager.GetRootNodes(NaturalezaCuentaContable, withNoActive...)
+
+	if err != nil {
+		return
+	}
+	_, noRootNodes, err := c.nodoCcManager.GetNoRootNodes(NaturalezaCuentaContable, withNoActive...)
+	if err != nil {
+		return
+	}
+	c.nodoCcHelper.BuildTreeFromDataSource(rootNodes, noRootNodes)
+	return
+}
+
 // AddNode Add new node to the tree
 func (c *NodoCuentaContableCompositor) AddNode(nodeData *models.NodoCuentaContable) (err error) {
 
@@ -38,12 +54,12 @@ func (c *NodoCuentaContableCompositor) AddNode(nodeData *models.NodoCuentaContab
 
 // BuildTree returns the tree data on the DB as a tree structure with it's hierarchy
 func (c *NodoCuentaContableCompositor) BuildTree(withNoActive ...bool) (rootNodes []*models.ArbolNbFormatNode, err error) {
-	rootNodes, _, err = c.nodoCcManager.GetRootNodes(withNoActive...)
+	rootNodes, _, err = c.nodoCcManager.GetRootNodes("", withNoActive...)
 
 	if err != nil {
 		return
 	}
-	_, noRootNodes, err := c.nodoCcManager.GetNoRootNodes(withNoActive...)
+	_, noRootNodes, err := c.nodoCcManager.GetNoRootNodes("", withNoActive...)
 	if err != nil {
 		return
 	}
