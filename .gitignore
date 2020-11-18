@@ -3,3 +3,4 @@ lastupdate.tmp
 go.mod
 go.sum
 ./go.mod
+.vscode
