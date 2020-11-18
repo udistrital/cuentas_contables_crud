@@ -4,3 +4,5 @@ lastupdate.tmp
 # go.sum
 # ./go.mod
 .vscode/
+.scannerwork/
+main
