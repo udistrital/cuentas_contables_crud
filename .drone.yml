@@ -81,18 +81,18 @@ steps:
 #     event:
 #     - push
 
-- name: run_sonar_scanner
-  image: aosapps/drone-sonar-plugin
-  settings:
-    sonar_host:
-      from_secret: SONAR_HOST
-    sonar_token:
-      from_secret: SONAR_TOKEN
-  when:
-    branch:
-    - develop
-    - feature/*
-    - release/*
+# - name: run_sonar_scanner
+#   image: aosapps/drone-sonar-plugin
+#   settings:
+#     sonar_host:
+#       from_secret: SONAR_HOST
+#     sonar_token:
+#       from_secret: SONAR_TOKEN
+#   when:
+#     branch:
+#     - develop
+#     - feature/*
+#     - release/*
 
 # - name: beego_migrate
 #   image: golang:1.14
