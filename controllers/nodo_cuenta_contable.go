@@ -36,6 +36,24 @@ func (c *NodoCuentaContableController) GetByUUID() {
 
 }
 
+// GetByNaturalezaArka función para obtener Los objetos segun naturaleza de cuenta contable para consumir en arka
+// @Title Get
+// @Description get all objects based on naturaleza cuenta contable for arka client
+// @Param	NaturalezaCuentaContable		path 	string	true	"NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)"
+// @Success 200 NodoRubroApropiacion models.NodoCuentaContable
+// @Failure 403 :objectId is empty
+// @router /cuentas/:NaturalezaCuentaContable [get]
+func (c *NodoCuentaContableController) GetByNaturalezaArka() {
+	NaturalezaCuentaContable := c.GetString(":NaturalezaCuentaContable")
+
+	nodeInfo, err := c.nodeCCCompositor.GetNodeArka(NaturalezaCuentaContable)
+
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, nodeInfo)
+
+	c.ServeJSON()
+
+}
+
 // GetByNaturalezaCuentaContable función para obtener Los objetos segun naturaleza de cuenta contable
 // @Title Get
 // @Description get all objects based on naturaleza cuenta contable

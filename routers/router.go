@@ -55,6 +55,11 @@ func init() {
 				&controllers.ConceptoController{},
 			),
 		),
+		beego.NSNamespace("/arka_cuentas_contables",
+			beego.NSInclude(
+				&controllers.NodoCuentaContableController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }

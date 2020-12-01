@@ -47,3 +47,12 @@ type ArbolNbFormatNode struct {
 	Data     *NodoArbolCuentaContable `json:"data" bson:"-"`
 	Children []*ArbolNbFormatNode     `json:"children" bson:"-"`
 }
+
+// ArkaCuentasContables...
+type ArkaCuentasContables struct {
+	*General    `bson:"inline"`
+	Codigo      string `json:"Codigo" bson:"_id,omitempty"`
+	Descripcion string `json:"DetalleCuentaID" bson:"detalle_cuenta_id"`
+	Naturaleza  string `json:"Naturaleza" bson:"naturaleza_id"`
+	Nombre      string `json:"Nombre" bson:"nombre"`
+}
