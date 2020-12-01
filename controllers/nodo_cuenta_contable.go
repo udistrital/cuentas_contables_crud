@@ -40,9 +40,9 @@ func (c *NodoCuentaContableController) GetByUUID() {
 // @Title Get
 // @Description get all objects based on naturaleza cuenta contable for arka client
 // @Param	NaturalezaCuentaContable		path 	string	true	"NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)"
-// @Success 200 NodoRubroApropiacion models.ArkaCuentasContables
+// @Success 200  models.ArkaCuentasContables
 // @Failure 403 :objectId is empty
-// @router /getNodoCuentasArka/:NaturalezaCuentaContable [get]
+// @router /getNodosCuentasArka/:NaturalezaCuentaContable [get]
 func (c *NodoCuentaContableController) GetByNaturalezaArka() {
 	NaturalezaCuentaContable := c.GetString(":NaturalezaCuentaContable")
 
