@@ -6,6 +6,7 @@ import (
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 // NodoCuentaContableCompositor compositor for controll the data processing over NodoCuentaContable models
@@ -39,6 +40,24 @@ func (c *NodoCuentaContableCompositor) GetNodeByNaturalezaCuentaContable(Natural
 	}
 	c.nodoCcHelper.BuildTreeFromDataSource(rootNodes, noRootNodes)
 	return
+}
+
+// GetNodeArka Returns a *models.ArkaCuentasContables by it's naturaleza_id
+func (c *NodoCuentaContableCompositor) GetNodeArka(NaturalezaCuentaContable string) (nodesData []*models.ArkaCuentasContables, err error) {
+
+	filter := make(map[string]interface{})
+
+	if NaturalezaCuentaContable != "" {
+		filter["naturaleza_id"] = NaturalezaCuentaContable
+	}
+	err = c.crudManager.GetAllDocuments(filter, -1, 0, models.ArbolPlanMaestroCuentasContCollection, func(curr *mongo.Cursor) {
+		var node models.ArkaCuentasContables
+		if err := curr.Decode(&node); err == nil {
+			nodesData = append(nodesData, &node)
+		}
+	})
+	return nodesData, err
+
 }
 
 // AddNode Add new node to the tree
