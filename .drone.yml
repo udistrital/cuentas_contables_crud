@@ -158,6 +158,8 @@ steps:
     branch:
     - release/*
     - master
+    event:
+      - push
 
 - name: update_aws_ecs
   image: golang:1.9
