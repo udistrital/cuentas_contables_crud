@@ -169,6 +169,24 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"],
+        beego.ControllerComments{
+            Method: "GetByNaturalezaCuentaContable",
+            Router: `/cuentas/:NaturalezaCuentaContable`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"],
+        beego.ControllerComments{
+            Method: "GetByNaturalezaArka",
+            Router: `/getNodosCuentasArka/:NaturalezaCuentaContable`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoComprobanteController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoComprobanteController"],
         beego.ControllerComments{
             Method: "GetAll",

@@ -1,2 +1,9 @@
 cuentas_contables_crud
 lastupdate.tmp
+# go.mod
+# go.sum
+# ./go.mod
+.vscode/
+.vscode
+.scannerwork/
+main

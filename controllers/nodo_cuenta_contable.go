@@ -33,6 +33,40 @@ func (c *NodoCuentaContableController) GetByUUID() {
 	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, nodeInfo)
 
 	c.ServeJSON()
+
+}
+
+// GetByNaturalezaArka función para obtener Los objetos segun naturaleza de cuenta contable para consumir en arka
+// @Title Get
+// @Description get all objects based on naturaleza cuenta contable for arka client
+// @Param	NaturalezaCuentaContable		path 	string	true	"NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)"
+// @Success 200  models.ArkaCuentasContables
+// @Failure 403 :objectId is empty
+// @router /getNodosCuentasArka/:NaturalezaCuentaContable [get]
+func (c *NodoCuentaContableController) GetByNaturalezaArka() {
+	NaturalezaCuentaContable := c.GetString(":NaturalezaCuentaContable")
+
+	nodeInfo, err := c.nodeCCCompositor.GetNodeArka(NaturalezaCuentaContable)
+
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, nodeInfo)
+
+	c.ServeJSON()
+
+}
+
+// GetByNaturalezaCuentaContable función para obtener Los objetos segun naturaleza de cuenta contable
+// @Title Get
+// @Description get all objects based on naturaleza cuenta contable
+// @Param	NaturalezaCuentaContable		path 	string	true	"NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)"
+// @Success 200 NodoRubroApropiacion models.NodoCuentaContable
+// @Failure 403 :objectId is empty
+// @router /cuentas/:NaturalezaCuentaContable [get]
+func (c *NodoCuentaContableController) GetByNaturalezaCuentaContable() {
+	NaturalezaCuentaContable := c.GetString(":NaturalezaCuentaContable")
+	fullTree := false
+	treeData, err := c.nodeCCCompositor.GetNodeByNaturalezaCuentaContable(NaturalezaCuentaContable, fullTree)
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, treeData)
+	c.ServeJSON()
 }
 
 // AddNode Método Post de HTTP
@@ -76,7 +110,6 @@ func (c *NodoCuentaContableController) GetTree() {
 	}
 	treeData, err := c.nodeCCCompositor.BuildTree(fullTree)
 	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, treeData)
-
 	c.ServeJSON()
 }
 

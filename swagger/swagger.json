@@ -363,6 +363,58 @@
                 }
             }
         },
+        "/nodo_cuenta_contable/cuentas/{NaturalezaCuentaContable}": {
+            "get": {
+                "tags": [
+                    "nodo_cuenta_contable"
+                ],
+                "description": "get all objects based on naturaleza cuenta contable",
+                "operationId": "NodoCuentaContableController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "NaturalezaCuentaContable",
+                        "description": "NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "NodoRubroApropiacion models.NodoCuentaContable"
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            }
+        },
+        "/nodo_cuenta_contable/getNodosCuentasArka/{NaturalezaCuentaContable}": {
+            "get": {
+                "tags": [
+                    "nodo_cuenta_contable"
+                ],
+                "description": "get all objects based on naturaleza cuenta contable for arka client",
+                "operationId": "NodoCuentaContableController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "NaturalezaCuentaContable",
+                        "description": "NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "models.ArkaCuentasContables"
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            }
+        },
         "/nodo_cuenta_contable/{UUID}": {
             "get": {
                 "tags": [
@@ -539,6 +591,9 @@
             "title": "Comprobante",
             "type": "object",
             "properties": {
+                "Activo": {
+                    "type": "boolean"
+                },
                 "Codigo": {
                     "type": "integer",
                     "format": "int64"
@@ -546,8 +601,35 @@
                 "Comprobante": {
                     "type": "string"
                 },
+                "CuentaBanco": {
+                    "type": "string"
+                },
                 "Descripcion": {
                     "type": "string"
+                },
+                "FechaCreacion": {
+                    "type": "string"
+                },
+                "FechaModificacion": {
+                    "type": "string"
+                },
+                "FormatoImpresion": {
+                    "type": "string"
+                },
+                "NumCopias": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "NumInicial": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "NumItems": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "NumeracionAutomatica": {
+                    "type": "boolean"
                 },
                 "Numero": {
                     "type": "integer",
@@ -555,6 +637,12 @@
                 },
                 "TipoComprobante": {
                     "$ref": "#/definitions/models.TipoComprobante"
+                },
+                "TipoImpresion": {
+                    "type": "string"
+                },
+                "Titulo": {
+                    "type": "string"
                 },
                 "_id": {
                     "type": "string"
@@ -565,10 +653,19 @@
             "title": "Concepto",
             "type": "object",
             "properties": {
+                "Activo": {
+                    "type": "boolean"
+                },
                 "CuentaCredito": {
                     "type": "string"
                 },
                 "CuentaDebito": {
+                    "type": "string"
+                },
+                "FechaCreacion": {
+                    "type": "string"
+                },
+                "FechaModificacion": {
                     "type": "string"
                 },
                 "ID": {
@@ -601,6 +698,9 @@
             "title": "NodoCuentaContable",
             "type": "object",
             "properties": {
+                "Activo": {
+                    "type": "boolean"
+                },
                 "Ajustable": {
                     "type": "boolean"
                 },
@@ -614,6 +714,12 @@
                     "type": "string"
                 },
                 "DetalleCuentaID": {
+                    "type": "string"
+                },
+                "FechaCreacion": {
+                    "type": "string"
+                },
+                "FechaModificacion": {
                     "type": "string"
                 },
                 "Hijos": {
@@ -683,10 +789,19 @@
             "title": "TipoComprobante",
             "type": "object",
             "properties": {
+                "Activo": {
+                    "type": "boolean"
+                },
                 "Codigo": {
                     "type": "string"
                 },
                 "Descripcion": {
+                    "type": "string"
+                },
+                "FechaCreacion": {
+                    "type": "string"
+                },
+                "FechaModificacion": {
                     "type": "string"
                 },
                 "TipoDocumento": {
