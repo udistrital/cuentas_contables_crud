@@ -20,7 +20,7 @@ func main() {
 		"27017",
 		beego.AppConfig.String("mongo_user"),
 		beego.AppConfig.String("mongo_pass"),
-		beego.AppConfig.String("mongo_db_auth"),
+		beego.AppConfig.String("mongo_db"),
 		beego.AppConfig.String("mongo_db"),
 	)
 
