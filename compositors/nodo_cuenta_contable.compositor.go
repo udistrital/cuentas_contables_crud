@@ -42,6 +42,17 @@ func (c *NodoCuentaContableCompositor) GetNodeByNaturalezaCuentaContable(Natural
 	return
 }
 
+// GetCuentas Returns a []*models.ArkaCuentasContables
+func (c *NodoCuentaContableCompositor) GetAll(filter map[string]interface{}, limit int64, offset int64) (nodesData []*models.ArkaCuentasContables, err error) {
+	err = c.crudManager.GetAllDocuments(filter, limit, offset, models.ArbolPlanMaestroCuentasContCollection, func(curr *mongo.Cursor) {
+		var node models.ArkaCuentasContables
+		if err := curr.Decode(&node); err == nil {
+			nodesData = append(nodesData, &node)
+		}
+	})
+	return nodesData, err
+}
+
 // GetNodeArka Returns a *models.ArkaCuentasContables by it's naturaleza_id
 func (c *NodoCuentaContableCompositor) GetNodeArka(NaturalezaCuentaContable string) (nodesData []*models.ArkaCuentasContables, err error) {
 
