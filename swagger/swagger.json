@@ -363,6 +363,46 @@
                 }
             }
         },
+        "/nodo_cuenta_contable/cuentas": {
+            "get": {
+                "tags": [
+                    "nodo_cuenta_contable"
+                ],
+                "description": "Obtiene cuentas contables",
+                "operationId": "NodoCuentaContableController.Get All",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Filter. e.g. {naturaleza_id:credito}",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Limit the size of result set. Must be an integer",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "offset",
+                        "description": "Start position of result set. Must be an integer",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.ArkaCuentasContables"
+                        }
+                    },
+                    "404": {
+                        "description": "not found resource"
+                    }
+                }
+            }
+        },
         "/nodo_cuenta_contable/cuentas/{NaturalezaCuentaContable}": {
             "get": {
                 "tags": [
@@ -382,6 +422,32 @@
                 "responses": {
                     "200": {
                         "description": "NodoRubroApropiacion models.NodoCuentaContable"
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            }
+        },
+        "/nodo_cuenta_contable/getCuentas/{NaturalezaCuentaContable}": {
+            "get": {
+                "tags": [
+                    "nodo_cuenta_contable"
+                ],
+                "description": "obtiene las cuentas de máximo nivel (sin hijos) segun su naturaleza",
+                "operationId": "NodoCuentaContableController.GetCuentas",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "NaturalezaCuentaContable",
+                        "description": "NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "models.ArkaCuentasContables"
                     },
                     "403": {
                         "description": ":objectId is empty"
@@ -587,6 +653,24 @@
         }
     },
     "definitions": {
+        "models.ArkaCuentasContables": {
+            "title": "ArkaCuentasContables",
+            "type": "object",
+            "properties": {
+                "Codigo": {
+                    "type": "string"
+                },
+                "DetalleCuentaID": {
+                    "type": "string"
+                },
+                "Naturaleza": {
+                    "type": "string"
+                },
+                "Nombre": {
+                    "type": "string"
+                }
+            }
+        },
         "models.Comprobante": {
             "title": "Comprobante",
             "type": "object",

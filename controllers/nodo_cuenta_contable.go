@@ -4,10 +4,13 @@ import (
 	"encoding/json"
 
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 	"github.com/udistrital/cuentas_contables_crud/compositors"
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
+
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 // NodoCuentaContableController ...
@@ -34,6 +37,25 @@ func (c *NodoCuentaContableController) GetByUUID() {
 
 	c.ServeJSON()
 
+}
+
+// GetCuentasUsablesByNaturaleza obtiene las cuentas de máximo nivel (sin hijos) segun su naturaleza
+// @Title GetCuentas
+// @Description obtiene las cuentas de máximo nivel (sin hijos) segun su naturaleza
+// @Param	NaturalezaCuentaContable		path 	string	true	"NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)"
+// @Success 200  models.ArkaCuentasContables
+// @Failure 403 :objectId is empty
+// @router /getCuentas/:NaturalezaCuentaContable [get]
+func (c *NodoCuentaContableController) GetCuentasUsablesByNaturaleza() {
+	NaturalezaCuentaContable := c.GetString(":NaturalezaCuentaContable")
+	filter := make(map[string]interface{})
+	if NaturalezaCuentaContable != "" {
+		filter["naturaleza_id"] = NaturalezaCuentaContable
+	}
+	filter["$or"] = []bson.M{{"hijos": nil}, {"hijos": []bson.M{}}}
+	nodeInfo, err := c.nodeCCCompositor.GetAll(filter, -1, 0)
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, nodeInfo)
+	c.ServeJSON()
 }
 
 // GetByNaturalezaArka función para obtener Los objetos segun naturaleza de cuenta contable para consumir en arka
@@ -110,6 +132,42 @@ func (c *NodoCuentaContableController) GetTree() {
 	}
 	treeData, err := c.nodeCCCompositor.BuildTree(fullTree)
 	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, treeData)
+	c.ServeJSON()
+}
+
+// GetAll ...
+// @Title Get All
+// @Description Obtiene cuentas contables
+// @Param	query	query	string	false	"Filter. e.g. {"naturaleza_id":"credito"}"
+// @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
+// @Param	offset	query	string	false	"Start position of result set. Must be an integer"
+// @Success 200 {object} models.ArkaCuentasContables
+// @Failure 404 not found resource
+// @router /cuentas [get]
+func (c *NodoCuentaContableController) GetAll() {
+	var query bson.M = nil
+	var limit int64 = -1
+	var offset int64 = 0
+	if v := c.GetString("query"); v != "" {
+		err := json.Unmarshal([]byte(v), &query)
+		if err != nil {
+			logs.Error("json. Unmarshal() ERROR:", err)
+		}
+	}
+	if v, err := c.GetInt64("limit"); err == nil {
+		limit = v
+	}
+	if v, err := c.GetInt64("offset"); err == nil {
+		offset = v
+	}
+	l, err := c.nodeCCCompositor.GetAll(query, limit, offset)
+	if err != nil {
+		logs.Error(err)
+		c.Data["system"] = err
+		c.Abort("404")
+	} else {
+		c.Data["json"] = c.commonHelper.DefaultResponse(200, err, l)
+	}
 	c.ServeJSON()
 }
 
