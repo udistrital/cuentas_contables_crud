@@ -43,6 +43,7 @@ func (c *NodoCuentaContableController) GetByUUID() {
 // @Title GetCuentas
 // @Description obtiene las cuentas de máximo nivel (sin hijos) segun su naturaleza
 // @Param	NaturalezaCuentaContable		path 	string	true	"NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)"
+// @Param	withInactives	query	bool	false	"With inactives nodes. False is default"
 // @Success 200  models.ArkaCuentasContables
 // @Failure 403 :objectId is empty
 // @router /getCuentas/:NaturalezaCuentaContable [get]
@@ -148,6 +149,7 @@ func (c *NodoCuentaContableController) GetTree() {
 // @Param	query	query	string	false	"Filter. e.g. {"naturaleza_id":"credito"}"
 // @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
 // @Param	offset	query	string	false	"Start position of result set. Must be an integer"
+// @Param	withInactives	query	bool	false	"With inactives nodes. False is default"
 // @Success 200 {object} models.ArkaCuentasContables
 // @Failure 404 not found resource
 // @router /cuentas [get]
