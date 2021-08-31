@@ -48,9 +48,16 @@ func (c *NodoCuentaContableController) GetByUUID() {
 // @router /getCuentas/:NaturalezaCuentaContable [get]
 func (c *NodoCuentaContableController) GetCuentasUsablesByNaturaleza() {
 	NaturalezaCuentaContable := c.GetString(":NaturalezaCuentaContable")
+	withInactives := false
+	if v, err := c.GetBool("withInactives"); v && err == nil {
+		withInactives = v
+	}
 	filter := make(map[string]interface{})
 	if NaturalezaCuentaContable != "" {
 		filter["naturaleza_id"] = NaturalezaCuentaContable
+	}
+	if !withInactives {
+		filter["activo"] = true
 	}
 	filter["$or"] = []bson.M{{"hijos": nil}, {"hijos": []bson.M{}}}
 	nodeInfo, err := c.nodeCCCompositor.GetAll(filter, -1, 0)
@@ -148,11 +155,19 @@ func (c *NodoCuentaContableController) GetAll() {
 	var query bson.M = nil
 	var limit int64 = -1
 	var offset int64 = 0
+	withInactives := false
+	if v, err := c.GetBool("withInactives"); v && err == nil {
+		withInactives = v
+	}
 	if v := c.GetString("query"); v != "" {
 		err := json.Unmarshal([]byte(v), &query)
 		if err != nil {
 			logs.Error("json. Unmarshal() ERROR:", err)
+		} else if _, exist := query["activo"]; !exist && !withInactives {
+			query["activo"] = true
 		}
+	} else if !withInactives {
+		query = bson.M{"activo": true}
 	}
 	if v, err := c.GetInt64("limit"); err == nil {
 		limit = v
