@@ -43,14 +43,22 @@ func (c *NodoCuentaContableController) GetByUUID() {
 // @Title GetCuentas
 // @Description obtiene las cuentas de máximo nivel (sin hijos) segun su naturaleza
 // @Param	NaturalezaCuentaContable		path 	string	true	"NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)"
+// @Param	withInactives	query	bool	false	"With inactives nodes. False is default"
 // @Success 200  models.ArkaCuentasContables
 // @Failure 403 :objectId is empty
 // @router /getCuentas/:NaturalezaCuentaContable [get]
 func (c *NodoCuentaContableController) GetCuentasUsablesByNaturaleza() {
 	NaturalezaCuentaContable := c.GetString(":NaturalezaCuentaContable")
+	withInactives := false
+	if v, err := c.GetBool("withInactives"); v && err == nil {
+		withInactives = v
+	}
 	filter := make(map[string]interface{})
 	if NaturalezaCuentaContable != "" {
 		filter["naturaleza_id"] = NaturalezaCuentaContable
+	}
+	if !withInactives {
+		filter["activo"] = true
 	}
 	filter["$or"] = []bson.M{{"hijos": nil}, {"hijos": []bson.M{}}}
 	nodeInfo, err := c.nodeCCCompositor.GetAll(filter, -1, 0)
@@ -141,6 +149,7 @@ func (c *NodoCuentaContableController) GetTree() {
 // @Param	query	query	string	false	"Filter. e.g. {"naturaleza_id":"credito"}"
 // @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
 // @Param	offset	query	string	false	"Start position of result set. Must be an integer"
+// @Param	withInactives	query	bool	false	"With inactives nodes. False is default"
 // @Success 200 {object} models.ArkaCuentasContables
 // @Failure 404 not found resource
 // @router /cuentas [get]
@@ -148,11 +157,19 @@ func (c *NodoCuentaContableController) GetAll() {
 	var query bson.M = nil
 	var limit int64 = -1
 	var offset int64 = 0
+	withInactives := false
+	if v, err := c.GetBool("withInactives"); v && err == nil {
+		withInactives = v
+	}
 	if v := c.GetString("query"); v != "" {
 		err := json.Unmarshal([]byte(v), &query)
 		if err != nil {
 			logs.Error("json. Unmarshal() ERROR:", err)
+		} else if _, exist := query["activo"]; !exist && !withInactives {
+			query["activo"] = true
 		}
+	} else if !withInactives {
+		query = bson.M{"activo": true}
 	}
 	if v, err := c.GetInt64("limit"); err == nil {
 		limit = v

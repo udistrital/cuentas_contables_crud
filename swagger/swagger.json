@@ -388,6 +388,12 @@
                         "name": "offset",
                         "description": "Start position of result set. Must be an integer",
                         "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "withInactives",
+                        "description": "With inactives nodes. False is default",
+                        "type": "boolean"
                     }
                 ],
                 "responses": {
@@ -443,6 +449,12 @@
                         "description": "NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)",
                         "required": true,
                         "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "withInactives",
+                        "description": "With inactives nodes. False is default",
+                        "type": "boolean"
                     }
                 ],
                 "responses": {
