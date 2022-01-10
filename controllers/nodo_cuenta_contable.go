@@ -11,6 +11,7 @@ import (
 	"github.com/udistrital/cuentas_contables_crud/models"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // NodoCuentaContableController ...
@@ -226,7 +227,7 @@ func (c *NodoCuentaContableController) UpdateNode() {
 	message := ""
 
 	if err == nil {
-		requestBody.ID = uuid
+		requestBody.ID, _ = primitive.ObjectIDFromHex(uuid)
 		var resul interface{}
 		err = c.crudManager.UpdateDocument(requestBody, uuid, models.ArbolPlanMaestroCuentasContCollection, &resul)
 		if err == nil {

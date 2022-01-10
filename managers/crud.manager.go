@@ -40,6 +40,27 @@ func (m *CrudManager) GetDocumentByUUID(UUID interface{}, collName string, resul
 	return
 }
 
+// GetDocumentByCodigo get one document by it's codigo.
+func (m *CrudManager) GetDocumentByCodigo(codigo interface{}, collName string, resul interface{}) (err error) {
+	coll, err := db.GetCollection(collName)
+
+	if err != nil {
+		return err
+	}
+
+	filter := make(map[string]interface{})
+
+	filter["Codigo"] = codigo
+
+	err = coll.FindOne(context.TODO(), filter).Decode(resul)
+
+	if err == mongo.ErrNoDocuments {
+		return errors.New("document-no-found")
+	}
+
+	return
+}
+
 // GetDocumentByItem get one document by it's item by nameItem.
 func (m *CrudManager) GetDocumentByItem(item interface{}, nameBson, collName string, resul interface{}) (err error) {
 	coll, err := db.GetCollection(collName)
