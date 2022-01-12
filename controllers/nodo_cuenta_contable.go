@@ -110,6 +110,7 @@ func (c *NodoCuentaContableController) AddNode() {
 	var requestBody models.NodoCuentaContable
 
 	err := json.Unmarshal(c.Ctx.Input.RequestBody, &requestBody)
+	requestBody.ID = requestBody.Codigo
 
 	message := ""
 
@@ -221,6 +222,7 @@ func (c *NodoCuentaContableController) ChangeNodeState() {
 func (c *NodoCuentaContableController) UpdateNode() {
 	uuid := c.GetString(":UUID")
 	var requestBody models.NodoCuentaContable
+	requestBody.ID = requestBody.Codigo
 
 	err := json.Unmarshal(c.Ctx.Input.RequestBody, &requestBody)
 	message := ""
