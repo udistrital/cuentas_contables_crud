@@ -76,7 +76,7 @@ func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable)
 
 	nodeData.General = &models.General{}
 	nodeData.Activo = true
-	originalID := nodeData.ID
+	originalID := nodeData.Codigo
 	if fatherData != nil { // infer level from father if it exist.
 		nodeData.Nivel = fatherData.Nivel + 1
 		nodeData.Codigo = fatherData.Codigo + "-" + nodeData.Codigo

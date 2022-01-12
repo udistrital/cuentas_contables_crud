@@ -50,7 +50,7 @@ func (m *CrudManager) GetDocumentByCodigo(codigo interface{}, collName string, r
 
 	filter := make(map[string]interface{})
 
-	filter["Codigo"] = codigo
+	filter["codigo"] = codigo
 
 	err = coll.FindOne(context.TODO(), filter).Decode(resul)
 

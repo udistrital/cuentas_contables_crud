@@ -229,7 +229,7 @@ func (c *NodoCuentaContableController) UpdateNode() {
 	if err == nil {
 		requestBody.ID, _ = primitive.ObjectIDFromHex(uuid)
 		var resul interface{}
-		err = c.crudManager.UpdateDocument(requestBody, uuid, models.ArbolPlanMaestroCuentasContCollection, &resul)
+		err = c.crudManager.UpdateDocument(requestBody, requestBody.ID, models.ArbolPlanMaestroCuentasContCollection, &resul)
 		if err == nil {
 			message = "node-updated"
 		}
