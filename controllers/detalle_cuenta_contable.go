@@ -18,8 +18,7 @@ type DetalleCuentaContable struct {
 // GetAll función para obtener todos los objetos
 // @Title Get
 // @Description get all objects
-// @Success 200 TipoComprobante models.TipoComprobante
-// @Failure 403 :objectId is empty
+// @Success 200 {object} []models.DetalleCuentaContable
 // @router / [get]
 func (c *DetalleCuentaContable) GetAll() {
 	filter := make(map[string]interface{})

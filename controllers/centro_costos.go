@@ -15,10 +15,10 @@ type CentroCostos struct {
 	crudManager  managers.CrudManager
 }
 
-// GetAll función para obtener todos los objetos
+// GetAll ...
 // @Title Get
-// @Description get all objects
-// @Success 200 TipoComprobante models.TipoComprobante
+// @Description Lista todos los centros de costos
+// @Success 200 {object} models.TipoComprobante
 // @Failure 403 :objectId is empty
 // @router / [get]
 func (c *CentroCostos) GetAll() {

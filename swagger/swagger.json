@@ -20,11 +20,14 @@
                 "tags": [
                     "centro_costos"
                 ],
-                "description": "get all objects",
+                "description": "Lista todos los centros de costos",
                 "operationId": "CentroCostos.Get",
                 "responses": {
                     "200": {
-                        "description": "TipoComprobante models.TipoComprobante"
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.TipoComprobante"
+                        }
                     },
                     "403": {
                         "description": ":objectId is empty"
@@ -37,11 +40,17 @@
                 "tags": [
                     "comprobante"
                 ],
-                "description": "get all objects",
+                "description": "Obtiene todos los objetos",
                 "operationId": "ComprobanteController.Get",
                 "responses": {
                     "200": {
-                        "description": "Comprobante models.Comprobante"
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Comprobante"
+                            }
+                        }
                     },
                     "403": {
                         "description": ":objectId is empty"
@@ -67,10 +76,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "{int} models.Comprobante.Id"
-                    },
-                    "403": {
-                        "description": "body is empty"
+                        "description": "{string} \"comprobante-added\""
                     }
                 }
             }
@@ -80,11 +86,23 @@
                 "tags": [
                     "comprobante"
                 ],
-                "description": "get object por id",
+                "description": "Obtiene los objetos por id",
                 "operationId": "ComprobanteController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "UUID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Comprobante models.Comprobante"
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.Comprobante"
+                        }
                     },
                     "403": {
                         "description": ":objectId is empty"
@@ -99,9 +117,16 @@
                 "operationId": "ComprobanteController.Update models.Comprobante",
                 "parameters": [
                     {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The objectid you want to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
                         "in": "body",
                         "name": "body",
-                        "description": "The objectid you want to update",
+                        "description": "The new content",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/models.Comprobante"
@@ -110,7 +135,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "{int} models.Comprobante.Id"
+                        "description": "{string} \"comprobante-updated\""
                     },
                     "403": {
                         "description": "body is empty"
@@ -125,21 +150,16 @@
                 "operationId": "ComprobanteController.Delete models.Comprobante",
                 "parameters": [
                     {
-                        "in": "body",
-                        "name": "body",
+                        "in": "path",
+                        "name": "id",
                         "description": "The objectid you want to delete",
                         "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.Comprobante"
-                        }
+                        "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "{int} models.Comprobante.Id"
-                    },
-                    "403": {
-                        "description": "body is empty"
+                        "description": "{string} \"comprobante-deleted\""
                     }
                 }
             }
@@ -153,7 +173,13 @@
                 "operationId": "ConceptoController.Get",
                 "responses": {
                     "200": {
-                        "description": "TipoComprobante models.TipoComprobante"
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Concepto"
+                            }
+                        }
                     },
                     "403": {
                         "description": ":objectId is empty"
@@ -164,7 +190,7 @@
                 "tags": [
                     "concepto"
                 ],
-                "description": "Post models.Concepto",
+                "description": "Método Post de HTTP de models.Concepto",
                 "operationId": "ConceptoController.Post models.Concepto",
                 "parameters": [
                     {
@@ -179,7 +205,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "{int} models.Concepto.Id"
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.Concepto"
+                        }
                     },
                     "403": {
                         "description": "body is empty"
@@ -192,11 +221,23 @@
                 "tags": [
                     "concepto"
                 ],
-                "description": "get all objects",
+                "description": "Trae un objeto por UUID",
                 "operationId": "ConceptoController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "UUID",
+                        "description": "UUID del objeto",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "TipoComprobante models.Concepto"
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.Concepto"
+                        }
                     },
                     "403": {
                         "description": ":objectId is empty"
@@ -213,14 +254,23 @@
                     {
                         "in": "path",
                         "name": "UUID",
-                        "description": "The key for object to update",
+                        "description": "UUID del objeto a actualizar",
                         "required": true,
                         "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "El nuevo contenido",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Concepto"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "{int} models.Concepto.ID"
+                        "description": "{string} \"concept-updated\""
                     },
                     "403": {
                         "description": "body is empty"
@@ -244,7 +294,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "{int} models.Concepto.ID"
+                        "description": "{string} \"concept-deleted\""
                     },
                     "403": {
                         "description": "body is empty"
@@ -261,10 +311,13 @@
                 "operationId": "DetalleCuentaContable.Get",
                 "responses": {
                     "200": {
-                        "description": "TipoComprobante models.TipoComprobante"
-                    },
-                    "403": {
-                        "description": ":objectId is empty"
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.DetalleCuentaContable"
+                            }
+                        }
                     }
                 }
             }
@@ -278,10 +331,13 @@
                 "operationId": "NaturalezaCuentaContable.Get",
                 "responses": {
                     "200": {
-                        "description": "TipoComprobante models.TipoComprobante"
-                    },
-                    "403": {
-                        "description": ":objectId is empty"
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.NaturalezaCuentaContable"
+                            }
+                        }
                     }
                 }
             }
@@ -295,15 +351,21 @@
                 "operationId": "NodoCuentaContableController.GetTree",
                 "parameters": [
                     {
-                        "in": "fullTree",
-                        "name": "query",
-                        "description": "Filter. e.g. col1:v1,col2:v2 ...",
-                        "type": "string"
+                        "in": "query",
+                        "name": "fullTree",
+                        "description": "With no active? Default false",
+                        "type": "boolean"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "NodoRubroApropiacion []models.NodoCuentaContable"
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ArbolNbFormatNode"
+                            }
+                        }
                     },
                     "403": {
                         "description": ":objectId is empty"
@@ -329,7 +391,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "{int} models.NodoCuentaContable.Id"
+                        "description": "{string} \"node-added\""
                     },
                     "403": {
                         "description": "body is empty"
@@ -342,7 +404,7 @@
                 "tags": [
                     "nodo_cuenta_contable"
                 ],
-                "description": "Post models.NodoCuentaContable",
+                "description": "Change Node State. TODO: currently, this funtion will only change state of target node, in future realises maybe it can change full branch state.",
                 "operationId": "NodoCuentaContableController.PUT ChangeNodeState",
                 "parameters": [
                     {
@@ -355,7 +417,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "{int} models.NodoCuentaContable.Id"
+                        "description": "{string} \"node-state-changed\""
                     },
                     "403": {
                         "description": "body is empty"
@@ -381,13 +443,15 @@
                         "in": "query",
                         "name": "limit",
                         "description": "Limit the size of result set. Must be an integer",
-                        "type": "string"
+                        "type": "integer",
+                        "format": "int64"
                     },
                     {
                         "in": "query",
                         "name": "offset",
                         "description": "Start position of result set. Must be an integer",
-                        "type": "string"
+                        "type": "integer",
+                        "format": "int64"
                     },
                     {
                         "in": "query",
@@ -400,7 +464,10 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#/definitions/models.ArkaCuentasContables"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ArkaCuentasContables"
+                            }
                         }
                     },
                     "404": {
@@ -427,7 +494,13 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "NodoRubroApropiacion models.NodoCuentaContable"
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ArbolNbFormatNode"
+                            }
+                        }
                     },
                     "403": {
                         "description": ":objectId is empty"
@@ -447,7 +520,6 @@
                         "in": "path",
                         "name": "NaturalezaCuentaContable",
                         "description": "NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)",
-                        "required": true,
                         "type": "string"
                     },
                     {
@@ -459,7 +531,13 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "models.ArkaCuentasContables"
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ArkaCuentasContables"
+                            }
+                        }
                     },
                     "403": {
                         "description": ":objectId is empty"
@@ -485,7 +563,13 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "models.ArkaCuentasContables"
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ArkaCuentasContables"
+                            }
+                        }
                     },
                     "403": {
                         "description": ":objectId is empty"
@@ -500,9 +584,21 @@
                 ],
                 "description": "get all objects",
                 "operationId": "NodoCuentaContableController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "UUID",
+                        "description": "UUID del objeto",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "NodoRubroApropiacion models.NodoCuentaContable"
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.NodoCuentaContable"
+                        }
                     },
                     "403": {
                         "description": ":objectId is empty"
@@ -522,11 +618,20 @@
                         "description": "The key for object to update",
                         "required": true,
                         "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The new content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.NodoCuentaContable"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "{int} models.NodoCuentaContable.Id"
+                        "description": "{string} \"node-updated\""
                     },
                     "403": {
                         "description": "body is empty"
@@ -543,7 +648,13 @@
                 "operationId": "TipoComprobanteController.Get",
                 "responses": {
                     "200": {
-                        "description": "TipoComprobante models.TipoComprobante"
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.TipoComprobante"
+                            }
+                        }
                     },
                     "403": {
                         "description": ":objectId is empty"
@@ -569,7 +680,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "{int} models.TipoComprobante.Id"
+                        "description": "{string} \"tipo-comprobante-added\""
                     },
                     "403": {
                         "description": "body is empty"
@@ -584,9 +695,21 @@
                 ],
                 "description": "get object by id",
                 "operationId": "TipoComprobanteController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "UUID del objeto",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "TipoComprobante models.TipoComprobante"
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.TipoComprobante"
+                        }
                     },
                     "403": {
                         "description": ":objectId is empty"
@@ -601,9 +724,16 @@
                 "operationId": "TipoComprobanteController.Update models.TipoComprobante",
                 "parameters": [
                     {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The objectid you want to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
                         "in": "body",
                         "name": "body",
-                        "description": "The objectid you want to update",
+                        "description": "The new content",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/models.TipoComprobante"
@@ -612,7 +742,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "{int} models.TipoComprobante.Id"
+                        "description": "{string} \"tipo-comprobante-updated\""
                     },
                     "403": {
                         "description": "body is empty"
@@ -627,21 +757,16 @@
                 "operationId": "TipoComprobanteController.Delete models.TipoComprobante",
                 "parameters": [
                     {
-                        "in": "body",
-                        "name": "body",
+                        "in": "path",
+                        "name": "id",
                         "description": "The objectid you want to delete",
                         "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.TipoComprobante"
-                        }
+                        "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "{int} models.TipoComprobante.Id"
-                    },
-                    "403": {
-                        "description": "body is empty"
+                        "description": "{string} \"tipo-comprobante-deleted\""
                     }
                 }
             }
@@ -655,16 +780,34 @@
                 "operationId": "TipoMoneda.Get",
                 "responses": {
                     "200": {
-                        "description": "TipoComprobante models.TipoComprobante"
-                    },
-                    "403": {
-                        "description": ":objectId is empty"
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.TipoMoneda"
+                            }
+                        }
                     }
                 }
             }
         }
     },
     "definitions": {
+        "models.ArbolNbFormatNode": {
+            "title": "ArbolNbFormatNode",
+            "type": "object",
+            "properties": {
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ArbolNbFormatNode"
+                    }
+                },
+                "data": {
+                    "$ref": "#/definitions/models.NodoArbolCuentaContable"
+                }
+            }
+        },
         "models.ArkaCuentasContables": {
             "title": "ArkaCuentasContables",
             "type": "object",
@@ -775,6 +918,18 @@
                 }
             }
         },
+        "models.DetalleCuentaContable": {
+            "title": "DetalleCuentaContable",
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "string"
+                },
+                "Label": {
+                    "type": "string"
+                }
+            }
+        },
         "models.General": {
             "title": "General",
             "type": "object",
@@ -787,6 +942,58 @@
                 },
                 "FechaModificacion": {
                     "type": "string"
+                }
+            }
+        },
+        "models.NaturalezaCuentaContable": {
+            "title": "NaturalezaCuentaContable",
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "string"
+                },
+                "Label": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.NodoArbolCuentaContable": {
+            "title": "NodoArbolCuentaContable",
+            "type": "object",
+            "properties": {
+                "Activo": {
+                    "type": "boolean"
+                },
+                "Codigo": {
+                    "type": "string"
+                },
+                "FechaCreacion": {
+                    "type": "string"
+                },
+                "FechaModificacion": {
+                    "type": "string"
+                },
+                "Hijos": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "Nivel": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Nombre": {
+                    "type": "string"
+                },
+                "Padre": {
+                    "type": "string"
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.NodoArbolCuentaContable"
+                    }
                 }
             }
         },
@@ -901,6 +1108,18 @@
                     "type": "string"
                 },
                 "TipoDocumento": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TipoMoneda": {
+            "title": "TipoMoneda",
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "string"
+                },
+                "Label": {
                     "type": "string"
                 }
             }
