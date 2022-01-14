@@ -9,7 +9,8 @@ var ArbolCuentasContParametersCollection = "parametros_plan_cuentas_contables"
 // NodoCuentaContable This struct represents a tree's node of "plan cuentas contable" bussines model.
 type NodoCuentaContable struct {
 	*General            `bson:"inline"`
-	ID                  string   `json:"Codigo" bson:"_id,omitempty"`
+	ID                  string   `json:"Id" bson:"_id,omitempty"`
+	Codigo              string   `json:"Codigo" bson:"codigo,omitempty"`
 	Hijos               []string `json:"Hijos" bson:"hijos,omitempty"`
 	Padre               *string  `json:"Padre" bson:"padre,omitempty"` // if the field is optional we put it as pointer.
 	Nombre              string   `json:"Nombre" bson:"nombre"`
@@ -27,7 +28,8 @@ type NodoCuentaContable struct {
 // NodoArbolCuentaContable This struct is iseful for reduce band with usage in services that build a tree.
 type NodoArbolCuentaContable struct {
 	*General `bson:"inline"`
-	ID       string                     `json:"Codigo" bson:"_id,omitempty"`
+	ID       string                     `json:"Id" bson:"_id,omitempty"`
+	Codigo   string                     `json:"Codigo" bson:"codigo,omitempty"`
 	Hijos    []string                   `json:"Hijos" bson:"hijos,omitempty"`
 	HijosRef []*NodoArbolCuentaContable `json:"children" bson:"-"`
 	Padre    *string                    `json:"Padre" bson:"padre,omitempty"` // if the field is optional we put it as pointer.
