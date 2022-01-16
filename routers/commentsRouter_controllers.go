@@ -106,6 +106,33 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptosController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptosController"],
+        beego.ControllerComments{
+            Method: "GetTree",
+            Router: `/`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptosController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptosController"],
+        beego.ControllerComments{
+            Method: "AddNode",
+            Router: `/`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptosController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptosController"],
+        beego.ControllerComments{
+            Method: "GetByCodigo",
+            Router: `/:Codigo`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:DetalleCuentaContable"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:DetalleCuentaContable"],
         beego.ControllerComments{
             Method: "GetAll",

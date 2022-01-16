@@ -3,6 +3,7 @@ lastupdate.tmp
 # go.mod
 # go.sum
 # ./go.mod
+*.env
 .vscode/
 .vscode
 .scannerwork/
