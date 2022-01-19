@@ -71,9 +71,9 @@ Pruebas unitarias
 # Not Data
 ```
 ## Estado CI
-| Develop | Relese 0.1.1 | Master |
+| Develop | Relese 0.1.2 | Master |
 | -- | -- | -- |
-| [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/cuentas_contables_crud/status.svg?ref=refs/heads/develop)](https://hubci.portaloas.udistrital.edu.co/udistrital/cuentas_contables_crud) | [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/cuentas_contables_crud/status.svg?ref=refs/heads/release/0.1.1)](https://hubci.portaloas.udistrital.edu.co/udistrital/cuentas_contables_crud) | [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/cuentas_contables_crud/status.svg?ref=refs/heads/master)](https://hubci.portaloas.udistrital.edu.co/udistrital/cuentas_contables_crud) |
+| [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/cuentas_contables_crud/status.svg?ref=refs/heads/develop)](https://hubci.portaloas.udistrital.edu.co/udistrital/cuentas_contables_crud) | [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/cuentas_contables_crud/status.svg?ref=refs/heads/release/0.1.2)](https://hubci.portaloas.udistrital.edu.co/udistrital/cuentas_contables_crud) | [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/cuentas_contables_crud/status.svg?ref=refs/heads/master)](https://hubci.portaloas.udistrital.edu.co/udistrital/cuentas_contables_crud) |
 
 
 ## Licencia
