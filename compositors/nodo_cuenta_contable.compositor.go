@@ -6,6 +6,7 @@ import (
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -21,7 +22,9 @@ func (c *NodoCuentaContableCompositor) GetNodeByID(ID string) (node *models.Nodo
 
 	resul := &models.NodoCuentaContable{}
 
-	err = c.crudManager.GetDocumentByUUID(ID, models.ArbolPlanMaestroCuentasContCollection, resul)
+	id, _ := primitive.ObjectIDFromHex(ID)
+
+	err = c.crudManager.GetDocumentByUUID(id, models.ArbolPlanMaestroCuentasContCollection, resul)
 
 	return resul, err
 }

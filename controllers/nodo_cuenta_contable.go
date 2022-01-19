@@ -11,6 +11,7 @@ import (
 	"github.com/udistrital/cuentas_contables_crud/models"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // NodoCuentaContableController ...
@@ -111,7 +112,6 @@ func (c *NodoCuentaContableController) AddNode() {
 	var requestBody models.NodoCuentaContable
 
 	err := json.Unmarshal(c.Ctx.Input.RequestBody, &requestBody)
-	requestBody.ID = requestBody.Codigo
 
 	message := ""
 
@@ -224,15 +224,14 @@ func (c *NodoCuentaContableController) ChangeNodeState() {
 func (c *NodoCuentaContableController) UpdateNode() {
 	uuid := c.GetString(":UUID")
 	var requestBody models.NodoCuentaContable
-	requestBody.ID = requestBody.Codigo
 
 	err := json.Unmarshal(c.Ctx.Input.RequestBody, &requestBody)
 	message := ""
 
 	if err == nil {
-		requestBody.ID = uuid
+		requestBody.ID, _ = primitive.ObjectIDFromHex(uuid)
 		var resul interface{}
-		err = c.crudManager.UpdateDocument(requestBody, uuid, models.ArbolPlanMaestroCuentasContCollection, &resul)
+		err = c.crudManager.UpdateDocument(requestBody, requestBody.ID, models.ArbolPlanMaestroCuentasContCollection, &resul)
 		if err == nil {
 			message = "node-updated"
 		}
