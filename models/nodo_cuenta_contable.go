@@ -52,7 +52,8 @@ type ArbolNbFormatNode struct {
 
 // ArkaCuentasContables...
 type ArkaCuentasContables struct {
-	Codigo          string `json:"Codigo" bson:"_id,omitempty"`
+	ID              string `json:"Id" bson:"_id,omitempty"`
+	Codigo          string `json:"Codigo" bson:"codigo,omitempty"`
 	Descripcion     string `json:"DetalleCuentaID" bson:"detalle_cuenta_id"`
 	Naturaleza      string `json:"Naturaleza" bson:"naturaleza_id"`
 	Nombre          string `json:"Nombre" bson:"nombre"`

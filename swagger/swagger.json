@@ -818,11 +818,17 @@
                 "DetalleCuentaID": {
                     "type": "string"
                 },
+                "Id": {
+                    "type": "string"
+                },
                 "Naturaleza": {
                     "type": "string"
                 },
                 "Nombre": {
                     "type": "string"
+                },
+                "RequiereTercero": {
+                    "type": "boolean"
                 }
             }
         },
@@ -979,6 +985,9 @@
                         "type": "string"
                     }
                 },
+                "Id": {
+                    "type": "string"
+                },
                 "Nivel": {
                     "type": "integer",
                     "format": "int64"
@@ -1030,6 +1039,9 @@
                     "items": {
                         "type": "string"
                     }
+                },
+                "Id": {
+                    "type": "string"
                 },
                 "MonedaID": {
                     "type": "string"

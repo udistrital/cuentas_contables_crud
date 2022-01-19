@@ -540,10 +540,14 @@ definitions:
         type: string
       DetalleCuentaID:
         type: string
+      Id:
+        type: string
       Naturaleza:
         type: string
       Nombre:
         type: string
+      RequiereTercero:
+        type: boolean
   models.Comprobante:
     title: Comprobante
     type: object
@@ -649,6 +653,8 @@ definitions:
         type: array
         items:
           type: string
+      Id:
+        type: string
       Nivel:
         type: integer
         format: int64
@@ -684,6 +690,8 @@ definitions:
         type: array
         items:
           type: string
+      Id:
+        type: string
       MonedaID:
         type: string
       NaturalezaCuentaID:
