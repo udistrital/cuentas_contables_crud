@@ -1,9 +1,21 @@
+# Binarios, compilados y temporales
+*.exe
+*.zip
+*.tmp
+*.log
+*~
 cuentas_contables_crud
-lastupdate.tmp
-# go.mod
-# go.sum
-# ./go.mod
-.vscode/
+main
+
+# IDEs
 .vscode
 .scannerwork/
-main
+
+# Variables de entorno
+*.env
+!template.env
+
+# Swagger
+swagger/**
+!swagger/swagger.json
+!swagger/swagger.yml

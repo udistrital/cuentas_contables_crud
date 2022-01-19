@@ -21,7 +21,8 @@ type TipoComprobanteController struct {
 // GetByUUID función para obtener los objetos por id
 // @Title Get
 // @Description get object by id
-// @Success 200 TipoComprobante models.TipoComprobante
+// @Param id path string true "UUID del objeto"
+// @Success 200 {object} models.TipoComprobante
 // @Failure 403 :objectId is empty
 // @router /:id [get]
 func (c *TipoComprobanteController) GetByUUID() {
@@ -37,7 +38,7 @@ func (c *TipoComprobanteController) GetByUUID() {
 // GetAll función para obtener todos los objetos
 // @Title Get
 // @Description get all objects
-// @Success 200 TipoComprobante models.TipoComprobante
+// @Success 200 {object} []models.TipoComprobante
 // @Failure 403 :objectId is empty
 // @router / [get]
 func (c *TipoComprobanteController) GetAll() {
@@ -53,7 +54,7 @@ func (c *TipoComprobanteController) GetAll() {
 // @Title Post models.TipoComprobante
 // @Description Post models.TipoComprobante
 // @Param	body		body 	models.TipoComprobante	true		"Body para la creacion de models.TipoComprobante"
-// @Success 200 {int} models.TipoComprobante.Id
+// @Success 200 {string} "tipo-comprobante-added"
 // @Failure 403 body is empty
 // @router / [post]
 func (c *TipoComprobanteController) AddTipoComprobante() {
@@ -79,8 +80,9 @@ func (c *TipoComprobanteController) AddTipoComprobante() {
 // UpdateTipoComprobante Método Put de HTTP
 // @Title Update models.TipoComprobante
 // @Description Update models.TipoComprobante
-// @Param	body		body 	models.TipoComprobante	true		"The objectid you want to update"
-// @Success 200 {int} models.TipoComprobante.Id
+// @Param id   path  string                 true  "The objectid you want to update"
+// @Param body body  models.TipoComprobante true  "The new content"
+// @Success 200 {string} "tipo-comprobante-updated"
 // @Failure 403 body is empty
 // @router /:id [put]
 func (c *TipoComprobanteController) UpdateTipoComprobante() {
@@ -107,9 +109,8 @@ func (c *TipoComprobanteController) UpdateTipoComprobante() {
 // DeleteTipoComprobante Método Delete de HTTP
 // @Title Delete models.TipoComprobante
 // @Description Delete models.TipoComprobante
-// @Param	body		body 	models.TipoComprobante	true		"The objectid you want to delete"
-// @Success 200 {int} models.TipoComprobante.Id
-// @Failure 403 body is empty
+// @Param	id path	string true "The objectid you want to delete"
+// @Success 200 {string} "tipo-comprobante-deleted"
 // @router /:id [delete]
 func (c *TipoComprobanteController) DeleteTipoComprobante() {
 	objectID := c.Ctx.Input.Param(":id")
