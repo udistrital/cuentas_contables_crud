@@ -9,6 +9,7 @@ import (
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 
 )
 
@@ -79,5 +80,35 @@ func (c *ConceptosController) AddNode() {
 
 	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
 
+	c.ServeJSON()
+}
+
+// UpdateNode Método PUT de HTTP
+// @Title PUT UpdateNode
+// @Description Put models.Conceptos
+// @Param	UUID		path 	string	true		"The key for object to update"
+// @Param	body		body 	models.Conceptos	true		"Body para la actualizacion de models.Conceptos"
+// @Success 200 {int} models.Conceptos.Id
+// @Failure 403 body is empty
+// @router /:UUID [put]
+func (c *ConceptosController) UpdateNode() {
+	uuid := c.GetString(":UUID")
+	var requestBody models.Conceptos
+
+	err := json.Unmarshal(c.Ctx.Input.RequestBody, &requestBody)
+	message := ""
+
+	if err == nil {
+		requestBody.ID, _ = primitive.ObjectIDFromHex(uuid)
+		var resul interface{}
+		err = c.crudManager.UpdateDocument(requestBody, requestBody.ID, models.ArbolConceptosCollection, &resul)
+		if err == nil {
+			message = "node-updated"
+		}
+	} else {
+		message = "invalid-body"
+	}
+
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
 	c.ServeJSON()
 }
