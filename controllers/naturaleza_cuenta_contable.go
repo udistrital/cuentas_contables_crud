@@ -18,8 +18,7 @@ type NaturalezaCuentaContable struct {
 // GetAll función para obtener todos los objetos
 // @Title Get
 // @Description get all objects
-// @Success 200 TipoComprobante models.TipoComprobante
-// @Failure 403 :objectId is empty
+// @Success 200 {object} []models.NaturalezaCuentaContable
 // @router / [get]
 func (c *NaturalezaCuentaContable) GetAll() {
 	filter := make(map[string]interface{})

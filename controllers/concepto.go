@@ -18,11 +18,11 @@ type ConceptoController struct {
 	crudManager  managers.CrudManager
 }
 
-// Add Método Post de HTTP
+// Add ...
 // @Title Post models.Concepto
-// @Description Post models.Concepto
+// @Description Método Post de HTTP de models.Concepto
 // @Param	body		body 	models.Concepto	true		"Body para la creacion de models.Concepto"
-// @Success 200 {int} models.Concepto.Id
+// @Success 200 {object} models.Concepto
 // @Failure 403 body is empty
 // @router / [post]
 func (c *ConceptoController) Add() {
@@ -54,10 +54,11 @@ func (c *ConceptoController) Add() {
 	c.ServeJSON()
 }
 
-// GetOne función para obtener todos los objetos
+// GetOne ...
 // @Title Get
-// @Description get all objects
-// @Success 200 TipoComprobante models.Concepto
+// @Description Trae un objeto por UUID
+// @Param UUID path string true "UUID del objeto"
+// @Success 200 {object} models.Concepto
 // @Failure 403 :objectId is empty
 // @router /:UUID [get]
 func (c *ConceptoController) GetOne() {
@@ -75,7 +76,7 @@ func (c *ConceptoController) GetOne() {
 // GetAll función para obtener todos los objetos
 // @Title Get
 // @Description get all objects
-// @Success 200 TipoComprobante models.TipoComprobante
+// @Success 200 {object} []models.Concepto
 // @Failure 403 :objectId is empty
 // @router / [get]
 func (c *ConceptoController) GetAll() {
@@ -98,8 +99,9 @@ func (c *ConceptoController) GetAll() {
 // UpdateNode Método PUT de HTTP
 // @Title PUT UpdateNode
 // @Description Post models.Concepto
-// @Param	UUID		path 	string	true		"The key for object to update"
-// @Success 200 {int} models.Concepto.ID
+// @Param UUID path string          true  "UUID del objeto a actualizar"
+// @Param body body models.Concepto true  "El nuevo contenido"
+// @Success 200 {string} "concept-updated"
 // @Failure 403 body is empty
 // @router /:UUID [put]
 func (c *ConceptoController) UpdateNode() {
@@ -128,7 +130,7 @@ func (c *ConceptoController) UpdateNode() {
 // @Title Delete Delete
 // @Description Post models.Concepto
 // @Param	UUID		path 	string	true		"The key for object to update"
-// @Success 200 {int} models.Concepto.ID
+// @Success 200 {string} "concept-deleted"
 // @Failure 403 body is empty
 // @router /:UUID [delete]
 func (c *ConceptoController) Delete() {

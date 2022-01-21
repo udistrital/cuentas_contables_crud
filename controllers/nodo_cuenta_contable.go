@@ -11,6 +11,7 @@ import (
 	"github.com/udistrital/cuentas_contables_crud/models"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // NodoCuentaContableController ...
@@ -25,7 +26,8 @@ type NodoCuentaContableController struct {
 // GetByUUID función para obtener todos los objetos
 // @Title Get
 // @Description get all objects
-// @Success 200 NodoRubroApropiacion models.NodoCuentaContable
+// @Param UUID path string true "UUID del objeto"
+// @Success 200 {object} models.NodoCuentaContable
 // @Failure 403 :objectId is empty
 // @router /:UUID [get]
 func (c *NodoCuentaContableController) GetByUUID() {
@@ -42,9 +44,9 @@ func (c *NodoCuentaContableController) GetByUUID() {
 // GetCuentasUsablesByNaturaleza obtiene las cuentas de máximo nivel (sin hijos) segun su naturaleza
 // @Title GetCuentas
 // @Description obtiene las cuentas de máximo nivel (sin hijos) segun su naturaleza
-// @Param	NaturalezaCuentaContable		path 	string	true	"NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)"
-// @Param	withInactives	query	bool	false	"With inactives nodes. False is default"
-// @Success 200  models.ArkaCuentasContables
+// @Param NaturalezaCuentaContable path  string false "NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)"
+// @Param withInactives            query bool   false "With inactives nodes. False is default"
+// @Success 200 {object} []models.ArkaCuentasContables
 // @Failure 403 :objectId is empty
 // @router /getCuentas/:NaturalezaCuentaContable [get]
 func (c *NodoCuentaContableController) GetCuentasUsablesByNaturaleza() {
@@ -70,7 +72,7 @@ func (c *NodoCuentaContableController) GetCuentasUsablesByNaturaleza() {
 // @Title Get
 // @Description get all objects based on naturaleza cuenta contable for arka client
 // @Param	NaturalezaCuentaContable		path 	string	true	"NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)"
-// @Success 200  models.ArkaCuentasContables
+// @Success 200 {object} []models.ArkaCuentasContables
 // @Failure 403 :objectId is empty
 // @router /getNodosCuentasArka/:NaturalezaCuentaContable [get]
 func (c *NodoCuentaContableController) GetByNaturalezaArka() {
@@ -88,7 +90,7 @@ func (c *NodoCuentaContableController) GetByNaturalezaArka() {
 // @Title Get
 // @Description get all objects based on naturaleza cuenta contable
 // @Param	NaturalezaCuentaContable		path 	string	true	"NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)"
-// @Success 200 NodoRubroApropiacion models.NodoCuentaContable
+// @Success 200 {object} []models.ArbolNbFormatNode
 // @Failure 403 :objectId is empty
 // @router /cuentas/:NaturalezaCuentaContable [get]
 func (c *NodoCuentaContableController) GetByNaturalezaCuentaContable() {
@@ -103,7 +105,7 @@ func (c *NodoCuentaContableController) GetByNaturalezaCuentaContable() {
 // @Title Post models.NodoCuentaContable
 // @Description Post models.NodoCuentaContable
 // @Param	body		body 	models.NodoCuentaContable	true		"Body para la creacion de models.NodoCuentaContable"
-// @Success 200 {int} models.NodoCuentaContable.Id
+// @Success 200 {string} "node-added"
 // @Failure 403 body is empty
 // @router / [post]
 func (c *NodoCuentaContableController) AddNode() {
@@ -129,13 +131,13 @@ func (c *NodoCuentaContableController) AddNode() {
 // GetTree función para obtener todos los objetos
 // @Title GetTree
 // @Description get all objects
-// @Param	query	fullTree	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
-// @Success 200 NodoRubroApropiacion []models.NodoCuentaContable
+// @Param	fullTree query	bool	false	"With no active? Default false"
+// @Success 200 {object} []models.ArbolNbFormatNode
 // @Failure 403 :objectId is empty
 // @router / [get]
 func (c *NodoCuentaContableController) GetTree() {
 	fullTree := false
-	if v, err := c.GetBool("fullTree"); v && err == nil {
+	if v, err := c.GetBool("fullTree", false); err == nil {
 		fullTree = v
 	}
 	treeData, err := c.nodeCCCompositor.BuildTree(fullTree)
@@ -146,11 +148,11 @@ func (c *NodoCuentaContableController) GetTree() {
 // GetAll ...
 // @Title Get All
 // @Description Obtiene cuentas contables
-// @Param	query	query	string	false	"Filter. e.g. {"naturaleza_id":"credito"}"
-// @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
-// @Param	offset	query	string	false	"Start position of result set. Must be an integer"
-// @Param	withInactives	query	bool	false	"With inactives nodes. False is default"
-// @Success 200 {object} models.ArkaCuentasContables
+// @Param query         query string false "Filter. e.g. {"naturaleza_id":"credito"}"
+// @Param limit         query int    false "Limit the size of result set. Must be an integer"
+// @Param offset        query int    false "Start position of result set. Must be an integer"
+// @Param withInactives query bool   false "With inactives nodes. False is default"
+// @Success 200 {object} []models.ArkaCuentasContables
 // @Failure 404 not found resource
 // @router /cuentas [get]
 func (c *NodoCuentaContableController) GetAll() {
@@ -158,7 +160,7 @@ func (c *NodoCuentaContableController) GetAll() {
 	var limit int64 = -1
 	var offset int64 = 0
 	withInactives := false
-	if v, err := c.GetBool("withInactives"); v && err == nil {
+	if v, err := c.GetBool("withInactives", false); err == nil {
 		withInactives = v
 	}
 	if v := c.GetString("query"); v != "" {
@@ -190,9 +192,9 @@ func (c *NodoCuentaContableController) GetAll() {
 
 // ChangeNodeState Método PUT de HTTP
 // @Title PUT ChangeNodeState
-// @Description Post models.NodoCuentaContable
+// @Description Change Node State. TODO: currently, this funtion will only change state of target node, in future realises maybe it can change full branch state.
 // @Param	UUID		path 	string	true		"The key for object to update state"
-// @Success 200 {int} models.NodoCuentaContable.Id
+// @Success 200 {string} "node-state-changed"
 // @Failure 403 body is empty
 // @router /change_node_state/:UUID [put]
 func (c *NodoCuentaContableController) ChangeNodeState() {
@@ -214,8 +216,9 @@ func (c *NodoCuentaContableController) ChangeNodeState() {
 // UpdateNode Método PUT de HTTP
 // @Title PUT UpdateNode
 // @Description Post models.NodoCuentaContable
-// @Param	UUID		path 	string	true		"The key for object to update"
-// @Success 200 {int} models.NodoCuentaContable.Id
+// @Param UUID path  string                    true  "The key for object to update"
+// @Param body body  models.NodoCuentaContable true  "The new content"
+// @Success 200 {string} "node-updated"
 // @Failure 403 body is empty
 // @router /:UUID [put]
 func (c *NodoCuentaContableController) UpdateNode() {
@@ -226,9 +229,9 @@ func (c *NodoCuentaContableController) UpdateNode() {
 	message := ""
 
 	if err == nil {
-		requestBody.ID = uuid
+		requestBody.ID, _ = primitive.ObjectIDFromHex(uuid)
 		var resul interface{}
-		err = c.crudManager.UpdateDocument(requestBody, uuid, models.ArbolPlanMaestroCuentasContCollection, &resul)
+		err = c.crudManager.UpdateDocument(requestBody, requestBody.ID, models.ArbolPlanMaestroCuentasContCollection, &resul)
 		if err == nil {
 			message = "node-updated"
 		}

@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/udistrital/cuentas_contables_crud/models"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -46,7 +47,7 @@ func (m *NodoCuentaContableManager) getNodesByFilter(filter map[string]interface
 	err = m.crudManager.GetAllDocuments(filter, -1, 0, models.ArbolPlanMaestroCuentasContCollection, func(curr *mongo.Cursor) {
 		var node models.NodoArbolCuentaContable
 		if err := curr.Decode(&node); err == nil {
-			nodesDataIndexed[node.ID] = &node
+			nodesDataIndexed[node.Codigo] = &node
 			nodesData = append(nodesData, &node)
 		}
 	})
@@ -68,17 +69,17 @@ func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable)
 	}
 
 	if nodeData.Padre != nil {
-		if e := m.crudManager.GetDocumentByUUID(*nodeData.Padre, models.ArbolPlanMaestroCuentasContCollection, &fatherData); e != nil {
+		if e := m.crudManager.GetDocumentByCodigo(*nodeData.Padre, models.ArbolPlanMaestroCuentasContCollection, &fatherData); e != nil {
 			return errors.New("father-no-found")
 		}
 	}
 
 	nodeData.General = &models.General{}
 	nodeData.Activo = true
-	originalID := nodeData.ID
+	originalID := nodeData.Codigo
 	if fatherData != nil { // infer level from father if it exist.
 		nodeData.Nivel = fatherData.Nivel + 1
-		nodeData.ID = fatherData.ID + "-" + nodeData.ID
+		nodeData.Codigo = fatherData.Codigo + "-" + nodeData.Codigo
 	} else {
 		nodeData.Nivel = 1 // put 1 as default level
 	}
@@ -98,11 +99,11 @@ func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable)
 	}
 
 	if UUID != "" {
-		nodeData.ID = UUID
+		nodeData.ID, _ = primitive.ObjectIDFromHex(UUID)
 	}
 
 	if fatherData != nil {
-		fatherData.Hijos = append(fatherData.Hijos, nodeData.ID)
+		fatherData.Hijos = append(fatherData.Hijos, nodeData.Codigo)
 		var updtDoc interface{}
 		updMap := map[string]interface{}{
 			"hijos": fatherData.Hijos,
@@ -134,15 +135,15 @@ func (m *NodoCuentaContableManager) GetRootNodes(NaturalezaCuentaContable string
 	}
 
 	for _, root := range rootsData {
-		index := strings.IndexAny(root.ID, "-")
+		index := strings.IndexAny(root.Codigo, "-")
 		if index == -1 {
-			index = len(root.ID)
+			index = len(root.Codigo)
 		}
-		newdata := stringInSlice(root.ID[0:index], codigo)
+		newdata := stringInSlice(root.Codigo[0:index], codigo)
 		if newdata {
 			continue
 		}
-		codigo = append(codigo, root.ID[0:1])
+		codigo = append(codigo, root.Codigo[0:1])
 		rootsDataFormated = append(rootsDataFormated, &models.ArbolNbFormatNode{
 			Data: root,
 		})
