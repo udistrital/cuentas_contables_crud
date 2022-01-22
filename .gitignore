@@ -5,12 +5,6 @@
 *.log
 *~
 cuentas_contables_crud
-lastupdate.tmp
-# go.mod
-# go.sum
-# ./go.mod
-*.env
-.vscode/
 main
 
 # IDEs
