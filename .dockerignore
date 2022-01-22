@@ -1,7 +1,8 @@
-.git
-go.mod
-go.sum
+*.git*
+.drone.yml
+*.exe
 cuentas_contables_crud
-cuentas_contables_crud.exe
-lastupdate.tmp
+main
+*.tmp
+*.env
 .vscode
