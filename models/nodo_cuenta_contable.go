@@ -24,6 +24,7 @@ type NodoCuentaContable struct {
 	MonedaID            string             `json:"MonedaID" bson:"moneda_id"`
 	RequiereTercero     bool               `json:"RequiereTercero" bson:"requiere_tercero"`
 	CentroDecostosID    string             `json:"CentroDecostosID" bson:"centro_costos_id"`
+	TipoCuentaID        string             `json:"TipoCuentaID" bson:"tipo_cuenta_id"`
 	Nmnc                bool               `json:"Nmnc" bson:"nmnc"`
 }
 
