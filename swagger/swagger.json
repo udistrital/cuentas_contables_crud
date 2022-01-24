@@ -528,6 +528,35 @@
                 }
             }
         },
+        "/nodo_cuenta_contable/codigo/{code}": {
+            "get": {
+                "tags": [
+                    "nodo_cuenta_contable"
+                ],
+                "description": "get all objects",
+                "operationId": "NodoCuentaContableController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "code",
+                        "description": "Codigo del objeto",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.NodoCuentaContable"
+                        }
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            }
+        },
         "/nodo_cuenta_contable/cuentas": {
             "get": {
                 "tags": [
@@ -1169,7 +1198,7 @@
                     }
                 },
                 "Id": {
-                    "type": "string"
+                    "$ref": "#/definitions/primitive.ObjectID"
                 },
                 "Nivel": {
                     "type": "integer",
@@ -1224,7 +1253,7 @@
                     }
                 },
                 "Id": {
-                    "type": "string"
+                    "$ref": "#/definitions/primitive.ObjectID"
                 },
                 "MonedaID": {
                     "type": "string"
@@ -1307,10 +1336,6 @@
                 }
             }
         },
-        "primitive.ObjectID": {
-            "title": "ObjectID",
-            "type": "object"
-        },
         "models.TipoMoneda": {
             "title": "TipoMoneda",
             "type": "object",
@@ -1322,6 +1347,10 @@
                     "type": "string"
                 }
             }
+        },
+        "primitive.ObjectID": {
+            "title": "ObjectID",
+            "type": "object"
         }
     },
     "tags": [

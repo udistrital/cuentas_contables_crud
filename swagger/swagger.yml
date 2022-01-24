@@ -388,6 +388,25 @@ paths:
           description: '{string} "node-state-changed"'
         "403":
           description: body is empty
+  /nodo_cuenta_contable/codigo/{code}:
+    get:
+      tags:
+      - nodo_cuenta_contable
+      description: get all objects
+      operationId: NodoCuentaContableController.Get
+      parameters:
+      - in: path
+        name: code
+        description: Codigo del objeto
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.NodoCuentaContable'
+        "403":
+          description: :objectId is empty
   /nodo_cuenta_contable/cuentas:
     get:
       tags:
@@ -776,7 +795,7 @@ definitions:
         items:
           type: string
       Id:
-        type: string
+        $ref: '#/definitions/primitive.ObjectID'
       Nivel:
         type: integer
         format: int64
@@ -813,7 +832,7 @@ definitions:
         items:
           type: string
       Id:
-        type: string
+        $ref: '#/definitions/primitive.ObjectID'
       MonedaID:
         type: string
       NaturalezaCuentaID:
@@ -868,9 +887,6 @@ definitions:
         type: string
       TipoDocumento:
         type: string
-  primitive.ObjectID:
-    title: ObjectID
-    type: object
   models.TipoMoneda:
     title: TipoMoneda
     type: object
@@ -879,6 +895,9 @@ definitions:
         type: string
       Label:
         type: string
+  primitive.ObjectID:
+    title: ObjectID
+    type: object
 tags:
 - name: nodo_cuenta_contable
   description: |
