@@ -3,18 +3,17 @@ package managers
 import (
 	"context"
 	"errors"
-	_ "fmt"
 	_ "log"
 	"strings"
 
 	"github.com/udistrital/cuentas_contables_crud/models"
-	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type ConceptosManager struct {
-	Ctx			context.Context
-	crudManager	CrudManager
+	Ctx         context.Context
+	crudManager CrudManager
 }
 
 // NewConceptosManager initialicer for this manager. useful if you want to pass the app context over the DB operations (transactions will need this)
@@ -36,7 +35,7 @@ func (m *ConceptosManager) AddNodeConceptos(nodeData *models.Conceptos) (err err
 	if objectID, err = primitive.ObjectIDFromHex(nodeData.TipoComprobanteId); err != nil {
 		return err
 	}
-	if e:= m.crudManager.GetDocumentByUUID(objectID, models.TipoComprobanteCollection, &tempResults); e != nil {
+	if e := m.crudManager.GetDocumentByUUID(objectID, models.TipoComprobanteCollection, &tempResults); e != nil {
 		return errors.New("tipo-comprobante-no-found")
 	}
 
@@ -84,9 +83,7 @@ func (m *ConceptosManager) GetLevelParameterForNodeConceptos(level int) (*models
 	}
 	var parameter *models.ArbolConceptosParameters
 	err := m.crudManager.GetAllDocuments(filter, 1, 0, models.ArbolConceptosParametersCollection, func(curr *mongo.Cursor) {
-
-		if err := curr.Decode(&parameter); err == nil {
-		}
+		curr.Decode(&parameter)
 		return
 	})
 
@@ -96,11 +93,12 @@ func (m *ConceptosManager) GetLevelParameterForNodeConceptos(level int) (*models
 // GetRootNodesConceptos returns the "Plan maestro" tree's root nodes
 func (m *ConceptosManager) GetRootNodesConceptos(withNoActive ...bool) (rootsDataFormated []*models.ArbolConceptosFormatNode, nodesDataIndexed map[string]*models.NodoArbolConceptos, err error) {
 	var codigo []string
+	var rootsData []*models.NodoArbolConceptos
 	filter := make(map[string]interface{})
 
 	filter = map[string]interface{}{"padre": nil}
 
-	rootsData, nodesDataIndexed, err := m.getNodesByFilterConceptos(filter, withNoActive...)
+	rootsData, nodesDataIndexed, err = m.getNodesByFilterConceptos(filter, withNoActive...)
 	if err != nil {
 		return
 	}
@@ -131,13 +129,9 @@ func (m *ConceptosManager) GetNoRootNodesConceptos(withNoActive ...bool) (nodesD
 }
 
 func (m *ConceptosManager) getNodesByFilterConceptos(filter map[string]interface{}, withNoActive ...bool) (nodesData []*models.NodoArbolConceptos, nodesDataIndexed map[string]*models.NodoArbolConceptos, err error) {
-	localfilter := make(map[string]interface{})
-	if filter != nil {
-		localfilter = filter
-	}
 
 	if len(withNoActive) == 0 || (len(withNoActive) > 0 && !withNoActive[0]) {
-		localfilter["activo"] = true
+		filter["activo"] = true
 	}
 
 	nodesDataIndexed = make(map[string]*models.NodoArbolConceptos)
