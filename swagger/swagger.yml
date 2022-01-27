@@ -204,7 +204,7 @@ paths:
     get:
       tags:
       - conceptos
-      description: get conceptos
+      description: funcion para obtener todos los objetos
       operationId: ConceptosController.GetTree
       responses:
         "200":
@@ -212,7 +212,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/models.Conceptos'
+              $ref: '#/definitions/models.ArbolConceptosFormatNode'
         "400":
           description: :objectId is empty
     post:
@@ -619,6 +619,16 @@ paths:
             items:
               $ref: '#/definitions/models.TipoMoneda'
 definitions:
+  models.ArbolConceptosFormatNode:
+    title: ArbolConceptosFormatNode
+    type: object
+    properties:
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/models.ArbolConceptosFormatNode'
+      data:
+        $ref: '#/definitions/models.NodoArbolConceptos'
   models.ArbolNbFormatNode:
     title: ArbolNbFormatNode
     type: object
@@ -789,6 +799,35 @@ definitions:
         type: string
       Label:
         type: string
+  models.NodoArbolConceptos:
+    title: NodoArbolConceptos
+    type: object
+    properties:
+      Activo:
+        type: boolean
+      Codigo:
+        type: string
+      FechaCreacion:
+        type: string
+      FechaModificacion:
+        type: string
+      Hijos:
+        type: array
+        items:
+          type: string
+      Nivel:
+        type: integer
+        format: int64
+      Nombre:
+        type: string
+      Padre:
+        type: string
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/models.NodoArbolConceptos'
+      id:
+        $ref: '#/definitions/primitive.ObjectID'
   models.NodoArbolCuentaContable:
     title: NodoArbolCuentaContable
     type: object

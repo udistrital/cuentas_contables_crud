@@ -24,8 +24,8 @@ type ConceptosController struct {
 
 // GetTree ...
 // @Title GetTree
-// @Description get conceptos
-// @Success 200 {object} []models.Conceptos
+// @Description funcion para obtener todos los objetos
+// @Success 200 {object} []models.ArbolConceptosFormatNode
 // @Failure 400 :objectId is empty
 // @router / [get]
 func (c *ConceptosController) GetTree() {
@@ -95,26 +95,16 @@ func (c *ConceptosController) UpdateNode() {
 	uuid := c.GetString(":UUID")
 	var requestBody models.Conceptos
 
-	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &requestBody); err == nil {
-		requestBody.ID, _ = primitive.ObjectIDFromHex(uuid)
-		var resul interface{}
-		if err = c.crudManager.UpdateDocument(requestBody, requestBody.ID, models.ArbolConceptosCollection, &resul); err == nil {
-			//message = "node-updated"
-			c.Data["json"] = c.commonHelper.DefaultResponse(200, err, requestBody)
-		} else {
-			panic(errorctrl.Error("UpdateNode", err, "500"))
-		}
-		if err == nil {
-		}
-		//message := ""
+	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &requestBody); err != nil {
+		panic(errorctrl.Error("UpdateNode", err, "400"))
+
+	}
+	requestBody.ID, _ = primitive.ObjectIDFromHex(uuid)
+	var resul interface{}
+	if err := c.crudManager.UpdateDocument(requestBody, requestBody.ID, models.ArbolConceptosCollection, &resul); err == nil {
+		c.Data["json"] = c.commonHelper.DefaultResponse(200, err, requestBody)
 	} else {
 		panic(errorctrl.Error("UpdateNode", err, "500"))
 	}
-
-	// if err == nil {
-	// } else {
-	// 	message = "invalid-body"
-	// }
-
 	c.ServeJSON()
 }
