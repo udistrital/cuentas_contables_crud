@@ -200,6 +200,84 @@ paths:
           description: '{string} "concept-deleted"'
         "403":
           description: body is empty
+  /conceptos/:
+    get:
+      tags:
+      - conceptos
+      description: funcion para obtener todos los objetos
+      operationId: ConceptosController.GetTree
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/models.ArbolConceptosFormatNode'
+        "400":
+          description: :objectId is empty
+    post:
+      tags:
+      - conceptos
+      description: create conceptos
+      operationId: ConceptosController.AddNode
+      parameters:
+      - in: body
+        name: body
+        description: Body para la creacion de conceptos
+        required: true
+        schema:
+          $ref: '#/definitions/models.Conceptos'
+      responses:
+        "201":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Conceptos'
+        "400":
+          description: body is empty
+  /conceptos/{Codigo}:
+    get:
+      tags:
+      - conceptos
+      description: get conceptos por codigo
+      operationId: ConceptosController.GetByCodigo
+      parameters:
+      - in: path
+        name: Codigo
+        description: Codigo del concepto
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Conceptos'
+        "400":
+          description: :object is empty
+  /conceptos/{UUID}:
+    put:
+      tags:
+      - conceptos
+      description: Put conceptos
+      operationId: ConceptosController.PUT UpdateNode
+      parameters:
+      - in: path
+        name: UUID
+        description: The key for object to update
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: Body para la actualizacion de models.Conceptos
+        required: true
+        schema:
+          $ref: '#/definitions/models.Conceptos'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Conceptos'
+        "400":
+          description: body is empty
   /detalle_cuenta_contable/:
     get:
       tags:
@@ -308,8 +386,7 @@ paths:
     put:
       tags:
       - nodo_cuenta_contable
-      description: 'Change Node State. TODO: currently, this funtion will only change
-        state of target node, in future realises maybe it can change full branch state.'
+      description: 'Change Node State. TODO: currently, this funtion will only change state of target node, in future realises maybe it can change full branch state.'
       operationId: NodoCuentaContableController.PUT ChangeNodeState
       parameters:
       - in: path
@@ -322,6 +399,25 @@ paths:
           description: '{string} "node-state-changed"'
         "403":
           description: body is empty
+  /nodo_cuenta_contable/codigo/{code}:
+    get:
+      tags:
+      - nodo_cuenta_contable
+      description: get all objects
+      operationId: NodoCuentaContableController.Get
+      parameters:
+      - in: path
+        name: code
+        description: Codigo del objeto
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.NodoCuentaContable'
+        "403":
+          description: :objectId is empty
   /nodo_cuenta_contable/cuentas:
     get:
       tags:
@@ -536,6 +632,16 @@ paths:
             items:
               $ref: '#/definitions/models.TipoMoneda'
 definitions:
+  models.ArbolConceptosFormatNode:
+    title: ArbolConceptosFormatNode
+    type: object
+    properties:
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/models.ArbolConceptosFormatNode'
+      data:
+        $ref: '#/definitions/models.NodoArbolConceptos'
   models.ArbolNbFormatNode:
     title: ArbolNbFormatNode
     type: object
@@ -625,6 +731,61 @@ definitions:
         type: string
       Nombre:
         type: string
+  models.Conceptos:
+    title: Conceptos
+    type: object
+    properties:
+      Activo:
+        type: boolean
+      Aplicacion:
+        type: string
+      AreaFuncional:
+        type: integer
+        format: int64
+      ClaseTransaccionId:
+        type: integer
+        format: int64
+      Codigo:
+        type: string
+      CodigoBogdata:
+        type: string
+      CuentasCredito:
+        type: array
+        items:
+          type: string
+      CuentasDebito:
+        type: array
+        items:
+          type: string
+      EntidadPresupuestal:
+        type: integer
+        format: int64
+      FechaCreacion:
+        type: string
+      FechaModificacion:
+        type: string
+      Hijos:
+        type: array
+        items:
+          type: string
+      Metadatos:
+        type: string
+      Nivel:
+        type: integer
+        format: int64
+      Nombre:
+        type: string
+      Padre:
+        type: string
+      RubroPresupuestalId:
+        type: string
+      TipoComprobanteId:
+        type: string
+      TipoTransaccionId:
+        type: integer
+        format: int64
+      id:
+        $ref: '#/definitions/primitive.ObjectID'
   models.DetalleCuentaContable:
     title: DetalleCuentaContable
     type: object
@@ -651,6 +812,35 @@ definitions:
         type: string
       Label:
         type: string
+  models.NodoArbolConceptos:
+    title: NodoArbolConceptos
+    type: object
+    properties:
+      Activo:
+        type: boolean
+      Codigo:
+        type: string
+      FechaCreacion:
+        type: string
+      FechaModificacion:
+        type: string
+      Hijos:
+        type: array
+        items:
+          type: string
+      Nivel:
+        type: integer
+        format: int64
+      Nombre:
+        type: string
+      Padre:
+        type: string
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/models.NodoArbolConceptos'
+      id:
+        $ref: '#/definitions/primitive.ObjectID'
   models.NodoArbolCuentaContable:
     title: NodoArbolCuentaContable
     type: object
@@ -806,3 +996,6 @@ tags:
 - name: tipo_cuenta
   description: |
     TipoCuenta ...
+- name: conceptos
+  description: |
+    ConceptosController ...

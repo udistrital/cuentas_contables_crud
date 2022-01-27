@@ -2,7 +2,6 @@ package compositors
 
 import (
 	"context"
-
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
@@ -26,6 +25,15 @@ func (c *NodoCuentaContableCompositor) GetNodeByID(ID string) (node *models.Nodo
 
 	err = c.crudManager.GetDocumentByUUID(id, models.ArbolPlanMaestroCuentasContCollection, resul)
 
+	return resul, err
+}
+
+// GetNodeByCode Returns a *models.NodoCuentaContable by it's code
+func (c *NodoCuentaContableCompositor) GetNodeByCode(Codigo string) (node *models.NodoCuentaContable, err error) {
+
+	resul := &models.NodoCuentaContable{}
+
+	err = c.crudManager.GetDocumentByItem(Codigo, "codigo", models.ArbolPlanMaestroCuentasContCollection, resul)
 	return resul, err
 }
 
