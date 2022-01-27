@@ -97,9 +97,11 @@ func (c *ConceptosController) UpdateNode() {
 
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &requestBody); err != nil {
 		panic(errorctrl.Error("UpdateNode", err, "400"))
-
 	}
-	requestBody.ID, _ = primitive.ObjectIDFromHex(uuid)
+	var err error
+	if requestBody.ID, err = primitive.ObjectIDFromHex(uuid); err != nil {
+		panic(errorctrl.Error("UpdateNode", err, "400"))
+	}
 	var resul interface{}
 	if err := c.crudManager.UpdateDocument(requestBody, requestBody.ID, models.ArbolConceptosCollection, &resul); err == nil {
 		c.Data["json"] = c.commonHelper.DefaultResponse(200, err, requestBody)
