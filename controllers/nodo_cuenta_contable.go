@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 	"github.com/udistrital/cuentas_contables_crud/compositors"
@@ -32,8 +31,24 @@ type NodoCuentaContableController struct {
 // @router /:UUID [get]
 func (c *NodoCuentaContableController) GetByUUID() {
 	UUID := c.GetString(":UUID")
-
 	nodeInfo, err := c.nodeCCCompositor.GetNodeByID(UUID)
+
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, nodeInfo)
+
+	c.ServeJSON()
+
+}
+
+// GetByCodigo función para obtener todos los objetos por codigo
+// @Title Get
+// @Description get all objects
+// @Param code path string true "Codigo del objeto"
+// @Success 200 {object} models.NodoCuentaContable
+// @Failure 403 :objectId is empty
+// @router /codigo/:code [get]
+func (c *NodoCuentaContableController) GetByCodigo() {
+	Codigo := c.GetString(":code")
+	nodeInfo, err := c.nodeCCCompositor.GetNodeByCode(Codigo)
 
 	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, nodeInfo)
 
