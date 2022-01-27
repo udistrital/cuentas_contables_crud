@@ -605,6 +605,19 @@ paths:
       responses:
         "200":
           description: '{string} "tipo-comprobante-deleted"'
+  /tipo_cuenta/:
+    get:
+      tags:
+      - tipo_cuenta
+      description: get all objects
+      operationId: TipoCuentaController.Get
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/models.TipoCuenta'
   /tipo_moneda/:
     get:
       tags:
@@ -898,6 +911,8 @@ definitions:
         type: string
       RequiereTercero:
         type: boolean
+      TipoCuentaID:
+        type: string
   models.Parametros:
     title: Parametros
     type: object
@@ -937,6 +952,14 @@ definitions:
         type: string
       TipoDocumento:
         type: string
+  models.TipoCuenta:
+    title: TipoCuenta
+    type: object
+    properties:
+      Id:
+        type: string
+      Label:
+        type: string
   models.TipoMoneda:
     title: TipoMoneda
     type: object
@@ -970,6 +993,9 @@ tags:
 - name: centro_costos
   description: |
     CentroCostos ...
+- name: tipo_cuenta
+  description: |
+    TipoCuenta ...
 - name: conceptos
   description: |
     ConceptosController ...

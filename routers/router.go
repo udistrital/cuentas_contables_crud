@@ -55,6 +55,11 @@ func init() {
 				&controllers.ConceptoController{},
 			),
 		),
+		beego.NSNamespace("/tipo_cuenta",
+			beego.NSInclude(
+				&controllers.TipoCuentaController{},
+			),
+		),
 		beego.NSNamespace("/conceptos",
 			beego.NSInclude(
 				&controllers.ConceptosController{},

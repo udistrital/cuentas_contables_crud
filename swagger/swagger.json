@@ -919,6 +919,26 @@
                 }
             }
         },
+        "/tipo_cuenta/": {
+            "get": {
+                "tags": [
+                    "tipo_cuenta"
+                ],
+                "description": "get all objects",
+                "operationId": "TipoCuentaController.Get",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.TipoCuenta"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/tipo_moneda/": {
             "get": {
                 "tags": [
@@ -1350,6 +1370,9 @@
                 },
                 "RequiereTercero": {
                     "type": "boolean"
+                },
+                "TipoCuentaID": {
+                    "type": "string"
                 }
             }
         },
@@ -1410,6 +1433,18 @@
                 }
             }
         },
+        "models.TipoCuenta": {
+            "title": "TipoCuenta",
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "string"
+                },
+                "Label": {
+                    "type": "string"
+                }
+            }
+        },
         "models.TipoMoneda": {
             "title": "TipoMoneda",
             "type": "object",
@@ -1455,6 +1490,10 @@
         {
             "name": "centro_costos",
             "description": "CentroCostos ...\n"
+        },
+        {
+            "name": "tipo_cuenta",
+            "description": "TipoCuenta ...\n"
         },
         {
             "name": "conceptos",
