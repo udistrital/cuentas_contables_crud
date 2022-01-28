@@ -2,7 +2,6 @@
 .drone.yml
 *.exe
 cuentas_contables_crud
-main
 *.tmp
 *.env
 .vscode
