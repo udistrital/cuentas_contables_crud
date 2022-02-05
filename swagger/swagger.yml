@@ -884,6 +884,9 @@ definitions:
         type: string
       CodigoCuentaAlterna:
         type: string
+      CuentaBancariaID:
+        type: integer
+        format: int64
       DetalleCuentaID:
         type: string
       FechaCreacion:
