@@ -20,7 +20,7 @@ type Conceptos struct {
 	ClaseTransaccionId  int                `json:"ClaseTransaccionId" bson:"clase_transaccion_id"`
 	TipoTransaccionId   int                `json:"TipoTransaccionId" bson:"tipo_transaccion_id"`
 	Codigo              string             `json:"Codigo" bson:"codigo"`
-	TipoComprobanteId   string             `json:"TipoComprobanteId" bson:"tipo_comprobante_id"`
+	TipoDocumentoId     int                `json:"TipoDocumentoId" bson:"tipo_documento_id"`
 	RubroPresupuestalId string             `json:"RubroPresupuestalId" bson:"rubro_presupuestal_id"`
 	CodigoBogdata       string             `json:"CodigoBogdata" bson:"codigo_bogdata"`
 	CuentasCredito      []string           `json:"CuentasCredito" bson:"cuentas_credito"`

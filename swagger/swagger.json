@@ -1175,8 +1175,9 @@
                 "RubroPresupuestalId": {
                     "type": "string"
                 },
-                "TipoComprobanteId": {
-                    "type": "string"
+                "TipoDocumentoId": {
+                    "type": "integer",
+                    "format": "int64"
                 },
                 "TipoTransaccionId": {
                     "type": "integer",
