@@ -30,14 +30,6 @@ func NewConceptosManager(ctx context.Context) ConceptosManager {
 // AddNodeConceptos This function will store the node data of a tree for the bussines proccess
 func (m *ConceptosManager) AddNodeConceptos(nodeData *models.Conceptos) (err error) {
 	var fatherData *models.Conceptos
-	var tempResults interface{}
-	var objectID primitive.ObjectID
-	if objectID, err = primitive.ObjectIDFromHex(nodeData.TipoComprobanteId); err != nil {
-		return err
-	}
-	if e := m.crudManager.GetDocumentByUUID(objectID, models.TipoComprobanteCollection, &tempResults); e != nil {
-		return errors.New("tipo-comprobante-no-found")
-	}
 
 	if nodeData.Padre != nil {
 		if e := m.crudManager.GetDocumentByItem(*nodeData.Padre, "codigo", models.ArbolConceptosCollection, &fatherData); e != nil {
