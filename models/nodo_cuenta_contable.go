@@ -39,6 +39,7 @@ type NodoArbolCuentaContable struct {
 	Padre    *string                    `json:"Padre" bson:"padre,omitempty"` // if the field is optional we put it as pointer.
 	Nombre   string                     `json:"Nombre" bson:"nombre"`
 	Nivel    int                        `json:"Nivel" bson:"nivel"`
+	NaturalezaCuentaID  string          `json:"NaturalezaCuentaID" bson:"naturaleza_id"`
 }
 
 // ArbolCuentaContableParameters represents the paremeters for some Arbol Cuentas contables process.
