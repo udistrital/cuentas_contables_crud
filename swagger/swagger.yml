@@ -861,6 +861,8 @@ definitions:
           type: string
       Id:
         $ref: '#/definitions/primitive.ObjectID'
+      NaturalezaCuentaID:
+        type: string
       Nivel:
         type: integer
         format: int64
