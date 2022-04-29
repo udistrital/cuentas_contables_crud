@@ -5,8 +5,7 @@ go 1.17
 require (
 	github.com/astaxie/beego v1.12.3
 	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
-	github.com/udistrital/auditoria v0.0.0-20200115201815-9680ae9c2515
-	github.com/udistrital/utils_oas v0.0.0-20211125230753-1091d2af48e2
+	github.com/udistrital/utils_oas v0.0.0-20220415063412-5dae4bd58180
 	github.com/xakep666/mongo-migrate v0.2.1
 	go.mongodb.org/mongo-driver v1.8.2
 )
