@@ -2,10 +2,11 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
+	"go.mongodb.org/mongo-driver/mongo"
+
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 // NaturalezaCuentaContable ...
@@ -13,6 +14,11 @@ type NaturalezaCuentaContable struct {
 	beego.Controller
 	commonHelper helpers.CommonHelper
 	crudManager  managers.CrudManager
+}
+
+// URLMapping ...
+func (c *NaturalezaCuentaContable) URLMapping() {
+	c.Mapping("GetAll", c.GetAll)
 }
 
 // GetAll función para obtener todos los objetos

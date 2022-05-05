@@ -2,15 +2,16 @@ package controllers
 
 import (
 	"encoding/json"
+
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 	"github.com/udistrital/cuentas_contables_crud/compositors"
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
-
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // NodoCuentaContableController ...
@@ -20,6 +21,20 @@ type NodoCuentaContableController struct {
 	commonHelper     helpers.CommonHelper
 	nodeCCManager    managers.NodoCuentaContableManager
 	crudManager      managers.CrudManager
+}
+
+// URLMapping ...
+func (c *NodoCuentaContableController) URLMapping() {
+	c.Mapping("GetByUUID", c.GetByUUID)
+	c.Mapping("GetByCodigo", c.GetByCodigo)
+	c.Mapping("GetCuentasUsablesByNaturaleza", c.GetCuentasUsablesByNaturaleza)
+	c.Mapping("GetByNaturalezaArka", c.GetByNaturalezaArka)
+	c.Mapping("GetByNaturalezaCuentaContable", c.GetByNaturalezaCuentaContable)
+	c.Mapping("AddNode", c.AddNode)
+	c.Mapping("GetTree", c.GetTree)
+	c.Mapping("GetAll", c.GetAll)
+	c.Mapping("ChangeNodeState", c.ChangeNodeState)
+	c.Mapping("UpdateNode", c.UpdateNode)
 }
 
 // GetByUUID función para obtener todos los objetos

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/astaxie/beego"
+
 	"github.com/udistrital/cuentas_contables_crud/compositors"
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/models"
@@ -17,6 +18,15 @@ type ComprobanteController struct {
 }
 
 // var commonHelper = helpers.CommonHelper{}
+
+// URLMapping ...
+func (c *ComprobanteController) URLMapping() {
+	c.Mapping("GetByUUID", c.GetByUUID)
+	c.Mapping("GetAll", c.GetAll)
+	c.Mapping("AddComprobante", c.AddComprobante)
+	c.Mapping("UpdateComprobante", c.UpdateComprobante)
+	c.Mapping("DeleteComprobante", c.DeleteComprobante)
+}
 
 // GetByUUID ...
 // @Title Get
