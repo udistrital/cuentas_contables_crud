@@ -31,15 +31,16 @@ type NodoCuentaContable struct {
 
 // NodoArbolCuentaContable This struct is iseful for reduce band with usage in services that build a tree.
 type NodoArbolCuentaContable struct {
-	*General `bson:"inline"`
-	ID       primitive.ObjectID         `json:"Id" bson:"_id,omitempty"`
-	Codigo   string                     `json:"Codigo" bson:"codigo,omitempty"`
-	Hijos    []string                   `json:"Hijos" bson:"hijos,omitempty"`
-	HijosRef []*NodoArbolCuentaContable `json:"children" bson:"-"`
-	Padre    *string                    `json:"Padre" bson:"padre,omitempty"` // if the field is optional we put it as pointer.
-	Nombre   string                     `json:"Nombre" bson:"nombre"`
-	Nivel    int                        `json:"Nivel" bson:"nivel"`
-	NaturalezaCuentaID  string          `json:"NaturalezaCuentaID" bson:"naturaleza_id"`
+	*General           `bson:"inline"`
+	ID                 primitive.ObjectID         `json:"Id" bson:"_id,omitempty"`
+	Codigo             string                     `json:"Codigo" bson:"codigo,omitempty"`
+	Hijos              []string                   `json:"Hijos" bson:"hijos,omitempty"`
+	HijosRef           []*NodoArbolCuentaContable `json:"children" bson:"-"`
+	Padre              *string                    `json:"Padre" bson:"padre,omitempty"` // if the field is optional we put it as pointer.
+	Nombre             string                     `json:"Nombre" bson:"nombre"`
+	Nivel              int                        `json:"Nivel" bson:"nivel"`
+	NaturalezaCuentaID string                     `json:"NaturalezaCuentaID" bson:"naturaleza_id"`
+	RequiereTercero    bool                       `json:"RequiereTercero" bson:"requiere_tercero"`
 }
 
 // ArbolCuentaContableParameters represents the paremeters for some Arbol Cuentas contables process.
