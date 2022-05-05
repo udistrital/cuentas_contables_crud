@@ -5,12 +5,13 @@ import (
 
 	"github.com/astaxie/beego"
 	_ "github.com/astaxie/beego/logs"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+
 	"github.com/udistrital/cuentas_contables_crud/compositors"
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
 	"github.com/udistrital/utils_oas/errorctrl"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // ConceptosController ...
@@ -20,6 +21,14 @@ type ConceptosController struct {
 	commonHelper       helpers.CommonHelper
 	nodeConcCManager   managers.ConceptosManager
 	crudManager        managers.CrudManager
+}
+
+// URLMapping ...
+func (c *ConceptosController) URLMapping() {
+	c.Mapping("GetTree", c.GetTree)
+	c.Mapping("GetByCodigo", c.GetByCodigo)
+	c.Mapping("AddNode", c.AddNode)
+	c.Mapping("UpdateNode", c.UpdateNode)
 }
 
 // GetTree ...

@@ -26,7 +26,7 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#/definitions/models.TipoComprobante"
+                            "$ref": "#/definitions/models.CentroCostos"
                         }
                     },
                     "403": {
@@ -1012,6 +1012,18 @@
                 },
                 "RequiereTercero": {
                     "type": "boolean"
+                }
+            }
+        },
+        "models.CentroCostos": {
+            "title": "CentroCostos",
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "string"
+                },
+                "Label": {
+                    "type": "string"
                 }
             }
         },

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/astaxie/beego"
+
 	"github.com/udistrital/cuentas_contables_crud/compositors"
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/models"
@@ -17,6 +18,15 @@ type TipoComprobanteController struct {
 }
 
 // var commonHelper = helpers.CommonHelper{}
+
+// URLMapping ...
+func (c *TipoComprobanteController) URLMapping() {
+	c.Mapping("GetByUUID", c.GetByUUID)
+	c.Mapping("GetAll", c.GetAll)
+	c.Mapping("AddTipoComprobante", c.AddTipoComprobante)
+	c.Mapping("UpdateTipoComprobante", c.UpdateTipoComprobante)
+	c.Mapping("DeleteTipoComprobante", c.DeleteTipoComprobante)
+}
 
 // GetByUUID función para obtener los objetos por id
 // @Title Get

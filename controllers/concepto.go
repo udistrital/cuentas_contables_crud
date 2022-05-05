@@ -5,17 +5,27 @@ import (
 	"errors"
 
 	"github.com/astaxie/beego"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
+
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type ConceptoController struct {
 	beego.Controller
 	commonHelper helpers.CommonHelper
 	crudManager  managers.CrudManager
+}
+
+// URLMapping ...
+func (c *ConceptoController) URLMapping() {
+	c.Mapping("Add", c.Add)
+	c.Mapping("GetOne", c.GetOne)
+	c.Mapping("GetAll", c.GetAll)
+	c.Mapping("UpdateNode", c.UpdateNode)
+	c.Mapping("Delete", c.Delete)
 }
 
 // Add ...
