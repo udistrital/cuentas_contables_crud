@@ -65,6 +65,11 @@ func init() {
 				&controllers.ConceptosController{},
 			),
 		),
+		beego.NSNamespace("/tipo_retencion",
+			beego.NSInclude(
+				&controllers.TipoRetencionController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }

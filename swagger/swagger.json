@@ -958,6 +958,26 @@
                     }
                 }
             }
+        },
+        "/tipo_retencion/": {
+            "get": {
+                "tags": [
+                    "tipo_retencion"
+                ],
+                "description": "get all objects",
+                "operationId": "TipoRetencionController.Get",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.TipoRetencion"
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -1480,6 +1500,18 @@
                 }
             }
         },
+        "models.TipoRetencion": {
+            "title": "TipoRetencion",
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "string"
+                },
+                "Label": {
+                    "type": "string"
+                }
+            }
+        },
         "primitive.ObjectID": {
             "title": "ObjectID",
             "type": "object"
@@ -1521,6 +1553,10 @@
         {
             "name": "conceptos",
             "description": "ConceptosController ...\n"
+        },
+        {
+            "name": "tipo_retencion",
+            "description": "TipoRetencion ...\n"
         }
     ]
 }

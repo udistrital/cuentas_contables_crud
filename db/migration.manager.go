@@ -2,7 +2,6 @@ package db
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/astaxie/beego"
@@ -16,9 +15,20 @@ import (
 
 // RunMigrations ... Migrate all files in migrations package.
 func RunMigrations() (*mongo.Database, error) {
-	uri := fmt.Sprintf("mongodb://%s:%s@%s:%s", beego.AppConfig.String("mongo_user"), beego.AppConfig.String("mongo_pass"), beego.AppConfig.String("mongo_host"), "27017")
-	opt := options.Client().ApplyURI(uri)
-	client, err := mongo.NewClient(opt)
+	dbURL := beego.AppConfig.String("mongo_host")
+	dbPort := "27017"
+	dbUser := beego.AppConfig.String("mongo_user")
+	dbPass := beego.AppConfig.String("mongo_pass")
+	dbAuth := beego.AppConfig.String("mongo_db_auth")
+	dbMain := beego.AppConfig.String("mongo_db")
+	clientOptions := options.Client().ApplyURI("mongodb://" + dbURL + ":" + dbPort).SetAuth(options.Credential{
+		Username:   dbUser,
+		Password:   dbPass,
+		AuthSource: dbAuth, // db name
+	})
+	mainDB = dbMain
+	var err error
+	client, err = mongo.NewClient(clientOptions)
 	if err != nil {
 		return nil, err
 	}

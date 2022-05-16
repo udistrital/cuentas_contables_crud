@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	tipoCuentaCOntable := []interface{}{
+	naturalezaCuentaContable := []interface{}{
 		models.NaturalezaCuentaContable{
 			ID:    "credito",
 			Label: "credito",
@@ -28,7 +28,17 @@ func init() {
 	}
 	migrate.Register(func(db *mongo.Database) error {
 
-		_, err := db.Collection(models.NaturalezaCuentaContableCollection).InsertMany(context.TODO(), tipoCuentaCOntable)
+		err := db.Collection(models.NaturalezaCuentaContableCollection).Drop(context.TODO())
+		if err != nil {
+			return err
+		}
+
+		err = db.Collection(models.TipoMonedaCollection).Drop(context.TODO())
+		if err != nil {
+			return err
+		}
+
+		_, err = db.Collection(models.NaturalezaCuentaContableCollection).InsertMany(context.TODO(), naturalezaCuentaContable)
 		if err != nil {
 			return err
 		}
@@ -38,7 +48,8 @@ func init() {
 		}
 		return nil
 	}, func(db *mongo.Database) error {
-		_, err := db.Collection(models.NaturalezaCuentaContableCollection).DeleteOne(context.TODO(), tipoCuentaCOntable)
+
+		_, err := db.Collection(models.NaturalezaCuentaContableCollection).DeleteOne(context.TODO(), naturalezaCuentaContable)
 		if err != nil {
 			return err
 		}
