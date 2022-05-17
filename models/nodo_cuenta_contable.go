@@ -27,6 +27,7 @@ type NodoCuentaContable struct {
 	TipoCuentaID        string             `json:"TipoCuentaID" bson:"tipo_cuenta_id"`
 	CuentaBancariaID    int                `json:"CuentaBancariaID" bson:"cuenta_bancaria_id"`
 	Nmnc                bool               `json:"Nmnc" bson:"nmnc"`
+	TipoRetencionID     string             `json:"TipoRetencionID" bson:"tipo_retencion_id"`
 }
 
 // NodoArbolCuentaContable This struct is iseful for reduce band with usage in services that build a tree.
