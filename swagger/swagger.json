@@ -1416,6 +1416,9 @@
                 },
                 "TipoCuentaID": {
                     "type": "string"
+                },
+                "TipoRetencionID": {
+                    "type": "string"
                 }
             }
         },

@@ -943,6 +943,8 @@ definitions:
         type: boolean
       TipoCuentaID:
         type: string
+      TipoRetencionID:
+        type: string
   models.Parametros:
     title: Parametros
     type: object
