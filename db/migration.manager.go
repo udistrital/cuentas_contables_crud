@@ -16,7 +16,7 @@ import (
 // RunMigrations ... Migrate all files in migrations package.
 func RunMigrations() (*mongo.Database, error) {
 	dbURL := beego.AppConfig.String("mongo_host")
-	dbPort := "27017"
+	dbPort := beego.AppConfig.String("mongo_port")
 	dbUser := beego.AppConfig.String("mongo_user")
 	dbPass := beego.AppConfig.String("mongo_pass")
 	dbAuth := beego.AppConfig.String("mongo_db_auth")
