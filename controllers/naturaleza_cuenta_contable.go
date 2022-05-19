@@ -24,8 +24,8 @@ func (c *NaturalezaCuentaContable) URLMapping() {
 // GetAll función para obtener todos los objetos
 // @Title Get
 // @Description get all objects
-// @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
-// @Param	offset	query	string	false	"Start position of result set. Must be an integer"
+// @Param	limit	query	int	false	"Limit the size of result set. Must be an integer"
+// @Param	offset	query	int	false	"Start position of result set. Must be an integer"
 // @Success 200 {object} []models.NaturalezaCuentaContable
 // @router / [get]
 func (c *NaturalezaCuentaContable) GetAll() {
