@@ -428,6 +428,22 @@
                 ],
                 "description": "get all objects",
                 "operationId": "DetalleCuentaContable.Get",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Limit the size of result set. Must be an integer",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "offset",
+                        "description": "Start position of result set. Must be an integer",
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "",
@@ -448,6 +464,22 @@
                 ],
                 "description": "get all objects",
                 "operationId": "NaturalezaCuentaContable.Get",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Limit the size of result set. Must be an integer",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "offset",
+                        "description": "Start position of result set. Must be an integer",
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "",
@@ -926,6 +958,22 @@
                 ],
                 "description": "get all objects",
                 "operationId": "TipoCuentaController.Get",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Limit the size of result set. Must be an integer",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "offset",
+                        "description": "Start position of result set. Must be an integer",
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "",
@@ -946,6 +994,22 @@
                 ],
                 "description": "get all objects",
                 "operationId": "TipoMoneda.Get",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Limit the size of result set. Must be an integer",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "offset",
+                        "description": "Start position of result set. Must be an integer",
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "",
@@ -953,6 +1017,42 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/models.TipoMoneda"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tipo_retencion/": {
+            "get": {
+                "tags": [
+                    "tipo_retencion"
+                ],
+                "description": "get all objects",
+                "operationId": "TipoRetencionController.Get",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "Limit the size of result set. Must be an integer",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "offset",
+                        "description": "Start position of result set. Must be an integer",
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.TipoRetencion"
                             }
                         }
                     }
@@ -1396,6 +1496,9 @@
                 },
                 "TipoCuentaID": {
                     "type": "string"
+                },
+                "TipoRetencionID": {
+                    "type": "string"
                 }
             }
         },
@@ -1480,6 +1583,18 @@
                 }
             }
         },
+        "models.TipoRetencion": {
+            "title": "TipoRetencion",
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "string"
+                },
+                "Label": {
+                    "type": "string"
+                }
+            }
+        },
         "primitive.ObjectID": {
             "title": "ObjectID",
             "type": "object"
@@ -1521,6 +1636,10 @@
         {
             "name": "conceptos",
             "description": "ConceptosController ...\n"
+        },
+        {
+            "name": "tipo_retencion",
+            "description": "TipoRetencion ...\n"
         }
     ]
 }

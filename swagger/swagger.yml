@@ -284,6 +284,17 @@ paths:
       - detalle_cuenta_contable
       description: get all objects
       operationId: DetalleCuentaContable.Get
+      parameters:
+      - in: query
+        name: limit
+        description: Limit the size of result set. Must be an integer
+        type: integer
+        format: int64
+      - in: query
+        name: offset
+        description: Start position of result set. Must be an integer
+        type: integer
+        format: int64
       responses:
         "200":
           description: ""
@@ -297,6 +308,17 @@ paths:
       - naturaleza_cuenta_contable
       description: get all objects
       operationId: NaturalezaCuentaContable.Get
+      parameters:
+      - in: query
+        name: limit
+        description: Limit the size of result set. Must be an integer
+        type: integer
+        format: int64
+      - in: query
+        name: offset
+        description: Start position of result set. Must be an integer
+        type: integer
+        format: int64
       responses:
         "200":
           description: ""
@@ -386,7 +408,8 @@ paths:
     put:
       tags:
       - nodo_cuenta_contable
-      description: 'Change Node State. TODO: currently, this funtion will only change state of target node, in future realises maybe it can change full branch state.'
+      description: 'Change Node State. TODO: currently, this funtion will only change
+        state of target node, in future realises maybe it can change full branch state.'
       operationId: NodoCuentaContableController.PUT ChangeNodeState
       parameters:
       - in: path
@@ -611,6 +634,17 @@ paths:
       - tipo_cuenta
       description: get all objects
       operationId: TipoCuentaController.Get
+      parameters:
+      - in: query
+        name: limit
+        description: Limit the size of result set. Must be an integer
+        type: integer
+        format: int64
+      - in: query
+        name: offset
+        description: Start position of result set. Must be an integer
+        type: integer
+        format: int64
       responses:
         "200":
           description: ""
@@ -624,6 +658,17 @@ paths:
       - tipo_moneda
       description: get all objects
       operationId: TipoMoneda.Get
+      parameters:
+      - in: query
+        name: limit
+        description: Limit the size of result set. Must be an integer
+        type: integer
+        format: int64
+      - in: query
+        name: offset
+        description: Start position of result set. Must be an integer
+        type: integer
+        format: int64
       responses:
         "200":
           description: ""
@@ -631,6 +676,30 @@ paths:
             type: array
             items:
               $ref: '#/definitions/models.TipoMoneda'
+  /tipo_retencion/:
+    get:
+      tags:
+      - tipo_retencion
+      description: get all objects
+      operationId: TipoRetencionController.Get
+      parameters:
+      - in: query
+        name: limit
+        description: Limit the size of result set. Must be an integer
+        type: integer
+        format: int64
+      - in: query
+        name: offset
+        description: Start position of result set. Must be an integer
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/models.TipoRetencion'
 definitions:
   models.ArbolConceptosFormatNode:
     title: ArbolConceptosFormatNode
@@ -929,6 +998,8 @@ definitions:
         type: boolean
       TipoCuentaID:
         type: string
+      TipoRetencionID:
+        type: string
   models.Parametros:
     title: Parametros
     type: object
@@ -984,6 +1055,14 @@ definitions:
         type: string
       Label:
         type: string
+  models.TipoRetencion:
+    title: TipoRetencion
+    type: object
+    properties:
+      Id:
+        type: string
+      Label:
+        type: string
   primitive.ObjectID:
     title: ObjectID
     type: object
@@ -1015,3 +1094,6 @@ tags:
 - name: conceptos
   description: |
     ConceptosController ...
+- name: tipo_retencion
+  description: |
+    TipoRetencion ...
