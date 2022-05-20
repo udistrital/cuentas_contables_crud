@@ -19,7 +19,7 @@ func TestNodoFail(t *testing.T) {
 	}()
 
 	nodoToInsert := models.NodoCuentaContable{
-		ID: "1",
+		Codigo: "1",
 	}
 
 	mang := managers.NodoCuentaContableManager{

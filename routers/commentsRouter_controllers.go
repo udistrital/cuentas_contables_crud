@@ -313,4 +313,13 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoRetencionController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoRetencionController"],
+        beego.ControllerComments{
+            Method: "GetAll",
+            Router: "/",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
 }
