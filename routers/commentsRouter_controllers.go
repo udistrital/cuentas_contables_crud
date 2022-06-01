@@ -244,7 +244,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"],
         beego.ControllerComments{
             Method: "GetByNaturalezaArka",
-            Router: "/getNodosCuentasArka/:NaturalezaCuentaContable",
+            Router: "/getNodosCuentasArka",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,

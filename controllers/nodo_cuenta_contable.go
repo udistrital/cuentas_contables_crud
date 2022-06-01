@@ -100,19 +100,29 @@ func (c *NodoCuentaContableController) GetCuentasUsablesByNaturaleza() {
 
 // GetByNaturalezaArka función para obtener Los objetos segun naturaleza de cuenta contable para consumir en arka
 // @Title Get
-// @Description get all objects based on naturaleza cuenta contable for arka client
-// @Param	NaturalezaCuentaContable		path 	string	true	"NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)"
-// @Success 200 {object} []models.ArkaCuentasContables
-// @Failure 403 :objectId is empty
-// @router /getNodosCuentasArka/:NaturalezaCuentaContable [get]
+// @Description	get all objects based on naturaleza cuenta contable for arka client
+// @Param	withInactives	query	bool	false	"With inactives nodes. False is default"
+// @Success	200 {object} []models.ArkaCuentasContables
+// @Failure	403 :objectId is empty
+// @router /getNodosCuentasArka [get]
 func (c *NodoCuentaContableController) GetByNaturalezaArka() {
-	NaturalezaCuentaContable := c.GetString(":NaturalezaCuentaContable")
 
-	nodeInfo, err := c.nodeCCCompositor.GetNodeArka(NaturalezaCuentaContable)
+	withInactives := false
+	if v, err := c.GetBool("withInactives"); v && err == nil {
+		withInactives = v
+	}
+	filter := make(map[string]interface{})
+	if !withInactives {
+		filter["activo"] = true
+	}
+	filter["$or"] = []bson.M{{"hijos": nil}, {"hijos": []bson.M{}}}
+	if nodeInfo, err := c.nodeCCCompositor.GetAll(filter, -1, 0); err == nil {
+		c.Data["xml"] = nodeInfo
+	} else {
+		panic(err)
+	}
 
-	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, nodeInfo)
-
-	c.ServeJSON()
+	c.ServeXML()
 
 }
 

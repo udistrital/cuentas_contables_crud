@@ -725,7 +725,7 @@
                 }
             }
         },
-        "/nodo_cuenta_contable/getNodosCuentasArka/{NaturalezaCuentaContable}": {
+        "/nodo_cuenta_contable/getNodosCuentasArka": {
             "get": {
                 "tags": [
                     "nodo_cuenta_contable"
@@ -734,11 +734,10 @@
                 "operationId": "NodoCuentaContableController.Get",
                 "parameters": [
                     {
-                        "in": "path",
-                        "name": "NaturalezaCuentaContable",
-                        "description": "NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)",
-                        "required": true,
-                        "type": "string"
+                        "in": "query",
+                        "name": "withInactives",
+                        "description": "With inactives nodes. False is default",
+                        "type": "boolean"
                     }
                 ],
                 "responses": {

@@ -520,18 +520,17 @@ paths:
               $ref: '#/definitions/models.ArkaCuentasContables'
         "403":
           description: :objectId is empty
-  /nodo_cuenta_contable/getNodosCuentasArka/{NaturalezaCuentaContable}:
+  /nodo_cuenta_contable/getNodosCuentasArka:
     get:
       tags:
       - nodo_cuenta_contable
       description: get all objects based on naturaleza cuenta contable for arka client
       operationId: NodoCuentaContableController.Get
       parameters:
-      - in: path
-        name: NaturalezaCuentaContable
-        description: NaturalezaCuentaContable para el filtro por tipo de cuenta contable(credito/debito)
-        required: true
-        type: string
+      - in: query
+        name: withInactives
+        description: With inactives nodes. False is default
+        type: boolean
       responses:
         "200":
           description: ""
