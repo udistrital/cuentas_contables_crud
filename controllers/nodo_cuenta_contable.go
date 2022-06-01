@@ -2,12 +2,13 @@ package controllers
 
 import (
 	"encoding/json"
-
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"strings"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+
 	"github.com/udistrital/cuentas_contables_crud/compositors"
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/managers"
@@ -115,13 +116,22 @@ func (c *NodoCuentaContableController) GetByNaturalezaArka() {
 	if !withInactives {
 		filter["activo"] = true
 	}
+
+	var data models.RespuestaApi
 	filter["$or"] = []bson.M{{"hijos": nil}, {"hijos": []bson.M{}}}
 	if nodeInfo, err := c.nodeCCCompositor.GetAll(filter, -1, 0); err == nil {
-		c.Ctx.Output.ServeFormatted(nodeInfo, false)
+		data.Data = nodeInfo
 	} else {
 		panic(err)
 	}
-
+	accept := c.Ctx.Input.Header("accept")
+	logs.Debug("accept:", accept)
+	if strings.Contains(accept, "/html") {
+		c.Data["xml"] = data
+		c.ServeXML()
+		return
+	}
+	c.Ctx.Output.ServeFormatted(data, false)
 }
 
 // GetByNaturalezaCuentaContable función para obtener Los objetos segun naturaleza de cuenta contable
