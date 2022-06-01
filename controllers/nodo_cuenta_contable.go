@@ -117,12 +117,10 @@ func (c *NodoCuentaContableController) GetByNaturalezaArka() {
 	}
 	filter["$or"] = []bson.M{{"hijos": nil}, {"hijos": []bson.M{}}}
 	if nodeInfo, err := c.nodeCCCompositor.GetAll(filter, -1, 0); err == nil {
-		c.Data["xml"] = nodeInfo
+		c.Ctx.Output.ServeFormatted(nodeInfo, false)
 	} else {
 		panic(err)
 	}
-
-	c.ServeXML()
 
 }
 
