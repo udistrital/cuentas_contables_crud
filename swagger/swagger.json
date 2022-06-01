@@ -732,6 +732,14 @@
                 ],
                 "description": "get all objects based on naturaleza cuenta contable for arka client",
                 "operationId": "NodoCuentaContableController.Get",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
                 "parameters": [
                     {
                         "in": "query",

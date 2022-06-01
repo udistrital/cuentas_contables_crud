@@ -408,8 +408,7 @@ paths:
     put:
       tags:
       - nodo_cuenta_contable
-      description: 'Change Node State. TODO: currently, this funtion will only change
-        state of target node, in future realises maybe it can change full branch state.'
+      description: 'Change Node State. TODO: currently, this funtion will only change state of target node, in future realises maybe it can change full branch state.'
       operationId: NodoCuentaContableController.PUT ChangeNodeState
       parameters:
       - in: path
@@ -526,6 +525,12 @@ paths:
       - nodo_cuenta_contable
       description: get all objects based on naturaleza cuenta contable for arka client
       operationId: NodoCuentaContableController.Get
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
       parameters:
       - in: query
         name: withInactives

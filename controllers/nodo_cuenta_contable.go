@@ -101,6 +101,7 @@ func (c *NodoCuentaContableController) GetCuentasUsablesByNaturaleza() {
 
 // GetByNaturalezaArka función para obtener Los objetos segun naturaleza de cuenta contable para consumir en arka
 // @Title Get
+// @Accept json,xml
 // @Description	get all objects based on naturaleza cuenta contable for arka client
 // @Param	withInactives	query	bool	false	"With inactives nodes. False is default"
 // @Success	200 {object} []models.ArkaCuentasContables
