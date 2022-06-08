@@ -272,3 +272,24 @@ func (c *NodoCuentaContableController) UpdateNode() {
 	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
 	c.ServeJSON()
 }
+
+// DeleteNode Método DELETE de HTTP
+// @Title DELETE DeleteNode
+// @Description Delete models.NodoCuentaContable
+// @Param UUID path  string                    true  "The key for object to delete"
+// @Success 200 {string} "node-deleted"
+// @Failure 403 body is empty
+// @router /:UUID [delete]
+func (c *NodoCuentaContableController) DeleteNode() {
+	uuid := c.GetString(":UUID")
+	message := ""
+
+	ID, _ := primitive.ObjectIDFromHex(uuid)
+	err := c.nodeCCManager.DeleteNodeByUUID(ID)
+	if err == nil {
+		message = "node-deleted"
+	}
+
+	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
+	c.ServeJSON()
+}

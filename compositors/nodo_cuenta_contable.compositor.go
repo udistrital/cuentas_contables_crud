@@ -2,6 +2,7 @@ package compositors
 
 import (
 	"context"
+
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
@@ -105,5 +106,16 @@ func (c *NodoCuentaContableCompositor) BuildTree(withNoActive ...bool) (rootNode
 		return
 	}
 	c.nodoCcHelper.BuildTreeFromDataSource(rootNodes, noRootNodes)
+	return
+}
+
+// DeleteNode Add new node to the tree
+func (c *NodoCuentaContableCompositor) DeleteNode(nodeData *models.NodoCuentaContable) (err error) {
+
+	err = c.crudManager.RunTransaction(func(ctx context.Context) error {
+		ccmang := managers.NewNodoCuentaContableManager(nil)
+		err = ccmang.DeleteNodeByUUID(nodeData.ID)
+		return err
+	})
 	return
 }

@@ -205,3 +205,24 @@ func stringInSlice(a string, list []string) bool {
 	}
 	return false
 }
+
+// deleteNodeByUUID this function will delete a node from the tree
+func (m *NodoCuentaContableManager) DeleteNodeByUUID(id interface{}) (err error) {
+
+	var nodeData models.NodoCuentaContable
+	var result interface{}
+
+	err = m.crudManager.GetDocumentByUUID(id, models.ArbolPlanMaestroCuentasContCollection, &nodeData)
+
+	if err != nil {
+		return
+	}
+
+	if len(nodeData.Hijos) > 0 {
+		return errors.New("node-has-children")
+	}
+
+	err = m.crudManager.DeleteDocumentByUUID(id, models.ArbolPlanMaestroCuentasContCollection, &result)
+
+	return
+}
