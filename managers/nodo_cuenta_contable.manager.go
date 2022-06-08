@@ -222,7 +222,32 @@ func (m *NodoCuentaContableManager) DeleteNodeByUUID(id interface{}) (err error)
 		return errors.New("node-has-children")
 	}
 
+	var fatherData models.NodoCuentaContable
+	err = m.crudManager.GetDocumentByCodigo(nodeData.Padre, models.ArbolPlanMaestroCuentasContCollection, &fatherData)
+
+	if err == nil {
+		hijos := removeStringFromSlice(nodeData.Codigo, fatherData.Hijos)
+		fatherData.Hijos = hijos
+		var updtDoc interface{}
+		updMap := map[string]interface{}{
+			"hijos": fatherData.Hijos,
+		}
+		if e := m.crudManager.UpdateDocument(updMap, fatherData.ID, models.ArbolPlanMaestroCuentasContCollection, updtDoc); e != nil {
+			return e
+		}
+	}
+
 	err = m.crudManager.DeleteDocumentByUUID(id, models.ArbolPlanMaestroCuentasContCollection, &result)
 
 	return
+}
+
+func removeStringFromSlice(a string, list []string) []string {
+	for i, b := range list {
+		if b == a {
+			list = append(list[:i], list[i+1:]...)
+			return list
+		}
+	}
+	return list
 }
