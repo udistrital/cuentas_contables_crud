@@ -189,6 +189,15 @@ func init() {
 
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"],
         beego.ControllerComments{
+            Method: "DeleteNode",
+            Router: "/:UUID",
+            AllowHTTPMethods: []string{"delete"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"],
+        beego.ControllerComments{
             Method: "GetByUUID",
             Router: "/:UUID",
             AllowHTTPMethods: []string{"get"},
