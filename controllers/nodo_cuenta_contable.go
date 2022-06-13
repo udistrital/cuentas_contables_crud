@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"net/http"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -288,8 +289,11 @@ func (c *NodoCuentaContableController) DeleteNode() {
 	err := c.nodeCCManager.DeleteNodeByUUID(ID)
 	if err == nil {
 		message = "node-deleted"
+		c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
+	} else {
+		c.Ctx.Output.SetStatus(http.StatusInternalServerError)
+		message = "node-deleted failed"
+		c.Data["json"] = c.commonHelper.DefaultResponse(500, err, message)
 	}
-
-	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
 	c.ServeJSON()
 }
