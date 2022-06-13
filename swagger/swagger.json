@@ -824,6 +824,30 @@
                         "description": "body is empty"
                     }
                 }
+            },
+            "delete": {
+                "tags": [
+                    "nodo_cuenta_contable"
+                ],
+                "description": "Delete models.NodoCuentaContable",
+                "operationId": "NodoCuentaContableController.DELETE DeleteNode",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "UUID",
+                        "description": "The key for object to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} \"node-deleted\""
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
             }
         },
         "/tipo_comprobante/": {
