@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"net/http"
 	"strings"
 
 	"github.com/astaxie/beego"
@@ -307,8 +308,11 @@ func (c *NodoCuentaContableController) DeleteNode() {
 	err := c.nodeCCManager.DeleteNodeByUUID(ID)
 	if err == nil {
 		message = "node-deleted"
+		c.Data["json"] = c.commonHelper.DefaultResponse(http.StatusOK, err, message)
+	} else {
+		c.Ctx.Output.SetStatus(http.StatusInternalServerError)
+		message = "node-deleted failed"
+		c.Data["json"] = c.commonHelper.DefaultResponse(http.StatusInternalServerError, err, message)
 	}
-
-	c.Data["json"] = c.commonHelper.DefaultResponse(200, err, message)
 	c.ServeJSON()
 }
