@@ -58,7 +58,12 @@ func (m *NodoCuentaContableManager) getNodesByFilter(filter map[string]interface
 // AddNode This function will store the node data of a tree for the bussines proccess
 func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable) (err error) {
 	var fatherData *models.NodoCuentaContable
+	var existData *models.NodoCuentaContable
 	var tempResults interface{}
+
+	if e := m.crudManager.GetDocumentByCodigo(nodeData.Codigo, models.ArbolPlanMaestroCuentasContCollection, &existData); e == nil {
+		return errors.New("node-alreaady-exist")
+	}
 
 	if e := m.crudManager.GetDocumentByUUID(nodeData.NaturalezaCuentaID, models.NaturalezaCuentaContableCollection, &tempResults); e != nil {
 		return errors.New("naturaleza-no-found")
