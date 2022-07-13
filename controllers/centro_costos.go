@@ -2,10 +2,11 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
+	"go.mongodb.org/mongo-driver/mongo"
+
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 // CentroCostos ...
@@ -15,10 +16,15 @@ type CentroCostos struct {
 	crudManager  managers.CrudManager
 }
 
-// GetAll función para obtener todos los objetos
+// URLMapping ...
+func (c *CentroCostos) URLMapping() {
+	c.Mapping("GetAll", c.GetAll)
+}
+
+// GetAll ...
 // @Title Get
-// @Description get all objects
-// @Success 200 TipoComprobante models.TipoComprobante
+// @Description Lista todos los centros de costos
+// @Success 200 {object} models.CentroCostos
 // @Failure 403 :objectId is empty
 // @router / [get]
 func (c *CentroCostos) GetAll() {

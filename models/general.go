@@ -6,3 +6,7 @@ type General struct {
 	FechaModificacion string `json:"FechaModificacion" bson:"fecha_modificacion"`
 	Activo            bool   `json:"Activo" bson:"activo"`
 }
+
+type RespuestaApi struct {
+	Data interface{}
+}

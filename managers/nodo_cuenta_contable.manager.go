@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/udistrital/cuentas_contables_crud/models"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -46,7 +47,7 @@ func (m *NodoCuentaContableManager) getNodesByFilter(filter map[string]interface
 	err = m.crudManager.GetAllDocuments(filter, -1, 0, models.ArbolPlanMaestroCuentasContCollection, func(curr *mongo.Cursor) {
 		var node models.NodoArbolCuentaContable
 		if err := curr.Decode(&node); err == nil {
-			nodesDataIndexed[node.ID] = &node
+			nodesDataIndexed[node.Codigo] = &node
 			nodesData = append(nodesData, &node)
 		}
 	})
@@ -57,7 +58,12 @@ func (m *NodoCuentaContableManager) getNodesByFilter(filter map[string]interface
 // AddNode This function will store the node data of a tree for the bussines proccess
 func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable) (err error) {
 	var fatherData *models.NodoCuentaContable
+	var existData *models.NodoCuentaContable
 	var tempResults interface{}
+
+	if e := m.crudManager.GetDocumentByCodigo(nodeData.Codigo, models.ArbolPlanMaestroCuentasContCollection, &existData); e == nil {
+		return errors.New("node-alreaady-exist")
+	}
 
 	if e := m.crudManager.GetDocumentByUUID(nodeData.NaturalezaCuentaID, models.NaturalezaCuentaContableCollection, &tempResults); e != nil {
 		return errors.New("naturaleza-no-found")
@@ -68,17 +74,17 @@ func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable)
 	}
 
 	if nodeData.Padre != nil {
-		if e := m.crudManager.GetDocumentByUUID(*nodeData.Padre, models.ArbolPlanMaestroCuentasContCollection, &fatherData); e != nil {
+		if e := m.crudManager.GetDocumentByCodigo(*nodeData.Padre, models.ArbolPlanMaestroCuentasContCollection, &fatherData); e != nil {
 			return errors.New("father-no-found")
 		}
 	}
 
 	nodeData.General = &models.General{}
 	nodeData.Activo = true
-	originalID := nodeData.ID
+	originalID := nodeData.Codigo
 	if fatherData != nil { // infer level from father if it exist.
 		nodeData.Nivel = fatherData.Nivel + 1
-		nodeData.ID = fatherData.ID + "-" + nodeData.ID
+		nodeData.Codigo = fatherData.Codigo + "-" + nodeData.Codigo
 	} else {
 		nodeData.Nivel = 1 // put 1 as default level
 	}
@@ -98,11 +104,11 @@ func (m *NodoCuentaContableManager) AddNode(nodeData *models.NodoCuentaContable)
 	}
 
 	if UUID != "" {
-		nodeData.ID = UUID
+		nodeData.ID, _ = primitive.ObjectIDFromHex(UUID)
 	}
 
 	if fatherData != nil {
-		fatherData.Hijos = append(fatherData.Hijos, nodeData.ID)
+		fatherData.Hijos = append(fatherData.Hijos, nodeData.Codigo)
 		var updtDoc interface{}
 		updMap := map[string]interface{}{
 			"hijos": fatherData.Hijos,
@@ -134,15 +140,15 @@ func (m *NodoCuentaContableManager) GetRootNodes(NaturalezaCuentaContable string
 	}
 
 	for _, root := range rootsData {
-		index := strings.IndexAny(root.ID, "-")
+		index := strings.IndexAny(root.Codigo, "-")
 		if index == -1 {
-			index = len(root.ID)
+			index = len(root.Codigo)
 		}
-		newdata := stringInSlice(root.ID[0:index], codigo)
+		newdata := stringInSlice(root.Codigo[0:index], codigo)
 		if newdata {
 			continue
 		}
-		codigo = append(codigo, root.ID[0:1])
+		codigo = append(codigo, root.Codigo[0:1])
 		rootsDataFormated = append(rootsDataFormated, &models.ArbolNbFormatNode{
 			Data: root,
 		})
@@ -203,4 +209,50 @@ func stringInSlice(a string, list []string) bool {
 		}
 	}
 	return false
+}
+
+// deleteNodeByUUID this function will delete a node from the tree
+func (m *NodoCuentaContableManager) DeleteNodeByUUID(id interface{}) (err error) {
+
+	var nodeData models.NodoCuentaContable
+	var result interface{}
+
+	err = m.crudManager.GetDocumentByUUID(id, models.ArbolPlanMaestroCuentasContCollection, &nodeData)
+
+	if err != nil {
+		return
+	}
+
+	if len(nodeData.Hijos) > 0 {
+		return errors.New("node-has-children")
+	}
+
+	var fatherData models.NodoCuentaContable
+	err = m.crudManager.GetDocumentByCodigo(nodeData.Padre, models.ArbolPlanMaestroCuentasContCollection, &fatherData)
+
+	if err == nil {
+		hijos := removeStringFromSlice(nodeData.Codigo, fatherData.Hijos)
+		fatherData.Hijos = hijos
+		var updtDoc interface{}
+		updMap := map[string]interface{}{
+			"hijos": fatherData.Hijos,
+		}
+		if e := m.crudManager.UpdateDocument(updMap, fatherData.ID, models.ArbolPlanMaestroCuentasContCollection, updtDoc); e != nil {
+			return e
+		}
+	}
+
+	err = m.crudManager.DeleteDocumentByUUID(id, models.ArbolPlanMaestroCuentasContCollection, &result)
+
+	return
+}
+
+func removeStringFromSlice(a string, list []string) []string {
+	for i, b := range list {
+		if b == a {
+			list = append(list[:i], list[i+1:]...)
+			return list
+		}
+	}
+	return list
 }

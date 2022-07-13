@@ -10,7 +10,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:CentroCostos"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:CentroCostos"],
         beego.ControllerComments{
             Method: "GetAll",
-            Router: `/`,
+            Router: "/",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -19,7 +19,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ComprobanteController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ComprobanteController"],
         beego.ControllerComments{
             Method: "GetAll",
-            Router: `/`,
+            Router: "/",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -28,7 +28,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ComprobanteController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ComprobanteController"],
         beego.ControllerComments{
             Method: "AddComprobante",
-            Router: `/`,
+            Router: "/",
             AllowHTTPMethods: []string{"post"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -37,7 +37,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ComprobanteController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ComprobanteController"],
         beego.ControllerComments{
             Method: "GetByUUID",
-            Router: `/:id`,
+            Router: "/:id",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -46,7 +46,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ComprobanteController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ComprobanteController"],
         beego.ControllerComments{
             Method: "UpdateComprobante",
-            Router: `/:id`,
+            Router: "/:id",
             AllowHTTPMethods: []string{"put"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -55,7 +55,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ComprobanteController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ComprobanteController"],
         beego.ControllerComments{
             Method: "DeleteComprobante",
-            Router: `/:id`,
+            Router: "/:id",
             AllowHTTPMethods: []string{"delete"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -64,7 +64,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"],
         beego.ControllerComments{
             Method: "Add",
-            Router: `/`,
+            Router: "/",
             AllowHTTPMethods: []string{"post"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -73,7 +73,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"],
         beego.ControllerComments{
             Method: "GetAll",
-            Router: `/`,
+            Router: "/",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -82,7 +82,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"],
         beego.ControllerComments{
             Method: "GetOne",
-            Router: `/:UUID`,
+            Router: "/:UUID",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -91,7 +91,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"],
         beego.ControllerComments{
             Method: "UpdateNode",
-            Router: `/:UUID`,
+            Router: "/:UUID",
             AllowHTTPMethods: []string{"put"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -100,8 +100,44 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptoController"],
         beego.ControllerComments{
             Method: "Delete",
-            Router: `/:UUID`,
+            Router: "/:UUID",
             AllowHTTPMethods: []string{"delete"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptosController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptosController"],
+        beego.ControllerComments{
+            Method: "GetTree",
+            Router: "/",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptosController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptosController"],
+        beego.ControllerComments{
+            Method: "AddNode",
+            Router: "/",
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptosController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptosController"],
+        beego.ControllerComments{
+            Method: "GetByCodigo",
+            Router: "/:Codigo",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptosController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:ConceptosController"],
+        beego.ControllerComments{
+            Method: "UpdateNode",
+            Router: "/:UUID",
+            AllowHTTPMethods: []string{"put"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})
@@ -109,7 +145,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:DetalleCuentaContable"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:DetalleCuentaContable"],
         beego.ControllerComments{
             Method: "GetAll",
-            Router: `/`,
+            Router: "/",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -118,7 +154,16 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NaturalezaCuentaContable"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NaturalezaCuentaContable"],
         beego.ControllerComments{
             Method: "GetAll",
-            Router: `/`,
+            Router: "/",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"],
+        beego.ControllerComments{
+            Method: "GetTree",
+            Router: "/",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -127,7 +172,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"],
         beego.ControllerComments{
             Method: "AddNode",
-            Router: `/`,
+            Router: "/",
             AllowHTTPMethods: []string{"post"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -135,9 +180,18 @@ func init() {
 
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"],
         beego.ControllerComments{
-            Method: "GetTree",
-            Router: `/`,
-            AllowHTTPMethods: []string{"get"},
+            Method: "UpdateNode",
+            Router: "/:UUID",
+            AllowHTTPMethods: []string{"put"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"],
+        beego.ControllerComments{
+            Method: "DeleteNode",
+            Router: "/:UUID",
+            AllowHTTPMethods: []string{"delete"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})
@@ -145,7 +199,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"],
         beego.ControllerComments{
             Method: "GetByUUID",
-            Router: `/:UUID`,
+            Router: "/:UUID",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -153,8 +207,8 @@ func init() {
 
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"],
         beego.ControllerComments{
-            Method: "UpdateNode",
-            Router: `/:UUID`,
+            Method: "ChangeNodeState",
+            Router: "/change_node_state/:UUID",
             AllowHTTPMethods: []string{"put"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -162,9 +216,18 @@ func init() {
 
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"],
         beego.ControllerComments{
-            Method: "ChangeNodeState",
-            Router: `/change_node_state/:UUID`,
-            AllowHTTPMethods: []string{"put"},
+            Method: "GetByCodigo",
+            Router: "/codigo/:code",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"],
+        beego.ControllerComments{
+            Method: "GetAll",
+            Router: "/cuentas",
+            AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})
@@ -172,7 +235,16 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"],
         beego.ControllerComments{
             Method: "GetByNaturalezaCuentaContable",
-            Router: `/cuentas/:NaturalezaCuentaContable`,
+            Router: "/cuentas/:NaturalezaCuentaContable",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"],
+        beego.ControllerComments{
+            Method: "GetCuentasUsablesByNaturaleza",
+            Router: "/getCuentas/:NaturalezaCuentaContable",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -181,7 +253,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:NodoCuentaContableController"],
         beego.ControllerComments{
             Method: "GetByNaturalezaArka",
-            Router: `/getNodosCuentasArka/:NaturalezaCuentaContable`,
+            Router: "/getNodosCuentasArka",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -190,7 +262,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoComprobanteController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoComprobanteController"],
         beego.ControllerComments{
             Method: "GetAll",
-            Router: `/`,
+            Router: "/",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -199,7 +271,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoComprobanteController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoComprobanteController"],
         beego.ControllerComments{
             Method: "AddTipoComprobante",
-            Router: `/`,
+            Router: "/",
             AllowHTTPMethods: []string{"post"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -208,7 +280,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoComprobanteController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoComprobanteController"],
         beego.ControllerComments{
             Method: "GetByUUID",
-            Router: `/:id`,
+            Router: "/:id",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -217,7 +289,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoComprobanteController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoComprobanteController"],
         beego.ControllerComments{
             Method: "UpdateTipoComprobante",
-            Router: `/:id`,
+            Router: "/:id",
             AllowHTTPMethods: []string{"put"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -226,8 +298,17 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoComprobanteController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoComprobanteController"],
         beego.ControllerComments{
             Method: "DeleteTipoComprobante",
-            Router: `/:id`,
+            Router: "/:id",
             AllowHTTPMethods: []string{"delete"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoCuentaController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoCuentaController"],
+        beego.ControllerComments{
+            Method: "GetAll",
+            Router: "/",
+            AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})
@@ -235,7 +316,16 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoMoneda"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoMoneda"],
         beego.ControllerComments{
             Method: "GetAll",
-            Router: `/`,
+            Router: "/",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoRetencionController"] = append(beego.GlobalControllerRouter["github.com/udistrital/cuentas_contables_crud/controllers:TipoRetencionController"],
+        beego.ControllerComments{
+            Method: "GetAll",
+            Router: "/",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,

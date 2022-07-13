@@ -4,10 +4,11 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/plugins/cors"
-	"github.com/udistrital/auditoria"
+
 	dbConnManager "github.com/udistrital/cuentas_contables_crud/db"
 	_ "github.com/udistrital/cuentas_contables_crud/routers"
 	apistatus "github.com/udistrital/utils_oas/apiStatusLib"
+	"github.com/udistrital/utils_oas/auditoria"
 	"github.com/udistrital/utils_oas/customerror"
 	"github.com/udistrital/utils_oas/responseformat"
 )

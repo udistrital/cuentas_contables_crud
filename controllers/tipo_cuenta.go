@@ -9,15 +9,15 @@ import (
 	"github.com/udistrital/cuentas_contables_crud/models"
 )
 
-// DetalleCuentaContable ...
-type DetalleCuentaContable struct {
+// TipoCuenta ...
+type TipoCuentaController struct {
 	beego.Controller
 	commonHelper helpers.CommonHelper
 	crudManager  managers.CrudManager
 }
 
 // URLMapping ...
-func (c *DetalleCuentaContable) URLMapping() {
+func (c *TipoCuentaController) URLMapping() {
 	c.Mapping("GetAll", c.GetAll)
 }
 
@@ -26,13 +26,12 @@ func (c *DetalleCuentaContable) URLMapping() {
 // @Description get all objects
 // @Param	limit	query	int	false	"Limit the size of result set. Must be an integer"
 // @Param	offset	query	int	false	"Start position of result set. Must be an integer"
-// @Success 200 {object} []models.DetalleCuentaContable
+// @Success 200 {object} []models.TipoCuenta
 // @router / [get]
-func (c *DetalleCuentaContable) GetAll() {
+func (c *TipoCuentaController) GetAll() {
 	filter := make(map[string]interface{})
 
-	var responseData []*models.DetalleCuentaContable
-
+	var responseData []*models.TipoCuenta
 	var limit int64 = -1
 	var offset int64
 
@@ -45,8 +44,8 @@ func (c *DetalleCuentaContable) GetAll() {
 		offset = v
 	}
 
-	err := c.crudManager.GetAllDocuments(filter, limit, offset, models.DetalleCuentaContableCollection, func(curr *mongo.Cursor) {
-		var row models.DetalleCuentaContable
+	err := c.crudManager.GetAllDocuments(filter, limit, offset, models.TipoCuentaCollection, func(curr *mongo.Cursor) {
+		var row models.TipoCuenta
 		if err := curr.Decode(&row); err == nil {
 			responseData = append(responseData, &row)
 		}

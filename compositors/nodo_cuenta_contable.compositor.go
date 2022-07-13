@@ -6,6 +6,7 @@ import (
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/managers"
 	"github.com/udistrital/cuentas_contables_crud/models"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -21,8 +22,19 @@ func (c *NodoCuentaContableCompositor) GetNodeByID(ID string) (node *models.Nodo
 
 	resul := &models.NodoCuentaContable{}
 
-	err = c.crudManager.GetDocumentByUUID(ID, models.ArbolPlanMaestroCuentasContCollection, resul)
+	id, _ := primitive.ObjectIDFromHex(ID)
 
+	err = c.crudManager.GetDocumentByUUID(id, models.ArbolPlanMaestroCuentasContCollection, resul)
+
+	return resul, err
+}
+
+// GetNodeByCode Returns a *models.NodoCuentaContable by it's code
+func (c *NodoCuentaContableCompositor) GetNodeByCode(Codigo string) (node *models.NodoCuentaContable, err error) {
+
+	resul := &models.NodoCuentaContable{}
+
+	err = c.crudManager.GetDocumentByItem(Codigo, "codigo", models.ArbolPlanMaestroCuentasContCollection, resul)
 	return resul, err
 }
 
@@ -40,6 +52,17 @@ func (c *NodoCuentaContableCompositor) GetNodeByNaturalezaCuentaContable(Natural
 	}
 	c.nodoCcHelper.BuildTreeFromDataSource(rootNodes, noRootNodes)
 	return
+}
+
+// GetCuentas Returns a []*models.ArkaCuentasContables
+func (c *NodoCuentaContableCompositor) GetAll(filter map[string]interface{}, limit int64, offset int64) (nodesData []*models.ArkaCuentasContables, err error) {
+	err = c.crudManager.GetAllDocuments(filter, limit, offset, models.ArbolPlanMaestroCuentasContCollection, func(curr *mongo.Cursor) {
+		var node models.ArkaCuentasContables
+		if err := curr.Decode(&node); err == nil {
+			nodesData = append(nodesData, &node)
+		}
+	})
+	return nodesData, err
 }
 
 // GetNodeArka Returns a *models.ArkaCuentasContables by it's naturaleza_id
@@ -83,5 +106,16 @@ func (c *NodoCuentaContableCompositor) BuildTree(withNoActive ...bool) (rootNode
 		return
 	}
 	c.nodoCcHelper.BuildTreeFromDataSource(rootNodes, noRootNodes)
+	return
+}
+
+// DeleteNode Add new node to the tree
+func (c *NodoCuentaContableCompositor) DeleteNode(nodeData *models.NodoCuentaContable) (err error) {
+
+	err = c.crudManager.RunTransaction(func(ctx context.Context) error {
+		ccmang := managers.NewNodoCuentaContableManager(nil)
+		err = ccmang.DeleteNodeByUUID(nodeData.ID)
+		return err
+	})
 	return
 }

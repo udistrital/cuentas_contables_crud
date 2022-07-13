@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/astaxie/beego"
+
 	"github.com/udistrital/cuentas_contables_crud/compositors"
 	"github.com/udistrital/cuentas_contables_crud/helpers"
 	"github.com/udistrital/cuentas_contables_crud/models"
@@ -18,10 +19,20 @@ type ComprobanteController struct {
 
 // var commonHelper = helpers.CommonHelper{}
 
-// GetByUUID función para obtener los objetos por id
+// URLMapping ...
+func (c *ComprobanteController) URLMapping() {
+	c.Mapping("GetByUUID", c.GetByUUID)
+	c.Mapping("GetAll", c.GetAll)
+	c.Mapping("AddComprobante", c.AddComprobante)
+	c.Mapping("UpdateComprobante", c.UpdateComprobante)
+	c.Mapping("DeleteComprobante", c.DeleteComprobante)
+}
+
+// GetByUUID ...
 // @Title Get
-// @Description get object por id
-// @Success 200 Comprobante models.Comprobante
+// @Description Obtiene los objetos por id
+// @Param id path string true "UUID"
+// @Success 200 {object} models.Comprobante
 // @Failure 403 :objectId is empty
 // @router /:id [get]
 func (c *ComprobanteController) GetByUUID() {
@@ -34,10 +45,10 @@ func (c *ComprobanteController) GetByUUID() {
 	c.ServeJSON()
 }
 
-// GetAll función para obtener todos los objetos
+// GetAll ...
 // @Title Get
-// @Description get all objects
-// @Success 200 Comprobante models.Comprobante
+// @Description Obtiene todos los objetos
+// @Success 200 {object} []models.Comprobante
 // @Failure 403 :objectId is empty
 // @router / [get]
 func (c *ComprobanteController) GetAll() {
@@ -53,8 +64,7 @@ func (c *ComprobanteController) GetAll() {
 // @Title Post models.Comprobante
 // @Description Post models.Comprobante
 // @Param	body		body 	models.Comprobante	true		"Body para la creacion de models.Comprobante"
-// @Success 200 {int} models.Comprobante.Id
-// @Failure 403 body is empty
+// @Success 200 {string} "comprobante-added"
 // @router / [post]
 func (c *ComprobanteController) AddComprobante() {
 	var requestBody models.Comprobante
@@ -79,8 +89,9 @@ func (c *ComprobanteController) AddComprobante() {
 // UpdateComprobante Método Put de HTTP
 // @Title Update models.Comprobante
 // @Description Update models.Comprobante
-// @Param	body		body 	models.Comprobante	true		"The objectid you want to update"
-// @Success 200 {int} models.Comprobante.Id
+// @Param id   path string             true  "The objectid you want to update"
+// @Param body body models.Comprobante true  "The new content"
+// @Success 200 {string} "comprobante-updated"
 // @Failure 403 body is empty
 // @router /:id [put]
 func (c *ComprobanteController) UpdateComprobante() {
@@ -107,9 +118,8 @@ func (c *ComprobanteController) UpdateComprobante() {
 // DeleteComprobante Método Delete de HTTP
 // @Title Delete models.Comprobante
 // @Description Delete models.Comprobante
-// @Param	body		body 	models.Comprobante	true		"The objectid you want to delete"
-// @Success 200 {int} models.Comprobante.Id
-// @Failure 403 body is empty
+// @Param id path string true "The objectid you want to delete"
+// @Success 200 {string} "comprobante-deleted"
 // @router /:id [delete]
 func (c *ComprobanteController) DeleteComprobante() {
 	objectID := c.Ctx.Input.Param(":id")

@@ -58,25 +58,18 @@ func init() {
 			Label: "Importación no gravada",
 		},
 		models.DetalleCuentaContable{
-			ID:    "excluida",
-			Label: "Excluida",
-		},
-		models.DetalleCuentaContable{
-			ID:    "excenta",
-			Label: "Excenta",
-		},
-		models.DetalleCuentaContable{
 			ID:    "inventario",
 			Label: "Inventario",
-		},
-		models.DetalleCuentaContable{
-			ID:    "disponible",
-			Label: "Disponible",
 		},
 	}
 	migrate.Register(func(db *mongo.Database) error {
 
-		_, err := db.Collection(models.DetalleCuentaContableCollection).InsertMany(context.TODO(), tipoCuentaCOntable)
+		err := db.Collection(models.DetalleCuentaContableCollection).Drop(context.TODO())
+		if err != nil {
+			return err
+		}
+
+		_, err = db.Collection(models.DetalleCuentaContableCollection).InsertMany(context.TODO(), tipoCuentaCOntable)
 		if err != nil {
 			return err
 		}
