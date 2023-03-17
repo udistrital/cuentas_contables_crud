@@ -88,7 +88,7 @@ func (c *NodoCuentaContableController) GetCuentasUsablesByNaturaleza() {
 		withInactives = v
 	}
 	filter := make(map[string]interface{})
-	if NaturalezaCuentaContable != "" {
+	if NaturalezaCuentaContable != "todas" {
 		filter["naturaleza_id"] = NaturalezaCuentaContable
 	}
 	if !withInactives {
