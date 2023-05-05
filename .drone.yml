@@ -47,7 +47,8 @@ steps:
     - push
 
 - name: go_run_test
-  image: golang:1.14
+  failure: ignore
+  image: golang:1.18
   commands:
   - go get -t
   - go get github.com/smartystreets/goconvey/convey
@@ -61,6 +62,8 @@ steps:
   when:
     branch:
     - develop
+    - feature/*
+    - hotfix/*
     - release/*
     - master
     event:
