@@ -5,15 +5,12 @@ import (
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/plugins/cors"
 
-	"github.com/udistrital/cuentas_contables_crud/compositors"
 	dbConnManager "github.com/udistrital/cuentas_contables_crud/db"
 	_ "github.com/udistrital/cuentas_contables_crud/routers"
 	apistatus "github.com/udistrital/utils_oas/apiStatusLib"
 	"github.com/udistrital/utils_oas/auditoria"
 	"github.com/udistrital/utils_oas/customerrorv2"
 )
-
-//var mainDb = beego.AppConfig.String("mongo_db")
 
 func main() {
 
@@ -25,12 +22,14 @@ func main() {
 		beego.AppConfig.String("mongo_db"),
 	)
 
+	AllowedOrigins := []string{"*.udistrital.edu.co"}
 	if beego.BConfig.RunMode == "dev" {
+		AllowedOrigins = []string{"*"}
 		beego.BConfig.WebConfig.DirectoryIndex = true
 		beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
 	}
 	beego.InsertFilter("*", beego.BeforeRouter, cors.Allow(&cors.Options{
-		AllowOrigins: []string{"*"},
+		AllowOrigins: AllowedOrigins,
 		AllowMethods: []string{"PUT", "PATCH", "GET", "POST", "OPTIONS", "DELETE"},
 		AllowHeaders: []string{"Origin", "x-requested-with",
 			"content-type",
@@ -52,10 +51,6 @@ func main() {
 	beego.ErrorController(&customerrorv2.CustomErrorController{})
 	apistatus.Init()
 	auditoria.InitMiddleware()
-
-	var aux compositors.NodoCuentaContableCompositor
-	cuenta, _ := aux.GetNodeByID("6299040de3550ee345551395")
-	logs.Info(cuenta)
-
 	beego.Run()
+
 }
