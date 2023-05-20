@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/plugins/cors"
 
+	"github.com/udistrital/cuentas_contables_crud/compositors"
 	dbConnManager "github.com/udistrital/cuentas_contables_crud/db"
 	_ "github.com/udistrital/cuentas_contables_crud/routers"
 	apistatus "github.com/udistrital/utils_oas/apiStatusLib"
@@ -51,6 +52,10 @@ func main() {
 	beego.ErrorController(&customerrorv2.CustomErrorController{})
 	apistatus.Init()
 	auditoria.InitMiddleware()
-	beego.Run()
 
+	var aux compositors.NodoCuentaContableCompositor
+	cuenta, _ := aux.GetNodeByID("6299040de3550ee345551395")
+	logs.Info(cuenta)
+
+	beego.Run()
 }
