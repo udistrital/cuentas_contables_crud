@@ -48,6 +48,7 @@ func main() {
 		logs.Info("Migration process success !")
 	}
 	// Custom libs
+	logs.Info(beego.AppConfig.String("mongo_host"))
 	beego.BConfig.RecoverFunc = responseformat.GlobalResponseHandler
 	auditoria.InitMiddleware()
 	beego.ErrorController(&customerror.CustomErrorController{})
