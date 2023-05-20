@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -84,7 +83,7 @@ func (c *NodoCuentaContableController) GetByCodigo() {
 // @router /getCuentas/:NaturalezaCuentaContable [get]
 func (c *NodoCuentaContableController) GetCuentasUsablesByNaturaleza() {
 	NaturalezaCuentaContable := c.GetString(":NaturalezaCuentaContable")
-	fmt.Println("Naturaleza: ", NaturalezaCuentaContable)
+	logs.Info("Naturaleza: ", NaturalezaCuentaContable)
 	withInactives := false
 	if v, err := c.GetBool("withInactives"); v && err == nil {
 		withInactives = v
