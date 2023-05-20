@@ -9,8 +9,7 @@ import (
 	_ "github.com/udistrital/cuentas_contables_crud/routers"
 	apistatus "github.com/udistrital/utils_oas/apiStatusLib"
 	"github.com/udistrital/utils_oas/auditoria"
-	"github.com/udistrital/utils_oas/customerror"
-	"github.com/udistrital/utils_oas/responseformat"
+	"github.com/udistrital/utils_oas/customerrorv2"
 )
 
 //var mainDb = beego.AppConfig.String("mongo_db")
@@ -47,12 +46,11 @@ func main() {
 	} else {
 		logs.Info("Migration process success !")
 	}
-	// Custom libs
-	logs.Info(beego.AppConfig.String("mongo_host"))
-	beego.BConfig.RecoverFunc = responseformat.GlobalResponseHandler
-	auditoria.InitMiddleware()
-	beego.ErrorController(&customerror.CustomErrorController{})
-	apistatus.Init()
 
+	// Custom libs
+	beego.ErrorController(&customerrorv2.CustomErrorController{})
+	apistatus.Init()
+	auditoria.InitMiddleware()
 	beego.Run()
+
 }
