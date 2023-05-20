@@ -83,12 +83,13 @@ func (c *NodoCuentaContableController) GetByCodigo() {
 // @router /getCuentas/:NaturalezaCuentaContable [get]
 func (c *NodoCuentaContableController) GetCuentasUsablesByNaturaleza() {
 	NaturalezaCuentaContable := c.GetString(":NaturalezaCuentaContable")
+	logs.Info("Naturaleza: ", NaturalezaCuentaContable)
 	withInactives := false
 	if v, err := c.GetBool("withInactives"); v && err == nil {
 		withInactives = v
 	}
 	filter := make(map[string]interface{})
-	if NaturalezaCuentaContable != "" {
+	if NaturalezaCuentaContable != "todas" {
 		filter["naturaleza_id"] = NaturalezaCuentaContable
 	}
 	if !withInactives {
